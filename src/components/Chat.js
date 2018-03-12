@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import * as actions from '../actions/index';
 import ListSearch from './ListSearch';
+import ListSettings from './ListSettings';
 import Message from './Message';
 import InputMessage from './InputMessage';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -15,15 +17,7 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.tasks)) {
-      this.setState({ loading: true }, () => {
-        this.props.fetchTasks(1, "tuta", () => { // 1 is for incompleted tasks
-          this.props.fetchSettings("tuta", () => {
-            this.setState({ loading: false });
-          });
-        });
-      });
-    }
+
   }
 
   renderMessages() {
@@ -45,12 +39,12 @@ class Chat extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    chatMessages: state.chatMessages,
-    currentChatUser: state.currentChatUser,
-    user: state.user
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     chatMessages: state.chatMessages,
+//     currentChatUser: state.currentChatUser,
+//     user: state.user
+//   };
+// }
 
-export default connect(mapStateToProps, actions)(Chat);
+export default connect(null, actions)(Chat);

@@ -4,18 +4,22 @@
   width: 100%;
   z-index: 100;
 }
-
 .stick-bottom {
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 100;
 }
-
 .message {
   border-radius: 10px;
 }
-
 .input-message {
   border-radius: 2px;
+}
+.icon {
+  height: 100px;
+  width: 100px;
+  margin: 20px;
+  text-align: center;
+  display: inline-block;
 }

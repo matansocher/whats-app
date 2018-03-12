@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+// import MoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 
 class Contact extends Component {
   constructor(props) {

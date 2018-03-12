@@ -38,11 +38,11 @@ class List extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    contactList: state.contactList,
-    user: state.user
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     contactList: state.contactList,
+//     user: state.user
+//   };
+// }
 
-export default connect(mapStateToProps, actions)(List);
+export default connect(null, actions)(List);

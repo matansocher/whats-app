@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { AAA } from '../actions/types';
+import { FETCH_CHATS_FOR_USER, DELETE_CONTACT_CHAT } from '../actions/types';
 
 export default function(state = [], action) {
   let newState = state;

@@ -2,8 +2,9 @@ import _ from 'lodash';
 import {
   LOGIN_USER,
   LOGOUT_USER,
+  FETCH_USER_DATA,
   SEND_MESSAGE,
-  DELETE_MESSAGE
+  DELETE_MESSAGE,
   CHANGE_CHAT,
   // FETCH_USER_INFO,
   FETCH_CHATS_FOR_USER,
@@ -20,6 +21,10 @@ export function loginUser() {
 }
 
 export function logoutUser() {
+
+}
+
+export function fetchUserData() {
 
 }
 

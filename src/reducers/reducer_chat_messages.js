@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { AAA } from '../actions/types';
+import { FETCH_MESSAGES_FOR_CHAT, SEND_MESSAGE, DELETE_MESSAGE } from '../actions/types';
 
 export default function(state = [], action) {
   let newState = state;

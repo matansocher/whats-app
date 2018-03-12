@@ -20,7 +20,7 @@ class ListSettings extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <Paper style={style} zDepth={5} circle={true} className="pull-left" />
+          <Paper zDepth={5} circle={true} className="icon pull-left" />
 
           <IconMenu
             className="pull-right"

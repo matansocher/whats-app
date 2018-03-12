@@ -20,9 +20,9 @@ class InputMessage extends Component {
     const { value, name } = e.target;
     change[name] = value;
     if (!value || value.length === 0 || value === '') {
-      this.setState(change, empty: true);
+      this.setState({ change, empty: true });
     } else {
-      this.setState(change, empty: false);
+      this.setState({ change, empty: false });
     }
   }
 

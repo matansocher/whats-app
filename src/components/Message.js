@@ -17,7 +17,7 @@ class Message extends Component {
     return (
       <div className="message">
         <MuiThemeProvider>
-        
+
           {this.props.sendOrRecieve}
 
           <span>אוהבת אותך</span>
