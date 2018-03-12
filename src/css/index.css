@@ -1,0 +1,21 @@
+.stick-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.stick-bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.message {
+  border-radius: 10px;
+}
+
+.input-message {
+  border-radius: 2px;
+}
