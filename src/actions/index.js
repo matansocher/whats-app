@@ -1,57 +1,163 @@
 import _ from 'lodash';
+import fire from '../config';
 import {
+  SIGNUP_USER,
   LOGIN_USER,
   LOGOUT_USER,
   FETCH_USER_DATA,
+  UPDATE_USER_DATA,
   SEND_MESSAGE,
   DELETE_MESSAGE,
   CHANGE_CHAT,
-  // FETCH_USER_INFO,
   FETCH_CHATS_FOR_USER,
   FETCH_MESSAGES_FOR_CHAT,
   DELETE_CONTACT_CHAT } from '../actions/types';
-import fire from '../config';
 
-export function signUpUser() {
+export function signUpUser(user) {
 
+  return dispatch => {
+    // callback();
+    dispatch({
+      type: SIGNUP_USER,
+      payload: user
+    });
+  }
 }
 
-export function loginUser() {
+export function loginUser(user) {
 
+  return dispatch => {
+    // callback();
+    dispatch({
+      type: LOGIN_USER,
+      payload: user
+    });
+  }
 }
 
-export function logoutUser() {
+export function logoutUser(user) {
 
+  return dispatch => {
+    // callback();
+    dispatch({
+      type: LOGOUT_USER,
+      payload: user
+    });
+  }
 }
 
-export function fetchUserData() {
+export function fetchUserData(user) {
 
+  return dispatch => {
+    fire.database().ref(`${user}/info`).once('value', snap => {
+      const userData = snap.val();
+      dispatch({
+        type: FETCH_USER_DATA,
+        payload: userData
+      });
+    });
+  }
 }
 
-export function sendMessage() {
-
+export function updateUserData(user) {
+  const { username } = user;
+  return dispatch => {
+    fire.database().ref(`${user}/info`).set({
+      username
+    });
+    dispatch({
+      type: UPDATE_USER_DATA,
+      payload: user
+    });
+  }
 }
 
-export function deleteMessage() {
-
+export function sendMessage(sender, reciever, message) {
+  const { content, date, hour } = message;
+  return dispatch => {
+    fire.database().ref(`${sender}/chats/${reciever}/${message}`).set({
+      content,
+      date,
+      hour,
+      senderOrReciever: 1
+    }).then(() => {
+      fire.database().ref(`${reciever}/chats/${sender}/${message}`).set({
+        content,
+        date,
+        hour,
+        senderOrReciever: 2
+      }).then(() => {
+        dispatch({
+          type: SEND_MESSAGE,
+          payload: message
+        });
+      });
+    })
+  }
 }
 
-export function changeChat() {
+export function deleteMessage(user, contact, message) {
 
+  return dispatch => {
+    fire.database().ref(`${username}/chats/${contact}/${message}`).remove().then(() => {
+      // callback();
+    });
+    dispatch({
+      type: DELETE_MESSAGE,
+      payload: message
+    });
+  }
 }
 
-export function fetchUserInfo() {
+export function changeChat(contact) {
 
+  return dispatch => {
+    fire.database().ref(`${username}/chats/${contact}`).once('value', snap => {
+      const chatData = snap.val();
+      // callback();
+    });
+    dispatch({
+      type: CHANGE_CHAT,
+      payload: chatData
+    });
+  }
 }
 
-export function fetchChatsForUser() {
+export function fetchChatsForUser(user) {
 
+  return dispatch => {
+    fire.database().ref(`${user}/`).once('value', snap => {
+      const chats = snap.val();
+    });
+    dispatch({
+      type: FETCH_CHATS_FOR_USER,
+      payload: task
+    });
+  }
 }
 
-export function fetchMessagesForChat() {
+export function fetchMessagesForChat(user, contact) {
 
+  return dispatch => {
+    fire.database().ref(`${user}/chats/${contact}`).once('value', snap => {
+      const messages = snap.val();
+    });
+    dispatch({
+      type: FETCH_MESSAGES_FOR_CHAT,
+      payload: messages
+    });
+  }
 }
 
-export function deleteContactChat() {
+export function deleteContactChat(username, contact) {
 
+  return dispatch => {
+    fire.database().ref(`${username}/chats/${contact}`).remove().then(() => {
+      // callback();
+    });
+    dispatch({
+      type: DELETE_CONTACT_CHAT,
+      payload: task
+    });
+  }
 }

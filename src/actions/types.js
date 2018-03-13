@@ -1,10 +1,11 @@
+export const SIGNUP_USER = 'signup_user';
 export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
 export const FETCH_USER_DATA = 'fetch_user_data';
+export const UPDATE_USER_DATA = 'update_user_data';
 export const SEND_MESSAGE = 'send_message';
 export const DELETE_MESSAGE = 'delete_message';
 export const CHANGE_CHAT = 'change_chat';
-// export const FETCH_USER_INFO = 'fetch_user_info';
 export const FETCH_CHATS_FOR_USER = 'fetch_chats_for_user';
 export const FETCH_MESSAGES_FOR_CHAT = 'fetch_messages_for_chat';
 export const DELETE_CONTACT_CHAT = 'delete_contact_chat';

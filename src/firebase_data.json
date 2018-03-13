@@ -2,7 +2,7 @@
   "matan": {
     "info": {
       "name": "matan",
-      "picture": "male.png"
+      "image": "male.png"
     },
     "chats": {
       "tuta": {
@@ -25,6 +25,10 @@
             "hour": "15:17",
             "sendOrRecieve": 1
           }
+        },
+        "info": {
+          "name": "tuta",
+          "image": "male2.png"
         }
       },
       "ron": {
@@ -47,6 +51,10 @@
             "hour": "15:17",
             "sendOrRecieve": 1
           }
+        },
+        "info": {
+          "name": "ron",
+          "image": "male2.png"
         }
       }
     }

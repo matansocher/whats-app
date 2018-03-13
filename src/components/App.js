@@ -29,19 +29,15 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <div className="container container-fluid">
+          <div className="col-sm-4">
+            <List contactList={this.props.contactList}
+              user={this.props.user} />
+          </div>
 
-            <div className="col-sm-4">
-              <List contactList={this.props.contactList}
-                user={this.props.user} />
-            </div>
-
-            <div className="col-sm-8">
-              <Chat chatMessages={this.props.chatMessages}
-                currentChatUser={this.props.currentChatUser}
-                user={this.props.user} />
-            </div>
-
+          <div className="col-sm-8">
+            <Chat chatMessages={this.props.chatMessages}
+              currentChatUser={this.props.currentChatUser}
+              user={this.props.user} />
           </div>
         </div>
       </Router>
@@ -59,9 +55,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(App);
-
-// <Switch>
-//   <Route path="/Settings" component={Settings}/>
-//   <Route path="/" component={HoursList}/>
-//   <Route path="*" component={NoMatch}/>
-// </Switch>
