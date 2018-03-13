@@ -1,8 +1,8 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 import { CHANGE_CHAT } from '../actions/types';
 
 export default function(state = [], action) {
-  let newState = state;
+  // let newState = state;
   switch (action.type) {
     case CHANGE_CHAT:
       return action.payload;

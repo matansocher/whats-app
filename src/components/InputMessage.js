@@ -29,9 +29,13 @@ class InputMessage extends Component {
   render() {
     return (
       <div>
-        <SmileyIcon className="pull-left" />
-        <textarea className="input-message" rows="1" placeholder="Type a message" onChange={this.handleChange} />
-        {this.state.empty ? <RecordIcon className="pull-right" /> : <SendIcon className="pull-right" />}
+        <MuiThemeProvider>
+          <div>
+            <SmileyIcon className="pull-left" />
+            <textarea className="input-message" rows="1" placeholder="Type a message" onChange={this.handleChange} />
+            {this.state.empty ? <RecordIcon className="pull-right" /> : <SendIcon className="pull-right" />}
+          </div>
+        </MuiThemeProvider>
       </div>
     );
   }

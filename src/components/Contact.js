@@ -15,7 +15,7 @@ class Contact extends Component {
       <div>
         <MuiThemeProvider>
           <div className="pull-left">
-            <Paper style={style} zDepth={5} circle={true} className="pull-left" />
+            <Paper zDepth={5} circle={true} className="pull-left" />
             <h4>Tuti</h4>
             <br />
             <span>אוהבת אותך יתותח</span>

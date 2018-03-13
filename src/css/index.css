@@ -17,9 +17,13 @@
   border-radius: 2px;
 }
 .icon {
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   margin: 20px;
   text-align: center;
   display: inline-block;
 }
+/* .circle {
+  height: 40px;
+  width: 40px;
+} */

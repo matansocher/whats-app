@@ -20,23 +20,25 @@ class ChatSettings extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <Paper style={style} zDepth={5} circle={true} className="pull-left" />
-          <h4>Tuta</h4>
-          <br />
-          <span>Last seen today at 15:20</span>
+          <div>
+            <Paper zDepth={5} circle={true} className="pull-left" />
+            <h4>Tuta</h4>
+            <br />
+            <span>Last seen today at 15:20</span>
 
-          <IconMenu
-            className="pull-right"
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          >
-            <MenuItem primaryText="Contact Info" />
-            <MenuItem primaryText="Select Messages" />
-            <MenuItem primaryText="Mute" />
-            <MenuItem primaryText="Clear Messages" />
-            <MenuItem primaryText="Delete Chat" />
-          </IconMenu>
+            <IconMenu
+              className="pull-right"
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+              <MenuItem primaryText="Contact Info" />
+              <MenuItem primaryText="Select Messages" />
+              <MenuItem primaryText="Mute" />
+              <MenuItem primaryText="Clear Messages" />
+              <MenuItem primaryText="Delete Chat" />
+            </IconMenu>
+          </div>
         </MuiThemeProvider>
       </div>
     );

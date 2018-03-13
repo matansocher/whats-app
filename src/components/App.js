@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
 import Chat from './Chat';
 import List from './List';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   constructor(props) {
@@ -27,20 +26,18 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div>
-          <div className="col-sm-4">
-            <List contactList={this.props.contactList}
-              user={this.props.user} />
-          </div>
-
-          <div className="col-sm-8">
-            <Chat chatMessages={this.props.chatMessages}
-              currentChatUser={this.props.currentChatUser}
-              user={this.props.user} />
-          </div>
+      <div>
+        <div className="col-sm-4">
+          <List contactList={this.props.contactList}
+            user={this.props.user} />
         </div>
-      </Router>
+
+        <div className="col-sm-8">
+          <Chat chatMessages={this.props.chatMessages}
+            currentChatUser={this.props.currentChatUser}
+            user={this.props.user} />
+        </div>
+      </div>
     );
   }
 }

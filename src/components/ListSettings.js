@@ -20,21 +20,23 @@ class ListSettings extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <Paper zDepth={5} circle={true} className="icon pull-left" />
+          <div>
+            <Paper zDepth={5} circle={true} className="icon pull-left" />
 
-          <IconMenu
-            className="pull-right"
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          >
-            <MenuItem primaryText="New Group" />
-            <MenuItem primaryText="Profile" />
-            <MenuItem primaryText="Archived" />
-            <MenuItem primaryText="Stared" />
-            <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Log Out" />
-          </IconMenu>
+            <IconMenu
+              className="pull-right"
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+              <MenuItem primaryText="New Group" />
+              <MenuItem primaryText="Profile" />
+              <MenuItem primaryText="Archived" />
+              <MenuItem primaryText="Stared" />
+              <MenuItem primaryText="Settings" />
+              <MenuItem primaryText="Log Out" />
+            </IconMenu>
+          </div>
         </MuiThemeProvider>
       </div>
     );

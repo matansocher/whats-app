@@ -1,4 +1,4 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 import fire from '../config';
 import {
   SIGNUP_USER,
@@ -99,7 +99,7 @@ export function sendMessage(sender, reciever, message) {
 export function deleteMessage(user, contact, message) {
 
   return dispatch => {
-    fire.database().ref(`${username}/chats/${contact}/${message}`).remove().then(() => {
+    fire.database().ref(`${user}/chats/${contact}/${message}`).remove().then(() => {
       // callback();
     });
     dispatch({
@@ -109,16 +109,16 @@ export function deleteMessage(user, contact, message) {
   }
 }
 
-export function changeChat(contact) {
+export function changeChat(user, contact) {
 
   return dispatch => {
-    fire.database().ref(`${username}/chats/${contact}`).once('value', snap => {
+    fire.database().ref(`${user}/chats/${contact}`).once('value', snap => {
       const chatData = snap.val();
       // callback();
-    });
-    dispatch({
-      type: CHANGE_CHAT,
-      payload: chatData
+      dispatch({
+        type: CHANGE_CHAT,
+        payload: chatData
+      });
     });
   }
 }
@@ -128,10 +128,10 @@ export function fetchChatsForUser(user) {
   return dispatch => {
     fire.database().ref(`${user}/`).once('value', snap => {
       const chats = snap.val();
-    });
-    dispatch({
-      type: FETCH_CHATS_FOR_USER,
-      payload: task
+      dispatch({
+        type: FETCH_CHATS_FOR_USER,
+        payload: chats
+      });
     });
   }
 }
@@ -141,10 +141,10 @@ export function fetchMessagesForChat(user, contact) {
   return dispatch => {
     fire.database().ref(`${user}/chats/${contact}`).once('value', snap => {
       const messages = snap.val();
-    });
-    dispatch({
-      type: FETCH_MESSAGES_FOR_CHAT,
-      payload: messages
+      dispatch({
+        type: FETCH_MESSAGES_FOR_CHAT,
+        payload: messages
+      });
     });
   }
 }
@@ -157,7 +157,7 @@ export function deleteContactChat(username, contact) {
     });
     dispatch({
       type: DELETE_CONTACT_CHAT,
-      payload: task
+      payload: null
     });
   }
 }

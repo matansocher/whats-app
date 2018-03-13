@@ -27,11 +27,14 @@ class List extends Component {
       <div className="container container-fluid">
         <div className="stick-top">
           <ListSettings user={this.props.user} />
+          <ListSearch />
         </div>
         <MuiThemeProvider>
-          { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
+          <div>
+            { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
 
-          {this.renderList()}
+            {this.renderList()}
+          </div>
         </MuiThemeProvider>
       </div>
     );
