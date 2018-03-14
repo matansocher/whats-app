@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import * as actions from '../actions/index';
 import ListSettings from './ListSettings';
 import ListSearch from './ListSearch';
+import Contact from './Contact';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -19,18 +21,26 @@ class List extends Component {
   }
 
   renderList() {
-
+    const chats = this.props.contactList;
+    // console.log(chats);
+    const chatsArray = _.values(chats);
+    // console.log(chatsArray);
+    return (
+      chatsArray.map((chat) => {
+        return <Contact chat={chat} />;
+      })
+    );
   }
 
   render() {
     return (
-      <div className="container container-fluid">
+      <div>
         <div className="stick-top">
           <ListSettings user={this.props.user} />
           <ListSearch />
         </div>
         <MuiThemeProvider>
-          <div>
+          <div className="scrollable-list">
             { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
 
             {this.renderList()}

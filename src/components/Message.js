@@ -14,13 +14,13 @@ class Message extends Component {
   }
 
   render() {
+    // {this.props.sendOrRecieve}
     return (
       <div className="message">
         <MuiThemeProvider>
 
-          {this.props.sendOrRecieve}
-
-          <span>אוהבת אותך</span>
+          <span>{this.props.message.content}</span>
+          <span>{this.props.message.hour}</span>
           <span>15:20</span>
 
           <IconMenu

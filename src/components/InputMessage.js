@@ -32,7 +32,7 @@ class InputMessage extends Component {
         <MuiThemeProvider>
           <div>
             <SmileyIcon className="pull-left" />
-            <textarea className="input-message" rows="1" placeholder="Type a message" onChange={this.handleChange} />
+            <textarea className="form-control" rows="1" placeholder="Type a message" onChange={this.handleChange}></textarea>
             {this.state.empty ? <RecordIcon className="pull-right" /> : <SendIcon className="pull-right" />}
           </div>
         </MuiThemeProvider>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import _ from 'lodash';
+import _ from 'lodash';
 import * as actions from '../actions/index';
 import ChatSettings from './ChatSettings';
-// import Message from './Message';
+import Message from './Message';
 import InputMessage from './InputMessage';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -20,16 +20,25 @@ class Chat extends Component {
   }
 
   renderMessages() {
-
+    const messages = this.props.chatMessages;
+    const messagesArray = _.values(messages);
+    return (
+      messagesArray.map(message => {
+        // console.log(message);
+        return (<Message message={message} />)
+      })
+    );
   }
 
   render() {
     return (
-      <div className="container container-fluid">
+      <div>
         <div className="stick-top">
           <ChatSettings currentChatUser={this.props.currentChatUser} />
         </div>
-        {this.renderMessages()}
+        <div className="scrollable-chat">
+          {this.renderMessages()}
+        </div>
         <div className="stick-bottom">
           <InputMessage />
         </div>

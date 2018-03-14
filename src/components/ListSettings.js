@@ -22,7 +22,7 @@ class ListSettings extends Component {
         <MuiThemeProvider>
           <div>
             <Paper zDepth={5} circle={true} className="icon pull-left" />
-
+            <h4>{this.props.user.name}</h4>
             <IconMenu
               className="pull-right"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

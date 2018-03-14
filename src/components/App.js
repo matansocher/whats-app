@@ -15,27 +15,30 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.contactList)) {
-      this.setState({ loading: true }, () => {
-        this.props.fetchUserData("matan", () => {
-          this.setState({ loading: false });
-        });
-      });
-    }
+    // if(_.isEmpty(this.props.contactList)) {
+    //   this.setState({ loading: true }, () => {
+    //     this.props.fetchChatsForUser("matan", () => {
+    //       this.setState({ loading: false });
+    //     });
+    //   });
+    // }
   }
 
   render() {
+    const { info, chats } = this.props.all;
+    // console.log(chats);
     return (
       <div>
-        <div className="col-sm-4">
-          <List contactList={this.props.contactList}
-            user={this.props.user} />
+        <div className="col-sm-4 col-md-4 left">
+          <List contactList={chats}
+            user={info}
+            all={this.props.all} />
         </div>
 
-        <div className="col-sm-8">
-          <Chat chatMessages={this.props.chatMessages}
-            currentChatUser={this.props.currentChatUser}
-            user={this.props.user} />
+        <div className="col-sm-8 col-md-8 right">
+          <Chat chatMessages={chats.tuta.messages}
+            currentChatUser={chats.tuta.info}
+            all={this.props.all} />
         </div>
       </div>
     );
@@ -47,7 +50,8 @@ function mapStateToProps(state) {
     contactList: state.contactList,
     chatMessages: state.chatMessages,
     currentChatUser: state.currentChatUser,
-    user: state.user
+    user: state.user,
+    all: state.all
   }
 }
 

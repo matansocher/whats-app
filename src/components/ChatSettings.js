@@ -12,7 +12,7 @@ class ChatSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentChatUser: this.props.currentChatUser
+      // currentChatUser: this.props.currentChatUser
     }
   }
 
@@ -22,9 +22,7 @@ class ChatSettings extends Component {
         <MuiThemeProvider>
           <div>
             <Paper zDepth={5} circle={true} className="pull-left" />
-            <h4>Tuta</h4>
-            <br />
-            <span>Last seen today at 15:20</span>
+            <h4>{this.props.currentChatUser.name}</h4>
 
             <IconMenu
               className="pull-right"

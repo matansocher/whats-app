@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import MoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import Paper from 'material-ui/Paper';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 class Contact extends Component {
   constructor(props) {
@@ -11,14 +16,14 @@ class Contact extends Component {
   }
 
   render() {
+    const { name } = this.props.chat.info;
     return (
-      <div>
+      <div className="list-group-item">
         <MuiThemeProvider>
           <div className="pull-left">
             <Paper zDepth={5} circle={true} className="pull-left" />
             <h4>Tuti</h4>
-            <br />
-            <span>אוהבת אותך יתותח</span>
+            <h4>{name}</h4>
           </div>
           <div className="pull-right">
             <span>15:20</span>

@@ -18,7 +18,8 @@ class ListSearch extends Component {
   render() {
     return (
       <div>
-        <input type="text" className="form-control" onChange={this.handleChange}
+        <input type="text" className="form-control"
+          onChange={this.handleChange}
           placeholder="Search or start new chat" />
       </div>
     );
