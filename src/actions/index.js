@@ -62,7 +62,7 @@ export function fetchUserData(user) {
 export function updateUserData(user) {
   const { username } = user;
   return dispatch => {
-    fire.database().ref(`${user}/info`).set({
+    fire.database().ref(`${username}/info`).set({
       username
     });
     dispatch({
@@ -124,16 +124,79 @@ export function changeChat(user, contact) {
 }
 
 export function fetchChatsForUser(user) {
-
-  return dispatch => {
-    fire.database().ref(`${user}/`).once('value', snap => {
-      const chats = snap.val();
-      dispatch({
-        type: FETCH_CHATS_FOR_USER,
-        payload: chats
-      });
-    });
+  const chats = {
+    "info": {
+      "name": "matan",
+      "image": "male.png"
+    },
+    "chats": {
+      "tuta": {
+        "messages": {
+          "1": {
+            "content": "Hi",
+            "date": "03/12/2018",
+            "hour": "15:15",
+            "sendOrRecieve": 1
+          },
+          "2": {
+            "content": "HiHi",
+            "date": "03/12/2018",
+            "hour": "15:16",
+            "sendOrRecieve": 2
+          },
+          "3": {
+            "content": "HiHi",
+            "date": "03/12/2018",
+            "hour": "15:17",
+            "sendOrRecieve": 1
+          }
+        },
+        "info": {
+          "name": "tuta",
+          "image": "male2.png"
+        }
+      },
+      "ron": {
+        "messages": {
+          "1": {
+            "content": "Hi",
+            "date": "03/12/2018",
+            "hour": "15:15",
+            "sendOrRecieve": 1
+          },
+          "2": {
+            "content": "HiHi",
+            "date": "03/12/2018",
+            "hour": "15:16",
+            "sendOrRecieve": 2
+          },
+          "3": {
+            "content": "HiHi",
+            "date": "03/12/2018",
+            "hour": "15:17",
+            "sendOrRecieve": 1
+          }
+        },
+        "info": {
+          "name": "ron",
+          "image": "male2.png"
+        }
+      }
+    }
   }
+  return {
+    type: FETCH_CHATS_FOR_USER,
+    payload: chats
+  }
+  // return dispatch => {
+  //   fire.database().ref(`${user}/`).once('value', snap => {
+  //     const chats = snap.val();
+  //     dispatch({
+  //       type: FETCH_CHATS_FOR_USER,
+  //       payload: chats
+  //     });
+  //   });
+  // }
 }
 
 export function fetchMessagesForChat(user, contact) {
@@ -149,8 +212,8 @@ export function fetchMessagesForChat(user, contact) {
   }
 }
 
-export function deleteContactChat(username, contact) {
-
+export function deleteContactChat(user, contact) {
+  const { username } = user;
   return dispatch => {
     fire.database().ref(`${username}/chats/${contact}`).remove().then(() => {
       // callback();
