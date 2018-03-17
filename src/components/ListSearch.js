@@ -5,7 +5,7 @@ class ListSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      searchTerm: ''
     }
   }
 
@@ -13,6 +13,10 @@ class ListSearch extends Component {
     var change = {};
     change[e.target.name] = e.target.value;
     this.setState(change);
+  }
+
+  searchContact = () => {
+    this.props.searchContact(this.state.searchTerm);
   }
 
   render() {

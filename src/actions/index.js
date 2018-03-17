@@ -1,96 +1,102 @@
 // import _ from 'lodash';
 import fire from '../config';
 import {
-  SIGNUP_USER,
-  LOGIN_USER,
-  LOGOUT_USER,
-  FETCH_USER_DATA,
-  UPDATE_USER_DATA,
-  SEND_MESSAGE,
-  DELETE_MESSAGE,
-  CHANGE_CHAT,
-  FETCH_CHATS_FOR_USER,
-  FETCH_MESSAGES_FOR_CHAT,
-  DELETE_CONTACT_CHAT } from '../actions/types';
+  // SIGNUP_USER,
+  // LOGIN_USER,
+  // LOGOUT_USER,
+  FETCH_ALL_DATA_FOR_USER,
+  FETCH_CHAT_DATA, // when selecting contact
+  // FETCH_USER_DATA,
+  // UPDATE_USER_DATA
+  SEND_MESSAGE, // send messageto sender and reciever
+  DELETE_MESSAGE, // delete individual message
+  DELETE_CONTACT_CHAT,
+} from '../actions/types';
 
-// export function fetchAllData(username) {
-//   return {
-//     type: FETCH_ALL_DATA,
-//     payload: {
+// export function signUpUser(user) {
 //
-//     }
+//   return dispatch => {
+//     // callback();
+//     dispatch({
+//       type: SIGNUP_USER,
+//       payload: user
+//     });
+//   }
+// }
+//
+// export function loginUser(user) {
+//
+//   return dispatch => {
+//     // callback();
+//     dispatch({
+//       type: LOGIN_USER,
+//       payload: user
+//     });
+//   }
+// }
+//
+// export function logoutUser(user) {
+//
+//   return dispatch => {
+//     // callback();
+//     dispatch({
+//       type: LOGOUT_USER,
+//       payload: user
+//     });
 //   }
 // }
 
-export function signUpUser(user) {
-
+export function fetchAllDataForUser(username) {
   return dispatch => {
-    // callback();
-    dispatch({
-      type: SIGNUP_USER,
-      payload: user
-    });
-  }
-}
-
-export function loginUser(user) {
-
-  return dispatch => {
-    // callback();
-    dispatch({
-      type: LOGIN_USER,
-      payload: user
-    });
-  }
-}
-
-export function logoutUser(user) {
-
-  return dispatch => {
-    // callback();
-    dispatch({
-      type: LOGOUT_USER,
-      payload: user
-    });
-  }
-}
-
-export function fetchUserData(user) {
-
-  return dispatch => {
-    fire.database().ref(`${user}/info`).once('value', snap => {
-      const userData = snap.val();
+    fire.database().ref(`${username}`).once('value', snap => {
+      const allDataForUser = snap.val();
       dispatch({
-        type: FETCH_USER_DATA,
-        payload: userData
+        type: FETCH_ALL_DATA_FOR_USER,
+        payload: allDataForUser
       });
     });
   }
 }
 
-export function updateUserData(user) {
-  const { username } = user;
-  return dispatch => {
-    fire.database().ref(`${username}/info`).set({
-      username
-    });
-    dispatch({
-      type: UPDATE_USER_DATA,
-      payload: user
-    });
-  }
-}
+// export function fetchUserData(user) {
+//
+//   return dispatch => {
+//     fire.database().ref(`${user}/info`).once('value', snap => {
+//       const userData = snap.val();
+//       dispatch({
+//         type: FETCH_USER_DATA,
+//         payload: userData
+//       });
+//     });
+//   }
+// }
+
+// export function updateUserData(user) {
+//   const { username } = user;
+//   return dispatch => {
+//     fire.database().ref(`${username}/info`).set({
+//       username
+//     });
+//     dispatch({
+//       type: UPDATE_USER_DATA,
+//       payload: user
+//     });
+//   }
+// }
 
 export function sendMessage(sender, reciever, message) {
-  const { content, date, hour } = message;
+  const { id, content, date, hour } = message;
   return dispatch => {
-    fire.database().ref(`${sender}/chats/${reciever}/${message}`).set({
+    // problem in message - should be message id or something
+    fire.database().ref(`${sender}/chats/${reciever}/messages/${message.id}`).set({
+      id,
       content,
       date,
       hour,
       senderOrReciever: 1
     }).then(() => {
-      fire.database().ref(`${reciever}/chats/${sender}/${message}`).set({
+      fire.database().ref(`${reciever}/chats/${sender}/messages/${message.id}`).set({
+        id,
         content,
         date,
         hour,
@@ -105,10 +111,10 @@ export function sendMessage(sender, reciever, message) {
   }
 }
 
-export function deleteMessage(user, contact, message) {
-
+export function deleteMessage(username, contact, message) {
   return dispatch => {
-    fire.database().ref(`${user}/chats/${contact}/${message}`).remove().then(() => {
+    fire.database().ref(`${username}/chats/${contact}/messages/${message.id}`).remove().then(() => {
+      fire.database().ref(`${contact}/chats/${username}/messages/${message.id}`).remove();
       // callback();
     });
     dispatch({
@@ -118,59 +124,26 @@ export function deleteMessage(user, contact, message) {
   }
 }
 
-export function changeChat(user, contact) {
-
+export function fetchChatData(username, contactName) {
   return dispatch => {
-    fire.database().ref(`${user}/chats/${contact}`).once('value', snap => {
-      const chatData = snap.val();
-      // callback();
-      dispatch({
-        type: CHANGE_CHAT,
-        payload: chatData
-      });
-    });
-  }
-}
-
-export function fetchChatsForUser(user) {
-  // const array = _.values(chats);
-  return {
-    type: FETCH_CHATS_FOR_USER,
-    payload: user
-  }
-  // return dispatch => {
-  //   fire.database().ref(`${user}/`).once('value', snap => {
-  //     const chats = snap.val();
-  //     dispatch({
-  //       type: FETCH_CHATS_FOR_USER,
-  //       payload: chats
-  //     });
-  //   });
-  // }
-}
-
-export function fetchMessagesForChat(user, contact) {
-
-  return dispatch => {
-    fire.database().ref(`${user}/chats/${contact}`).once('value', snap => {
+    fire.database().ref(`${username}/chats/${contactName}`).once('value', snap => {
       const messages = snap.val();
       dispatch({
-        type: FETCH_MESSAGES_FOR_CHAT,
+        type: FETCH_CHAT_DATA,
         payload: messages
       });
     });
   }
 }
 
-export function deleteContactChat(user, contact) {
-  const { username } = user;
+export function deleteContactChat(username, contact) {
   return dispatch => {
-    fire.database().ref(`${username}/chats/${contact}`).remove().then(() => {
+    fire.database().ref(`${username}/chats/${contact.info.name}`).remove().then(() => {
       // callback();
     });
     dispatch({
       type: DELETE_CONTACT_CHAT,
-      payload: null
+      payload: contact
     });
   }
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Paper from 'material-ui/Paper';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
@@ -12,17 +11,19 @@ class ChatSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currentChatUser: this.props.currentChatUser
+
     }
   }
 
   render() {
+    const { name, image } = this.props.currentChatUser;
     return (
-      <div>
+      <div className="chat-settings">
         <MuiThemeProvider>
           <div>
-            <Paper zDepth={5} circle={true} className="pull-left" />
-            <h4>{this.props.currentChatUser.name}</h4>
+            <h4>{name}</h4>
+            <img className="icon pull-left" alt="contact"
+              src={require(`../images/${image}`)} />
 
             <IconMenu
               className="pull-right"

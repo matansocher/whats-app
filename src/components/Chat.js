@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { sortMessagesByDate } from '../actions/CommonFunctions';
 import * as actions from '../actions/index';
 import ChatSettings from './ChatSettings';
 import Message from './Message';
 import InputMessage from './InputMessage';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Chat extends Component {
   constructor(props) {
@@ -16,43 +16,80 @@ class Chat extends Component {
   }
 
   componentDidMount() {
+    // this.scrollToBottom();
+  }
 
+  componentDidUpdate() {
+    // this.scrollToBottom();
+  }
+
+  // scrollToBottom = () => {
+  //   this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  // }
+
+  sendMessage = (message, callback) => {
+    const sender = this.props.user.name;
+    const reciever = this.props.currentChatUser.name;
+    this.props.sendMessage(sender, reciever, message);
+    callback();
+  }
+
+  deleteMessage = (message) => {
+    const sender = this.props.user.name;
+    const reciever = this.props.currentChatUser.name;
+    this.props.deleteMessage(sender, reciever, message);
   }
 
   renderMessages() {
-    const messages = this.props.chatMessages;
-    const messagesArray = _.values(messages);
+    let messages = this.props.currentChatMessages;
+    if (!messages || messages.length === 0) {
+      console.log('jjjj');
+      return <span />
+    }
+    messages = sortMessagesByDate(messages);
     return (
-      messagesArray.map(message => {
-        // console.log(message);
-        return (<Message message={message} />)
+      messages.map(message => {
+        if (message)
+          return (<Message key={message.id} message={message}
+            deleteMessage={this.deleteMessage} />);
+        const random = Math.floor((Math.random() * 10000) + 1);
+        return <span key={random} />
       })
     );
   }
 
   render() {
+    if(_.isEmpty(this.props.currentChatUser) || _.isEmpty(this.props.currentChatMessages)) {
+      return(
+        <span />
+      );
+    }
     return (
-      <div>
-        <div className="stick-top">
+      <div className="chat">
+        <div className="stick-top-chat">
           <ChatSettings currentChatUser={this.props.currentChatUser} />
         </div>
         <div className="scrollable-chat">
           {this.renderMessages()}
         </div>
-        <div className="stick-bottom">
-          <InputMessage />
+        <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+        </div>
+        <div className="stick-bottom-chat">
+          <InputMessage sendMessage={this.sendMessage} />
         </div>
       </div>
     );
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     chatMessages: state.chatMessages,
-//     currentChatUser: state.currentChatUser,
-//     user: state.user
-//   };
-// }
+function mapStateToProps(state) {
+  return {
+    currentChatUser: state.currentChatUser,
+    currentChatMessages: state.currentChatMessages,
+    // currentChat: state.currentChat,
+    user: state.user
+  };
+}
 
-export default connect(null, actions)(Chat);
+export default connect(mapStateToProps, actions)(Chat);

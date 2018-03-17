@@ -1,53 +1,66 @@
-.stick-top {
+body {
+  color: white;
+}
+.stick-top-list {
   position: fixed;
   top: 0;
-  width: 100%;
+  height: 170px;
+  width: 30%;
   z-index: 100;
-  height: 50px;
-  background: #F8C301;
+  background: #1E222A;
 }
-.stick-bottom {
+.stick-top-chat {
+  position: fixed;
+  top: 0;
+  height: 70px;
+  width: 70%;
+  z-index: 100;
+  background: #262B34;
+}
+.stick-bottom-chat {
   position: fixed;
   bottom: 0;
-  width: 100%;
-  height: 50px;
+  height: 70px;
+  width: 70%;
   z-index: 100;
-  background: #B8DC7C;
+  background: #262B34;
 }
 .scrollable-chat {
+  background: #252E3C;
   position: absolute;
-  top: 50px;
-  bottom: 50px;
+  top: 70px;
+  bottom: 70px;
   width: 100%;
-  overflow-y: scroll;
+  height: 100%;
 }
 .scrollable-list {
+  background: #1E222A;
   position: absolute;
-  top: 100px;
+  top: 170px;
   width: 100%;
-  overflow-y: scroll;
 }
-.left{
-  position:a bsolute;
-  background: #3BB3C3;
+.list {
+  position: absolute;
+  background: #1E222A;
+  top: 170;
   height: 100%;
-  width: 150px;   /* See #right left value */
+  width: 30%;   /* See #right left value */
   overflow: auto; /* make scrollable if content overflows */
 }
-.right{
+.chat {
   position: absolute;
   right: 0;
-  left: 150px; /* compensate #left width */
-  bottom: 0;
+  width: 70%;
+  top: 0;
   height: 100%;
-  background: #EE9B69;
+  background: #1E222A;
+  overflow: auto; /* make scrollable if content overflows */
 }
 .message {
   border-radius: 10px;
 }
 .input-message {
-  /* border-radius: 5px; */
-  width: 100%;
+  width: 92%;
 }
 .icon {
   height: 50px;
@@ -56,7 +69,14 @@
   text-align: center;
   display: inline-block;
 }
-/* .circle {
-  height: 40px;
-  width: 40px;
-} */
+.cetner {
+  margin: auto;
+  text-align: center;
+}
+.contact:hover {
+  background-color: #262B34;
+  cursor: pointer;
+}
+.chat-settings:hover {
+  cursor: pointer;
+}

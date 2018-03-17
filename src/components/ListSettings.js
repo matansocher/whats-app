@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Paper from 'material-ui/Paper';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
@@ -17,12 +16,16 @@ class ListSettings extends Component {
   }
 
   render() {
+    // console.log(this.props);
+    const { name, image } = this.props.user;
     return (
       <div>
         <MuiThemeProvider>
           <div>
-            <Paper zDepth={5} circle={true} className="icon pull-left" />
-            <h4>{this.props.user.name}</h4>
+            <h4>{name}</h4>
+            <img className="icon pull-left" alt="personal"
+              src={require(`../images/${image}`)} />
+
             <IconMenu
               className="pull-right"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

@@ -20,22 +20,44 @@ class List extends Component {
 
   }
 
+  deleteContactChat = (contact) => {
+    const username = this.props.user.name;
+    this.props.deleteContactChat(username, contact)
+  }
+
+  searchContact = () => {
+    // todo - filter the list by the searchTerm
+  }
+
+  fetchChatData = (contact) => {
+    const username = this.props.user.name;
+    this.props.fetchChatData(username, contact);
+  }
+
   renderList() {
-    const chats = this.props.contactList;
-    // console.log(chats);
-    const chatsArray = _.values(chats);
-    // console.log(chatsArray);
+    const contacts = _.values(this.props.contactList);
     return (
-      chatsArray.map((chat) => {
-        return <Contact chat={chat} />;
+      contacts.map((contact) => {
+        return <Contact key={contact.info.name} contact={contact}
+          fetchChatData={this.fetchChatData}
+          deleteContactChat={this.deleteContactChat} />
       })
     );
   }
 
   render() {
+    if(_.isEmpty(this.props.user)) {
+      return(
+        <MuiThemeProvider>
+          <div className="cetner">
+            <CircularProgress size={150} thickness={10} />
+          </div>
+        </MuiThemeProvider>
+      );
+    }
     return (
-      <div>
-        <div className="stick-top">
+      <div className="list">
+        <div className="stick-top-list">
           <ListSettings user={this.props.user} />
           <ListSearch />
         </div>
@@ -51,11 +73,11 @@ class List extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     contactList: state.contactList,
-//     user: state.user
-//   };
-// }
+function mapStateToProps(state) {
+  return {
+    contactList: state.contactList,
+    user: state.user
+  };
+}
 
-export default connect(null, actions)(List);
+export default connect(mapStateToProps, actions)(List);
