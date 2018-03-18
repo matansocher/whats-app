@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fire from '../config';
 import * as actions from '../actions/index';
+import '../css/signIn.css';
+import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -23,6 +25,19 @@ class SignInOrSignUp extends Component {
       SUpassword: '',
       loading: false
     }
+  }
+
+  comonentWillMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user);
+        // this.props.history.push('/');
+      } else {
+        console.log('not logged in');
+        // this.props.history.push('/SignInOrSignUp');
+      }
+    });
+  }
 
     handleChange = (e) => {
       var change = {};
@@ -51,7 +66,7 @@ class SignInOrSignUp extends Component {
           console.log(user);
           const signInMessage = `Welcome ${user.email}`;
           this.setState({ loading: false, signInMessage });
-          this.props.history.push('/');
+          // this.props.history.push('/');
         }).error(e => {
           const signInMessage = e.message;
           this.setState({ loading: false, signInMessage });
@@ -59,7 +74,7 @@ class SignInOrSignUp extends Component {
       });
     }
 
-    singUp = (e) => {
+    singUp = () => {
       this.setState({ loading: true }, () => {
         let signUpMessage = '';
         const { SUemail, SUpassword, SUusername } = this.refs;
@@ -83,7 +98,7 @@ class SignInOrSignUp extends Component {
             signUpMessage = `Welcome ${user.email}`;
             console.log(user);
             this.setState({ loading: false, signUpMessage });
-            this.props.history.push('/');
+            // this.props.history.push('/');
           }).error(e => {
             signUpMessage = e.message;
             this.setState({ loading: false, signUpMessage });
@@ -94,13 +109,13 @@ class SignInOrSignUp extends Component {
 
     render() {
       return (
-        <div className="container container-fluid">
+        <div className="container container-fluid center">
 
           { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
 
-          <div className="row">
-            <div className="col-5 center">
-              <MuiThemeProvider>
+          <MuiThemeProvider>
+            <div className="row">
+              <div className="col-5">
                 <div>
                   <h3>Sign In</h3>
                   <TextField hintText="Email" name="SIemail"
@@ -117,7 +132,12 @@ class SignInOrSignUp extends Component {
 
                   <br />
                   <p>{this.state.signInMessage}</p>
-                  forgot my password
+                  <span>forgot my password</span>
+
+                  <button className="btn btn-primary"
+                    onClick={this.singIn}>
+                      Sign In
+                  </button>
 
 
                   <br />
@@ -137,10 +157,15 @@ class SignInOrSignUp extends Component {
                   <br />
                   <p>{this.state.signUpMessage}</p>
 
+                  <button className="btn btn-primary"
+                    onClick={this.singUp}>
+                      Sign Up
+                  </button>
+
                 </div>
-              </MuiThemeProvider>
+              </div>
             </div>
-          </div>
+          </MuiThemeProvider>
         </div>
       );
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { makeID, makeMessageID } from '../actions/CommonFunctions';
+import { makeMessageID } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SmileyIcon from 'material-ui/svg-icons/social/mood';
 import RecordIcon from 'material-ui/svg-icons/av/mic';

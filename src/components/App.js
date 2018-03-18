@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import fire from '../config';
 import * as actions from '../actions/index';
+import '../css/index.css';
 import Chat from './Chat';
 import List from './List';
 

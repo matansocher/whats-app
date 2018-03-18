@@ -1,5 +1,5 @@
 // import _ from 'lodash';
-import { LOGIN_USER, LOGOUT_USER, FETCH_ALL_DATA_FOR_USER } from '../actions/types';
+import { SIGNUP_USER, LOGIN_USER, LOGOUT_USER, FETCH_ALL_DATA_FOR_USER } from '../actions/types';
 
 export default function(state = {}, action) {
   // let newState = state;

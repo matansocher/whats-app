@@ -25,11 +25,12 @@ export function signUpUser(username) {
           type: SIGNUP_USER,
           payload: userFromDB
         });
+      });
     });
-  }
+  };
 }
 
-export function loginUser(user) {
+export function loginUser(username) {
   return dispatch => {
     fire.database().ref(`${username}/info`).once('value', snap => {
       const userFromDB = snap.val();

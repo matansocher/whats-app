@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { sortMessagesByDate } from '../actions/CommonFunctions';
 import * as actions from '../actions/index';
 import ChatSettings from './ChatSettings';
 import Message from './Message';

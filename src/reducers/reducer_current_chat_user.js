@@ -2,7 +2,7 @@
 import { FETCH_ALL_DATA_FOR_USER, FETCH_CHAT_DATA } from '../actions/types';
 
 export default function(state = {}, action) {
-  let newState = state;
+  // let newState = state;
   switch (action.type) {
     case FETCH_ALL_DATA_FOR_USER:
       return action.payload.chats.tuta.info;
