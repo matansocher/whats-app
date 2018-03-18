@@ -43,10 +43,10 @@ class Chat extends Component {
   renderMessages() {
     let messages = this.props.currentChatMessages;
     if (!messages || messages.length === 0) {
-      console.log('jjjj');
+      // console.log('jjjj');
       return <span />
     }
-    messages = sortMessagesByDate(messages);
+    // messages = sortMessagesByDate(messages);
     return (
       messages.map(message => {
         if (message)

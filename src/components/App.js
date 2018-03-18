@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import fire from '../config';
 import * as actions from '../actions/index';
 import Chat from './Chat';
 import List from './List';
@@ -13,8 +14,18 @@ class App extends Component {
     }
   }
 
+  comonentWillMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.history.push('/');
+      } else {
+        this.props.history.push('/SignInOrSignUp');
+      }
+    });
+  }
+
   componentDidMount() {
-    if(_.isEmpty(this.props.contactList)) {
+    if(_.isEmpty(this.props.contactList)) { // if logged in
       this.setState({ loading: true }, () => {
         this.props.fetchAllDataForUser("matan", () => {
           this.setState({ loading: false });
@@ -34,16 +45,3 @@ class App extends Component {
 }
 
 export default connect(null, actions)(App);
-
-
-// <div className="col-sm-4 col-md-4 left">
-//   <List contactList={chats}
-//     user={info}
-//     all={this.props.all} />
-// </div>
-
-// <div className="col-sm-8 col-md-8 right">
-//   <Chat chatMessages={chats.tuta.messages}
-//     currentChatUser={chats.tuta.info}
-//     all={this.props.all} />
-// </div>

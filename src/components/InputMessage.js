@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { makeID } from '../actions/CommonFunctions';
+import { makeID, makeMessageID } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SmileyIcon from 'material-ui/svg-icons/social/mood';
 import RecordIcon from 'material-ui/svg-icons/av/mic';
@@ -17,7 +17,8 @@ class InputMessage extends Component {
   sendMessage = () => {
     var date = new Date();
     const message = {
-      id: makeID(),
+      // id: makeID(),
+      id: makeMessageID(),
       content: this.state.message,
       hour: `${date.getHours()}:${date.getMinutes()}`,
       date: `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`

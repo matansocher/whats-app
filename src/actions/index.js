@@ -1,10 +1,10 @@
 // import _ from 'lodash';
 import fire from '../config';
 import {
-  // SIGNUP_USER,
-  // LOGIN_USER,
-  // LOGOUT_USER,
-  FETCH_ALL_DATA_FOR_USER,
+  SIGNUP_USER,
+  LOGIN_USER,
+  LOGOUT_USER,
+  FETCH_ALL_DATA_FOR_USER, // fetches all the data for a user
   FETCH_CHAT_DATA, // when selecting contact
   // FETCH_USER_DATA,
   // UPDATE_USER_DATA
@@ -13,38 +13,40 @@ import {
   DELETE_CONTACT_CHAT,
 } from '../actions/types';
 
-// export function signUpUser(user) {
-//
-//   return dispatch => {
-//     // callback();
-//     dispatch({
-//       type: SIGNUP_USER,
-//       payload: user
-//     });
-//   }
-// }
-//
-// export function loginUser(user) {
-//
-//   return dispatch => {
-//     // callback();
-//     dispatch({
-//       type: LOGIN_USER,
-//       payload: user
-//     });
-//   }
-// }
-//
-// export function logoutUser(user) {
-//
-//   return dispatch => {
-//     // callback();
-//     dispatch({
-//       type: LOGOUT_USER,
-//       payload: user
-//     });
-//   }
-// }
+export function signUpUser(username) {
+  return dispatch => {
+    fire.database().ref(`${username}/info`).set({
+      name: username,
+      image: 'male.png'
+    }).then(() => {
+      fire.database().ref(`${username}/info`).once('value', snap => {
+        const userFromDB = snap.val();
+        dispatch({
+          type: SIGNUP_USER,
+          payload: userFromDB
+        });
+    });
+  }
+}
+
+export function loginUser(user) {
+  return dispatch => {
+    fire.database().ref(`${username}/info`).once('value', snap => {
+      const userFromDB = snap.val();
+      dispatch({
+        type: LOGIN_USER,
+        payload: userFromDB
+      });
+    });
+  }
+}
+
+export function logoutUser() {
+  return {
+    type: LOGOUT_USER,
+    payload: null
+  }
+}
 
 export function fetchAllDataForUser(username) {
   return dispatch => {

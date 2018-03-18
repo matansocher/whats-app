@@ -1,216 +1,41 @@
 {
   "matan": {
     "info": {
+      "email": "matan@gmail.com",
       "name": "matan",
       "image": "male.png"
     },
     "chats": {
       "tuta": {
         "messages": {
-          "1": {
-            "id": "1",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "2": {
-            "id": "2",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "3": {
-            "id": "3",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          },
-          "4": {
-            "id": "4",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "5": {
-            "id": "5",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "6": {
-            "id": "6",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          },
-          "7": {
-            "id": "7",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "8": {
-            "id": "8",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "9": {
-            "id": "9",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          },
-          "10": {
-            "id": "10",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          },
-          "11": {
-            "id": "11",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          },
-          "12": {
-            "id": "12",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
+          "SCSRlg": {
+            "id": "SCSRlg",
+            "content": "Matan to Tuta",
+            "date": "03/18/2018",
+            "hour": "17:37:32",
             "sendOrRecieve": 1
           }
         },
         "info": {
           "name": "tuta",
+          "email": "tuta@gmail.com",
           "image": "female3.png"
         }
       },
       "ron": {
         "messages": {
-          "13": {
-            "id": "13",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "14": {
-            "id": "14",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "15": {
-            "id": "15",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
+          "SCSRlg": {
+            "id": "SCSRlg",
+            "content": "Matan to Ron",
+            "date": "03/18/2018",
+            "hour": "17:37:32",
             "sendOrRecieve": 1
           }
         },
         "info": {
+          "email": "ron@gmail.com",
           "name": "ron",
           "image": "male2.png"
-        }
-      },
-      "eli": {
-        "messages": {
-          "16": {
-            "id": "16",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "17": {
-            "id": "17",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "18": {
-            "id": "18",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "name": "eli",
-          "image": "male2.png"
-        }
-      },
-      "david": {
-        "messages": {
-          "19": {
-            "id": "19",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "20": {
-            "id": "20",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "21": {
-            "id": "21",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "name": "david",
-          "image": "female2.png"
-        }
-      },
-      "aviv": {
-        "messages": {
-          "22": {
-            "id": "22",
-            "content": "Hi",
-            "date": "03/12/2018",
-            "hour": "15:15",
-            "sendOrRecieve": 1
-          },
-          "23": {
-            "id": "15",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:16",
-            "sendOrRecieve": 2
-          },
-          "24": {
-            "id": "15",
-            "content": "HiHi",
-            "date": "03/12/2018",
-            "hour": "15:17",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "name": "aviv",
-          "image": "female.png"
         }
       }
     }

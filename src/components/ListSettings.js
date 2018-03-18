@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import fire from '../config';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -13,6 +14,12 @@ class ListSettings extends Component {
     this.state = {
       user: this.props.user
     }
+  }
+
+  logout = () => {
+    fire.auth().logout();
+    this.props.logoutUser();
+    this.props.history.push('SignInOrSignUp');
   }
 
   render() {
@@ -37,7 +44,7 @@ class ListSettings extends Component {
               <MenuItem primaryText="Archived" />
               <MenuItem primaryText="Stared" />
               <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Log Out" />
+              <MenuItem primaryText="Log Out" onClick={this.logout} />
             </IconMenu>
           </div>
         </MuiThemeProvider>
