@@ -3,7 +3,7 @@
     "info": {
       "email": "matan@gmail.com",
       "name": "matan",
-      "image": "male.png"
+      "image": "contact1.png"
     },
     "chats": {
       "tuta": {
@@ -19,7 +19,7 @@
         "info": {
           "name": "tuta",
           "email": "tuta@gmail.com",
-          "image": "female3.png"
+          "image": "contact2.png"
         }
       },
       "ron": {
@@ -35,7 +35,7 @@
         "info": {
           "email": "ron@gmail.com",
           "name": "ron",
-          "image": "male2.png"
+          "image": "contact3.png"
         }
       }
     }

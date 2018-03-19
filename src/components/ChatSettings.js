@@ -20,13 +20,13 @@ class ChatSettings extends Component {
     return (
       <div className="chat-settings">
         <MuiThemeProvider>
-          <div>
-            <h4>{name}</h4>
-            <img className="icon pull-left" alt="contact"
+          <div className="three-dots-father">
+            <img className="icon inline" alt="contact"
               src={require(`../images/${image}`)} />
+            <h2 className="inline">{name}</h2>
 
             <IconMenu
-              className="pull-right"
+               className="three-dots"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}

@@ -4,6 +4,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import '../css/Message.css';
 
 class Message extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class Message extends Component {
   }
 
   deleteMessage = () => {
-    console.log(this.props.message);
     this.props.deleteMessage(this.props.message);
   }
 
@@ -23,13 +23,13 @@ class Message extends Component {
     return (
       <div className="message">
         <MuiThemeProvider>
-          <div>
+          <div className="three-dots-father">
             <span>{this.props.message.content}</span>
             <br />
             <span>{this.props.message.hour}</span>
 
             <IconMenu
-              className="pull-left"
+              className="three-dots-left"
               iconButtonElement={<IconButton><MoreIcon /></IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}

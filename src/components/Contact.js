@@ -19,9 +19,7 @@ class Contact extends Component {
   }
 
   fetchChatData = () => {
-    console.log(this.props.contact);
     const contactName = this.props.contact.info.name;
-    console.log(contactName);
     this.props.fetchChatData(contactName);
   }
 
@@ -31,15 +29,16 @@ class Contact extends Component {
       <div className="contact">
         <MuiThemeProvider>
           <div>
-            <div className="pull-left" onClick={this.fetchChatData}>
-              <img className="icon" alt="contact"
-              src={require(`../images/${image}`)} />
-              <h4>{name}</h4>
+            <div onClick={this.fetchChatData}>
+              <img className="icon inline" alt="contact"
+                src={require(`../images/${image}`)} />
+              <h2 className=" inline">{name}</h2>
             </div>
 
-            <div className="pull-right">
+            <div className="three-dots-father">
               <br />
               <IconMenu
+                className="three-dots"
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}

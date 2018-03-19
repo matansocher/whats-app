@@ -17,7 +17,6 @@ class SignInOrSignUp extends Component {
       signInMessage: '',
       signUpMessage: '',
       SIemail: '',
-      SIusername: '',
       SIpassword: '',
       // SICheck: false,
       SUemail: '',
@@ -29,11 +28,13 @@ class SignInOrSignUp extends Component {
 
   comonentWillMount() {
     fire.auth().onAuthStateChanged(user => {
-      if (user) {
+      if (user) { // logged in
         console.log(user);
+        // this.props.loginUser(user.username);
         // this.props.history.push('/');
-      } else {
+      } else { // NOT logged in
         console.log('not logged in');
+        // this.props.logoutUser();
         // this.props.history.push('/SignInOrSignUp');
       }
     });
@@ -56,11 +57,10 @@ class SignInOrSignUp extends Component {
     singIn = () => {
       this.setState({ loading: true }, () => {
         let signInMessage = '';
-        const { SIemail, SIpassword, SIusername } = this.refs;
+        const { SIemail, SIpassword } = this.refs;
         const email = SIemail.value;
         const password = SIpassword.value;
-        const username = SIusername.value;
-        console.log(email, username, password);
+        console.log(email, password);
         fire.auth().signInWithEmailAndPassword(email, password)
         .then(user => {
           console.log(user);
@@ -103,6 +103,9 @@ class SignInOrSignUp extends Component {
             signUpMessage = e.message;
             this.setState({ loading: false, signUpMessage });
           });
+        } else {
+          signUpMessage = `Oops, something went wrong, please try again`;
+          this.setState({ loading: false, signUpMessage });
         }
       });
     }
@@ -120,10 +123,6 @@ class SignInOrSignUp extends Component {
                   <h3>Sign In</h3>
                   <TextField hintText="Email" name="SIemail"
                     value={this.state.SIemail} onChange={this.handleChange}
-                  />
-                  <br />
-                  <TextField hintText="Username" name="SIusername"
-                    value={this.state.SIusername} onChange={this.handleChange}
                   />
                   <br />
                   <TextField hintText="Password" name="SIpassword" type="password"

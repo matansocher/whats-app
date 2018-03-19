@@ -5,6 +5,7 @@ import * as actions from '../actions/index';
 import ChatSettings from './ChatSettings';
 import Message from './Message';
 import InputMessage from './InputMessage';
+import '../css/Chat.css';
 
 class Chat extends Component {
   constructor(props) {
@@ -42,7 +43,6 @@ class Chat extends Component {
   renderMessages() {
     let messages = this.props.currentChatMessages;
     if (!messages || messages.length === 0) {
-      // console.log('jjjj');
       return <span />
     }
     // messages = sortMessagesByDate(messages);

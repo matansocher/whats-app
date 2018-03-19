@@ -14,10 +14,11 @@ import {
 } from '../actions/types';
 
 export function signUpUser(username) {
+  const randImg = Math.floor((Math.random() * 8) + 1);
   return dispatch => {
     fire.database().ref(`${username}/info`).set({
       name: username,
-      image: 'male.png'
+      image: `contact${randImg}.png`
     }).then(() => {
       fire.database().ref(`${username}/info`).once('value', snap => {
         const userFromDB = snap.val();

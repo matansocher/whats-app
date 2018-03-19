@@ -23,18 +23,17 @@ class ListSettings extends Component {
   }
 
   render() {
-    // console.log(this.props);
     const { name, image } = this.props.user;
     return (
       <div>
         <MuiThemeProvider>
-          <div>
-            <h4>{name}</h4>
-            <img className="icon pull-left" alt="personal"
+          <div className="three-dots-father">
+            <img className="icon inline" alt="personal"
               src={require(`../images/${image}`)} />
+            <h2 className="inline">{name}</h2>
 
             <IconMenu
-              className="pull-right"
+               className="three-dots"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}

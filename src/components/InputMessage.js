@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SmileyIcon from 'material-ui/svg-icons/social/mood';
 import RecordIcon from 'material-ui/svg-icons/av/mic';
 import SendIcon from 'material-ui/svg-icons/content/send';
+import '../css/inputMessage.css';
 
 class InputMessage extends Component {
   constructor(props) {

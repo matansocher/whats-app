@@ -26,7 +26,7 @@ body {
   background: #262B34;
 }
 .scrollable-chat {
-  background: #252E3C;
+  background: url("http://forums.crackberry.com/attachments/blackberry-10-wallpapers-f308/137432d1361639896t-z10-wallpaper-set-z10-music.jpg");
   position: absolute;
   top: 70px;
   bottom: 70px;
@@ -72,6 +72,8 @@ body {
 .cetner {
   margin: auto;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 .contact:hover {
   background-color: #262B34;
@@ -79,4 +81,22 @@ body {
 }
 .chat-settings:hover {
   cursor: pointer;
+}
+.three-dots-father {
+  position: relative
+}
+.three-dots {
+  float: right;
+  position: relative;
+  top: -25px;
+  right: -18px;
+}
+.three-dots-left {
+  float: left;
+  position: relative;
+  top: 25px;
+  left: 18px;
+}
+.inline {
+  display: inline;
 }
