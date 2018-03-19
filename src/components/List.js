@@ -62,9 +62,8 @@ class List extends Component {
           <ListSearch />
         </div>
         <MuiThemeProvider>
-          <div className="scrollable-list">
+          <div className="scrollable-list scrollbar">
             { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
-
             {this.renderList()}
           </div>
         </MuiThemeProvider>

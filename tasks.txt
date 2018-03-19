@@ -1,1 +1,11 @@
+automatically scroll to bottom in chat list
+new scroller
+message design
+list design
+chat settings design
+list settings design
+input message design
 
+sign up
+sign in
+sign out

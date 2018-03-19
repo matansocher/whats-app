@@ -68,11 +68,8 @@ class Chat extends Component {
         <div className="stick-top-chat">
           <ChatSettings currentChatUser={this.props.currentChatUser} />
         </div>
-        <div className="scrollable-chat">
+        <div className="scrollable-chat scrollbar">
           {this.renderMessages()}
-        </div>
-        <div style={{ float:"left", clear: "both" }}
-             ref={(el) => { this.messagesEnd = el; }}>
         </div>
         <div className="stick-bottom-chat">
           <InputMessage sendMessage={this.sendMessage} />
