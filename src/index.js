@@ -16,7 +16,7 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route path="/SignInOrSignUp" component={SignInOrSignUp}/>
-        <Route path="/" component={SignInOrSignUp}/>
+        <Route path="/" component={App}/>
         <Route path="*" component={NoMatch}/>
       </Switch>
     </Router>

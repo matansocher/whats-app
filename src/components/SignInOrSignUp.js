@@ -43,7 +43,8 @@ class SignInOrSignUp extends Component {
   handleChange = (e) => {
     var change = {};
     change[e.target.name] = e.target.value;
-    this.setState(change);
+    this.setState(change, () => {
+    });
   }
 
   // handleChangeCheckBox = () => {
@@ -57,17 +58,15 @@ class SignInOrSignUp extends Component {
   singIn = () => {
     this.setState({ loading: true }, () => {
       let signInMessage = '';
-      const { SIemail, SIpassword } = this.refs;
-      const email = SIemail.value;
-      const password = SIpassword.value;
-      console.log(email, password);
-      fire.auth().signInWithEmailAndPassword(email, password)
+      const { SIemail, SIpassword } = this.state;
+      console.log(SIemail, SIpassword);
+      fire.auth().signInWithEmailAndPassword(SIemail, SIpassword)
       .then(user => {
         console.log(user);
         const signInMessage = `Welcome ${user.email}`;
         this.setState({ loading: false, signInMessage });
         // this.props.history.push('/');
-      }).error(e => {
+      }).catch(e => {
         const signInMessage = e.message;
         this.setState({ loading: false, signInMessage });
       });
@@ -77,29 +76,27 @@ class SignInOrSignUp extends Component {
   singUp = () => {
     this.setState({ loading: true }, () => {
       let signUpMessage = '';
-      const { SUemail, SUpassword, SUusername } = this.refs;
-      const email = SUemail.value;
-      const password = SUpassword.value;
-      const username = SUusername.value;
-      console.log(email, username, password);
-      if(validatePassword(password) === 'short') {
+      const { SUemail, SUpassword, SUusername } = this.state;
+      console.log(SUemail, SUpassword, SUusername);
+      if(validatePassword(SUpassword) === 'short') {
         signUpMessage = `Password should contain at least 6 chars`;
         this.setState({ loading: false, signUpMessage });
         return;
       }
-      if(!username || username.length === 0) {
+      if(!SUusername || SUusername.length === 0) {
         signUpMessage = `Username is empty`;
         this.setState({ loading: false, signUpMessage });
         return;
       }
-      if(validateEmail(email) && validatePassword(password)) {
-        fire.auth().createUserWithEmailAndPassword(email, password)
+      if(validateEmail(SUemail) && validatePassword(SUpassword)) {
+        console.log('aaaaa');
+        fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
           signUpMessage = `Welcome ${user.email}`;
           console.log(user);
           this.setState({ loading: false, signUpMessage });
           // this.props.history.push('/');
-        }).error(e => {
+        }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });
         });
@@ -114,10 +111,10 @@ class SignInOrSignUp extends Component {
     return (
       <div className="container container-fluid center">
 
-        { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
 
         <MuiThemeProvider>
           <div className="row">
+          { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
             <div className="col-5">
               <div>
                 <h3>Sign In</h3>

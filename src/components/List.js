@@ -46,28 +46,19 @@ class List extends Component {
   }
 
   render() {
-    if(_.isEmpty(this.props.user)) {
-      return(
-        <MuiThemeProvider>
-          <div className="cetner">
-            <CircularProgress size={150} thickness={10} />
-          </div>
-        </MuiThemeProvider>
-      );
-    }
     return (
+      <MuiThemeProvider>
       <div className="list">
         <div className="stick-top-list">
           <ListSettings user={this.props.user} />
           <ListSearch />
         </div>
-        <MuiThemeProvider>
           <div className="scrollable-list scrollbar">
             { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
             {this.renderList()}
           </div>
-        </MuiThemeProvider>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

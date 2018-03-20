@@ -1,6 +1,5 @@
 .chat-settings {
   height: 55px;
-  background: #005e54;
   color: #fff;
   padding: 0 8px;
   font-size: 24px;
@@ -25,6 +24,9 @@
   margin: 0 0 0 5px;
   width: 36px;
   height: 36px;
+  position: relative;
+  top: 7px;
+  left: -20px;
 }
 .chat-settings .avatar img {
   border-radius: 50%;
@@ -41,6 +43,9 @@
   overflow: hidden;
   white-space: nowrap;
   width: 110px;
+  position: relative;
+  top: 30px;
+  left: 7px;
 }
 .chat-settings .status {
   display: block;
@@ -48,15 +53,9 @@
   font-weight: 400;
   letter-spacing: 0;
 }
-
-
-
-/* <div class="chat-settings">
-  <div class="avatar">
-    <img src={require(`../images/${image}`)} alt="Avatar">
-  </div>
-  <div class="name">
-    <span>Zeno Rocha</span>
-    <span class="status">online</span>
-  </div>
-</div> */
+.pull-right-chat-settings {
+  position: relative;
+  top: -35px;
+  /* right: -300px; */
+  right: -115px;
+}

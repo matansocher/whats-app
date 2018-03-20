@@ -29,7 +29,7 @@ class ListSettings extends Component {
         <MuiThemeProvider>
           <div className="three-dots-father">
             <img className="icon inline" alt="personal"
-              src={require(`../images/${image}`)} />
+              src={require(`../images/contact1.png`)} />
             <h2 className="inline">{name}</h2>
 
             <IconMenu
