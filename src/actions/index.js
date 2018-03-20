@@ -7,7 +7,7 @@ import {
   FETCH_ALL_DATA_FOR_USER, // fetches all the data for a user
   FETCH_CHAT_DATA, // when selecting contact
   // FETCH_USER_DATA,
-  // UPDATE_USER_DATA
+  // UPDATE_USER_DATA,
   SEND_MESSAGE, // send messageto sender and reciever
   DELETE_MESSAGE, // delete individual message
   DELETE_CONTACT_CHAT,

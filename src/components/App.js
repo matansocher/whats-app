@@ -4,6 +4,7 @@ import _ from 'lodash';
 import fire from '../config';
 import * as actions from '../actions/index';
 import '../css/index.css';
+import '../css/app.css';
 import Chat from './Chat';
 import List from './List';
 
@@ -28,6 +29,7 @@ class App extends Component {
   componentDidMount() {
     if(_.isEmpty(this.props.contactList)) { // if logged in
       this.setState({ loading: true }, () => {
+        // this.props.fetchAllDataForUser(fire.auth().currentUser.displayName, () => {
         this.props.fetchAllDataForUser("matan", () => {
           this.setState({ loading: false });
         });

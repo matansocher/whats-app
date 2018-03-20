@@ -1,5 +1,4 @@
-
-.user-bar {
+.chat-settings {
   height: 55px;
   background: #005e54;
   color: #fff;
@@ -8,52 +7,32 @@
   position: relative;
   z-index: 1;
 }
-
-.user-bar:after {
+.chat-settings:after {
   content: "";
   display: table;
   clear: both;
 }
-
-.user-bar div {
+.chat-settings:hover {
+  cursor: pointer;
+}
+.chat-settings div {
   float: left;
   transform: translateY(-50%);
   position: relative;
   top: 50%;
 }
-
-.user-bar .actions {
-  float: right;
-  margin: 0 0 0 20px;
-}
-
-.user-bar .actions.more {
-  margin: 0 12px 0 32px;
-}
-
-.user-bar .actions.attachment {
-  margin: 0 0 0 30px;
-}
-
-.user-bar .actions.attachment i {
-  display: block;
-  transform: rotate(-45deg);
-}
-
-.user-bar .avatar {
+.chat-settings .avatar {
   margin: 0 0 0 5px;
   width: 36px;
   height: 36px;
 }
-
-.user-bar .avatar img {
+.chat-settings .avatar img {
   border-radius: 50%;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
   display: block;
   width: 100%;
 }
-
-.user-bar .name {
+.chat-settings .name {
   font-size: 17px;
   font-weight: 600;
   text-overflow: ellipsis;
@@ -63,8 +42,7 @@
   white-space: nowrap;
   width: 110px;
 }
-
-.user-bar .status {
+.chat-settings .status {
   display: block;
   font-size: 13px;
   font-weight: 400;
@@ -73,24 +51,12 @@
 
 
 
-/* <div class="user-bar">
-  <div class="back">
-    <i class="zmdi zmdi-arrow-left"></i>
-  </div>
+/* <div class="chat-settings">
   <div class="avatar">
-    <img src="https://avatars2.githubusercontent.com/u/398893?s=128" alt="Avatar">
+    <img src={require(`../images/${image}`)} alt="Avatar">
   </div>
   <div class="name">
     <span>Zeno Rocha</span>
     <span class="status">online</span>
-  </div>
-  <div class="actions more">
-    <i class="zmdi zmdi-more-vert"></i>
-  </div>
-  <div class="actions attachment">
-    <i class="zmdi zmdi-attachment-alt"></i>
-  </div>
-  <div class="actions">
-    <i class="zmdi zmdi-phone"></i>
   </div>
 </div> */

@@ -10,7 +10,6 @@
   word-wrap: break-word;
   z-index: -1;
 }
-
 .message:after {
   position: absolute;
   content: "";
@@ -18,7 +17,6 @@
   height: 0;
   border-style: solid;
 }
-
 .metadata {
   display: inline-block;
   float: right;
@@ -26,42 +24,35 @@
   position: relative;
   bottom: -4px;
 }
-
 .metadata .time {
   color: white;
   font-size: 11px;
   display: inline-block;
 }
-
 .message:first-child {
   margin: 16px 0 8px;
 }
-
 .message.received {
   background: #1F232A;
   color: white;
   border-radius: 0px 5px 5px 5px;
   float: left;
 }
-
 .message.received .metadata {
   padding: 0 0 0 16px;
 }
-
 .message.received:after {
   border-width: 0px 10px 10px 0;
   border-color: transparent #fff transparent transparent;
   top: 0;
   left: -10px;
 }
-
 .message.sent {
   background: #1F232A;
   color: white;
   border-radius: 5px 0px 5px 5px;
   float: right;
 }
-
 .message.sent:after {
   border-width: 0px 0 10px 10px;
   border-color: transparent transparent transparent #e1ffc7;

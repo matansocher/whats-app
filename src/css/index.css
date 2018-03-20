@@ -79,17 +79,15 @@ body {
   background-color: #262B34;
   cursor: pointer;
 }
-.chat-settings:hover {
-  cursor: pointer;
-}
+
 .three-dots-father {
   position: relative
 }
 .three-dots {
   float: right;
   position: relative;
-  top: -25px;
-  right: -18px;
+  top: 25px;
+  right: 18px;
 }
 .three-dots-left {
   float: left;
