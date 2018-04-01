@@ -63,11 +63,11 @@ class SignInOrSignUp extends Component {
       fire.auth().signInWithEmailAndPassword(SIemail, SIpassword)
       .then(user => {
         console.log(user);
-        const signInMessage = `Welcome ${user.email}`;
+        signInMessage = `Welcome ${user.email}`;
         this.setState({ loading: false, signInMessage });
         // this.props.history.push('/');
       }).catch(e => {
-        const signInMessage = e.message;
+        signInMessage = e.message;
         this.setState({ loading: false, signInMessage });
       });
     });

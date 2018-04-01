@@ -20,6 +20,13 @@
           "name": "tuta",
           "email": "tuta@gmail.com",
           "image": "contact2.png"
+        },
+        "lastMessage": {
+          "id": "SCSRlg",
+          "content": "Matan to Tuta",
+          "date": "03/18/2018",
+          "hour": "17:37:32",
+          "senderOrReciever": 1
         }
       },
       "ron": {
@@ -36,6 +43,13 @@
           "email": "ron@gmail.com",
           "name": "ron",
           "image": "contact3.png"
+        },
+        "lastMessage": {
+          "id": "SCSRlg",
+          "content": "Matan to Ron",
+          "date": "03/18/2018",
+          "hour": "17:37:32",
+          "senderOrReciever": 1
         }
       }
     }

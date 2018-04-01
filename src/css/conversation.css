@@ -1,0 +1,36 @@
+.conversation-header {
+  position: fixed;
+  top: 0;
+  height: 70px;
+  width: 100%;
+  z-index: 100;
+  background: #262B34;
+}
+
+.scrollable-conversation {
+  position: absolute;
+  width: 100%;
+  top: 70px;
+  bottom: 70px;
+  overflow: auto;
+}
+
+.conversation-footer {
+  position: fixed;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
+  z-index: 100;
+  background: #262B34;
+}
+
+.three-dots-conversation-header {
+  float: right;
+  position: relative;
+  top: -60px;
+}
+
+.input-message {
+  width: 80%;
+  padding: 10px;
+}

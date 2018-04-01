@@ -50,10 +50,11 @@ export function logoutUser() {
   }
 }
 
-export function fetchAllDataForUser(username) {
+export function fetchAllDataForUser(username, callback) {
   return dispatch => {
     fire.database().ref(`${username}`).once('value', snap => {
       const allDataForUser = snap.val();
+      callback();
       dispatch({
         type: FETCH_ALL_DATA_FOR_USER,
         payload: allDataForUser
@@ -128,10 +129,11 @@ export function deleteMessage(username, contact, message) {
   }
 }
 
-export function fetchChatData(username, contactName) {
+export function fetchChatData(username, contactName, callback) {
   return dispatch => {
     fire.database().ref(`${username}/chats/${contactName}`).once('value', snap => {
       const messages = snap.val();
+      callback();
       dispatch({
         type: FETCH_CHAT_DATA,
         payload: messages

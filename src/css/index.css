@@ -1,68 +1,6 @@
 body {
   color: white;
-}
-.stick-top-list {
-  position: fixed;
-  top: 0;
-  height: 170px;
-  width: 30%;
-  z-index: 100;
-  background: #1E222A;
-}
-.stick-top-chat {
-  position: fixed;
-  top: 0;
-  height: 70px;
-  width: 70%;
-  z-index: 100;
-  background: #262B34;
-}
-.stick-bottom-chat {
-  position: fixed;
-  bottom: 0;
-  height: 70px;
-  width: 70%;
-  z-index: 100;
-  background: #262B34;
-}
-.scrollable-chat {
-  background: url("http://forums.crackberry.com/attachments/blackberry-10-wallpapers-f308/137432d1361639896t-z10-wallpaper-set-z10-music.jpg");
-  position: absolute;
-  top: 70px;
-  bottom: 70px;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-.scrollable-list {
-  background: #1E222A;
-  position: absolute;
-  top: 170px;
-  width: 100%;
-  /* height: 100%; */
-}
-.list {
-  position: absolute;
-  background: #1E222A;
-  top: 170;
-  height: 100%;
-  width: 30%;   /* See #right left value */
-  overflow: auto; /* make scrollable if content overflows */
-}
-.chat {
-  position: absolute;
-  right: 0;
-  width: 70%;
-  top: 0;
-  height: 100%;
-  background: #1E222A;
-  overflow: auto; /* make scrollable if content overflows */
-}
-.message {
-  border-radius: 10px;
-}
-.input-message {
-  width: 92%;
+  background: #1D212A;
 }
 .icon {
   height: 50px;
@@ -71,51 +9,9 @@ body {
   text-align: center;
   display: inline-block;
 }
-.cetner {
+/* .cetner {
   margin: auto;
   text-align: center;
   align-items: center;
   justify-content: center;
-}
-.contact:hover {
-  background-color: #262B34;
-  cursor: pointer;
-}
-
-.three-dots-father {
-  position: relative
-}
-.three-dots {
-  float: right;
-  position: relative;
-  top: 25px;
-  right: 18px;
-}
-.three-dots-left {
-  float: left;
-  position: relative;
-  top: 25px;
-  left: 18px;
-}
-.inline {
-  display: inline;
-}
-
-/* scrollbar */
-.scrollbar {
-	float: left;
-	height: 200px;
-	overflow-y: scroll;
-}
-.scrollbar::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-}
-.scrollbar::-webkit-scrollbar {
-	width: 6px;
-	background-color: #F5F5F5;
-}
-.scrollbar::-webkit-scrollbar-thumb {
-	background-color: #272C35;
-}
-/* scrollbar */
+} */

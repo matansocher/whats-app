@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import _ from 'lodash';
-import fire from '../config';
+// import fire from '../config';
+import Chats from './Chats';
+import Conversation from './Conversation';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as actions from '../actions/index';
 import '../css/index.css';
-import Chat from './Chat';
-import List from './List';
 
 class App extends Component {
   constructor(props) {
@@ -15,35 +15,13 @@ class App extends Component {
     }
   }
 
-  comonentWillMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.history.push('/');
-      } else {
-        this.props.history.push('/SignInOrSignUp');
-      }
-    });
-  }
-
-  componentDidMount() {
-    if(_.isEmpty(this.props.contactList)) { // if logged in
-      this.setState({ loading: true }, () => {
-        // this.props.fetchAllDataForUser(fire.auth().currentUser.displayName, () => {
-        this.props.fetchAllDataForUser("matan", () => {
-          this.setState({ loading: false });
-        });
-      });
-    }
-  }
-
   render() {
     return (
-      <div>
-        <List />
-        <Chat />
-      </div>
+      <MuiThemeProvider>
+        <Chats />
+      </MuiThemeProvider>
     );
   }
 }
 
-export default connect(null, actions)(App);
+export default App;

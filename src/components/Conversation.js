@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import * as actions from '../actions/index';
-import ChatSettings from './ChatSettings';
+import { getCircularProgress } from '../actions/CommonFunctions';
+import ConversationHeader from './ConversationHeader';
+import ConversationFooter from './ConversationFooter';
 import Message from './Message';
-import InputMessage from './InputMessage';
-import '../css/Chat.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class Chat extends Component {
+import '../css/conversation.css';
+
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+class Conversation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      loading: false
     }
   }
 
-  componentDidMount() {
-    // this.scrollToBottom();
+  comonentWillMount() {
+    // fire.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     this.props.history.push('/');
+    //   } else {
+    //     this.props.history.push('/SignInOrSignUp');
+    //   }
+    // });
   }
-
-  componentDidUpdate() {
-    // this.scrollToBottom();
-  }
-
-  // scrollToBottom = () => {
-  //   this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  // }
 
   sendMessage = (message, callback) => {
     const sender = this.props.user.name;
@@ -58,23 +60,21 @@ class Chat extends Component {
   }
 
   render() {
-    if(_.isEmpty(this.props.currentChatUser) || _.isEmpty(this.props.currentChatMessages)) {
-      return(
-        <span />
-      );
-    }
     return (
-      <div className="chat">
-        <div className="stick-top-chat">
-          <ChatSettings currentChatUser={this.props.currentChatUser} />
+      <MuiThemeProvider>
+        <div>
+          <div className="conversation-header">
+            <ConversationHeader currentChatUser={this.props.currentChatUser} />
+          </div>
+          <div className="scrollable-conversation">
+            { this.state.loading ? getCircularProgress() : <span />}
+            {this.renderMessages()}
+          </div>
+          <div className="conversation-footer">
+            <ConversationFooter sendMessage={this.sendMessage} />
+          </div>
         </div>
-        <div className="scrollable-chat scrollbar">
-          {this.renderMessages()}
-        </div>
-        <div className="stick-bottom-chat">
-          <InputMessage sendMessage={this.sendMessage} />
-        </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
@@ -88,4 +88,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, actions)(Chat);
+export default connect(mapStateToProps, actions)(Conversation);

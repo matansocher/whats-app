@@ -4,9 +4,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SmileyIcon from 'material-ui/svg-icons/social/mood';
 import RecordIcon from 'material-ui/svg-icons/av/mic';
 import SendIcon from 'material-ui/svg-icons/content/send';
-import '../css/inputMessage.css';
 
-class InputMessage extends Component {
+class ConversationFooter extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +17,6 @@ class InputMessage extends Component {
   sendMessage = () => {
     var date = new Date();
     const message = {
-      // id: makeID(),
       id: makeMessageID(),
       content: this.state.message,
       hour: `${date.getHours()}:${date.getMinutes()}`,
@@ -45,10 +43,16 @@ class InputMessage extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div className="cetner input-text">
-            <SmileyIcon className="pull-left" />
-            <textarea value={this.state.message} name="message" className="form-control input-message" rows="1" placeholder="Type a message" onChange={this.handleChange}></textarea>
-            {this.state.empty ? <RecordIcon className="pull-right" /> : <SendIcon className="pull-right" onClick={this.sendMessage} />}
+          <div className="cetner">
+            <div className="col-sm-1 ">
+              <SmileyIcon className="pull-left" />
+            </div>
+            <div className="col-sm-10 input-text">
+              <textarea value={this.state.message} name="message" className="form-control input-message" rows="1" placeholder="Type a message" onChange={this.handleChange}></textarea>
+            </div>
+            <div className="col-sm-1 ">
+              {this.state.empty ? <RecordIcon className="pull-right" /> : <SendIcon className="pull-right" onClick={this.sendMessage} />}
+            </div>
           </div>
         </MuiThemeProvider>
       </div>
@@ -56,5 +60,4 @@ class InputMessage extends Component {
   }
 }
 
-export default InputMessage;
-// export default connect(null, null)(InputMessage);
+export default ConversationFooter;

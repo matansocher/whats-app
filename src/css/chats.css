@@ -1,0 +1,35 @@
+.contact:hover {
+  background-color: #262B34;
+  cursor: pointer;
+}
+
+.center {
+  text-align: center;
+}
+
+.chats-header {
+  position: fixed;
+  top: 0;
+  height: 120px;
+  width: 100%;
+  z-index: 100;
+  background: #373d47;
+}
+
+.scrollable-chats {
+  position: absolute;
+  width: 100%;
+  top: 120px;
+  overflow: auto;
+}
+
+.three-dots-contact{
+  float: right;
+  position: relative;
+  top: -60px;
+}
+
+.search-chats {
+  width: 100%;
+  padding: 10px;
+}

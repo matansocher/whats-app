@@ -9,3 +9,6 @@ input message design
 sign up
 sign in
 sign out
+
+
+add the last message hour in contact and sort the list by it
