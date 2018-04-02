@@ -94,6 +94,20 @@ export function actionSendMessage(sender, reciever, message, callback) {
         hour,
         senderOrReciever: 2
       }).then(() => {
+        fire.database().ref(`${sender}/chats/${reciever}/lastMessage/`).set({
+          id,
+          content,
+          date,
+          hour,
+          senderOrReciever: 1
+      }).then(() => {
+        fire.database().ref(`${reciever}/chats/${sender}/lastMessage/`).set({
+          id,
+          content,
+          date,
+          hour,
+          senderOrReciever: 2
+      }).then(() => {
         callback();
         dispatch({
           type: SEND_MESSAGE,
