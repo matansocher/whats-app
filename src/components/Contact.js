@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getLastMessageTime } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import MoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import { ListItem } from 'material-ui/List';
@@ -30,6 +31,7 @@ class Contact extends Component {
     console.log(this.props.lastMessage);
     const { name, image } = this.props.contact.info;
     const { lastMessage } = this.props;
+    const lastMessageTime = getLastMessageTime(lastMessage);
     console.log(lastMessage);
     return (
       <div className="contact">
@@ -43,8 +45,8 @@ class Contact extends Component {
               leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
             />
 
-            <span className="pull-right">{lastMessage.hour}</span>
-            
+            <span className="pull-right">{lastMessageTime}</span>
+
             <IconMenu
               className="three-dots-contact"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

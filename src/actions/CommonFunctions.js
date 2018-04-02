@@ -12,7 +12,6 @@ export function makeMessageID() {
   const dateString = `${getCharFromNumber(date.getFullYear()-2000)}${getCharFromNumber(date.getMonth())}${getCharFromNumber(date.getDate())}`;
   const hourString = `${getCharFromNumber(date.getHours())}${getCharFromNumber(date.getMinutes())}${getCharFromNumber(date.getSeconds())}`;
   return `${dateString}${hourString}`;
-  // return date.getTime();
 }
 
 export function validateEmail(email) {
@@ -77,4 +76,38 @@ export function sortContactByLastMessageTime(array) {
     });
     return (a.epoch > b.epoch) ? 1 : ((b.epoch > a.epoch) ? -1 : 0);
   });
+}
+
+export function getLastMessageTime(lastMessage) {
+  const splitDate = lastMessage.date.split('-');
+  const splitHour = lastMessage.hour.split(':');
+  const today = new Date();
+  const dateObject = new Date(splitDate[0],splitDate[1],splitDate[2]);
+  const sevenDaysInSeconds = 60*60*24*7;
+  if (today.getFullYear() === splitDate[0] &&
+    (today.getMonth() + 1) === splitDate[1] &&
+    today.getDate() === splitDate[2]) { // today
+    return `${splitHour[0]}:${splitHour[1]}`;
+  }
+  if (today.getFullYear() === splitDate[0] &&
+    (today.getMonth() + 1) === splitDate[1] &&
+    today.getDate() - 1 === splitDate[2]) { // yesterday
+    return "Yesterday";
+  }
+  if(((today.getTime()/1000) - (dateObject.getTime()/1000)) < sevenDaysInSeconds) { // not today or yesterday, but in this week
+    return getDayFromDayNumber(dateObject.getDay());
+  }
+  return `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`; // not today, and not in this week
+}
+
+function getDayFromDayNumber(dayNumber) {
+  switch(dayNumber) {
+    case 0: return "Sunday";
+    case 1: return "Monday";
+    case 2: return "Tuesday";
+    case 3: return "Wednesday";
+    case 4: return "Thursday";
+    case 5: return "Friday";
+    case 6: return "Saturday";
+  }
 }

@@ -66,9 +66,13 @@ export function actionUpdateUserData(user, callback) {
   const { username } = user;
   return dispatch => {
     fire.database().ref(`${username}/info`).set({
-      username
+      name: username
+    }).then(() => {
+      fire.database().ref(`${username}`).set({
+        name: username
+      });
+      callback();
     });
-    callback();
     dispatch({
       type: UPDATE_USER_DATA,
       payload: user
@@ -79,7 +83,6 @@ export function actionUpdateUserData(user, callback) {
 export function actionSendMessage(sender, reciever, message, callback) {
   const { id, content, date, hour } = message;
   return dispatch => {
-    // problem in message - should be message id or something
     fire.database().ref(`${sender}/chats/${reciever}/messages/${message.id}`).set({
       id,
       content,

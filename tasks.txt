@@ -9,7 +9,3 @@ input message design
 sign up
 sign in
 sign out
-
-
-add to sendMessage action the last message with user 
-add hour in contact and sort the list by it

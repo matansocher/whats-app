@@ -18,7 +18,7 @@ class ConversationHeader extends Component {
     }
   }
 
-  handleBackClick = () => {
+  נackClick = () => {
     this.props.history.push('/chats');
   }
 
@@ -30,8 +30,10 @@ class ConversationHeader extends Component {
     return (
       <MuiThemeProvider>
         <div>
+
           <BackIcon className="pull-left icon back-icon"
-             onClick={this.handleCancelClick} />
+             onClick={this.נackClick} />
+
           <ListItem
             primaryText={name}
             secondaryText="Online"

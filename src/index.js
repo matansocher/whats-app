@@ -10,6 +10,7 @@ import Chats from './components/Chats';
 import Conversation from './components/Conversation';
 import SignInOrSignUp from './components/SignInOrSignUp';
 import NoMatch from './components/NoMatch';
+import '../css/index.css';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -18,9 +19,9 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route path="/SignInOrSignUp" component={SignInOrSignUp}/>
-        <Route path="/" component={App}/>
         <Route path="/UserInfo" component={UserInfo}/>
         <Route path="/conversation" component={Conversation}/>
+        <Route path="/" component={Chats}/>
         <Route path="*" component={NoMatch}/>
       </Switch>
     </Router>
