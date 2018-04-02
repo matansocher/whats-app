@@ -47,3 +47,34 @@ export function getCircularProgress() {
     </MuiThemeProvider>
   );
 }
+
+export function filterBySearch(array, subString) {
+  _.filter(array, (contact) => {
+    return contact.info.name.toLowerCase()
+      .startsWith(subString.toLowerCase());
+  });
+}
+
+export function sortContactByLastMessageTime(array) {
+  return array.sort((a, b) => {
+    array.map((contact) => {
+      const { hour, date } = contact.lastMessage;
+      const splitDays = contact.date.split('-');
+      const splitHours = contact.hour.split(':');
+
+      const epoch = new Date(splitDays[0], splitDays[1], splitDays[2],
+        splitHours[0], splitHours[1], splitHours[2]).getTime() / 1000;
+      contact.epoch = epoch;
+
+      // const splitDays = contact.date.split('-');
+      // let numOfDays = 365*30*24*60*60*(splitDays[0]-2018)+30*24*60*60*splitDays[1]+24*60*60*splitDays[2];
+      // numOfDays = isNaN(numOfDays) ? 0 : numOfDays;
+      // const splitHours = contact.hour.split(':');
+      // let numOfHours = 60*60*splitHours[0]+60*splitHours[1]+splitHours[2];
+      // numOfHours = isNaN(numOfHours) ? 0 : numOfHours;
+      // contact.time = numOfDays + numOfHours;
+      // return contact;
+    });
+    return (a.epoch > b.epoch) ? 1 : ((b.epoch > a.epoch) ? -1 : 0);
+  });
+}

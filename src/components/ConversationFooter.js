@@ -19,8 +19,8 @@ class ConversationFooter extends Component {
     const message = {
       id: makeMessageID(),
       content: this.state.message,
-      hour: `${date.getHours()}:${date.getMinutes()}`,
-      date: `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`
+      hour: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+      date: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     }
     this.props.sendMessage(message, () => {
       this.setState({ message: '' });

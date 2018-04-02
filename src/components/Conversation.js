@@ -29,17 +29,25 @@ class Conversation extends Component {
     // });
   }
 
-  sendMessage = (message, callback) => {
-    const sender = this.props.user.name;
-    const reciever = this.props.currentChatUser.name;
-    this.props.sendMessage(sender, reciever, message);
-    callback();
+  actionSendMessagesendMessage = (message, callback) => {
+    this.setState({ loading: true }, () => {
+      const sender = this.props.user.name;
+      const reciever = this.props.currentChatUser.name;
+      this.props.actionSendMessage(sender, reciever, message, () => {
+        this.setState({ loading: false });
+        callback();
+      });
+    });
   }
 
-  deleteMessage = (message) => {
-    const sender = this.props.user.name;
-    const reciever = this.props.currentChatUser.name;
-    this.props.deleteMessage(sender, reciever, message);
+  actionDeleteMessagedeleteMessage = (message) => {
+    this.setState({ loading: true }, () => {
+      const sender = this.props.user.name;
+      const reciever = this.props.currentChatUser.name;
+      this.props.actionDeleteMessage(sender, reciever, message, () => {
+        this.setState({ loading: false });
+      });
+    });
   }
 
   renderMessages() {

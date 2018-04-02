@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-// import fire from '../config';
+// import fire from '../firebase';
 import Chats from './Chats';
 import Conversation from './Conversation';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

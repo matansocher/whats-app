@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import fire from '../config';
+import fire from '../firebase';
 import * as actions from '../actions/index';
 import '../css/signIn.css';
 import { validateEmail, validatePassword } from '../actions/CommonFunctions';
@@ -30,11 +30,11 @@ class SignInOrSignUp extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) { // logged in
         console.log(user);
-        // this.props.loginUser(user.username);
+        // this.props.actionLoginUser(user.username);
         // this.props.history.push('/');
       } else { // NOT logged in
         console.log('not logged in');
-        // this.props.logoutUser();
+        // this.props.actionLogoutUser();
         // this.props.history.push('/SignInOrSignUp');
       }
     });

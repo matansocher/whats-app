@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
-import { getCircularProgress } from '../actions/CommonFunctions';
+import { getCircularProgress, sortContactByLastMessageTime, filterBySearch } from '../actions/CommonFunctions';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -14,6 +14,7 @@ class Chats extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchTerm: '',
       loading: false
     }
   }
@@ -31,8 +32,8 @@ class Chats extends Component {
   componentDidMount() {
     if(_.isEmpty(this.props.contactList)) { // if logged in
       this.setState({ loading: true }, () => {
-        // this.props.fetchAllDataForUser(fire.auth().currentUser.displayName, () => {
-        this.props.fetchAllDataForUser("matan", () => {
+        // this.props.actinoFetchAllDataForUser(fire.auth().currentUser.displayName, () => {
+        this.props.actinoFetchAllDataForUser("matan", () => {
           this.setState({ loading: false });
         });
       });
@@ -40,8 +41,12 @@ class Chats extends Component {
   }
 
   deleteContactChat = (contact) => {
-    const username = this.props.user.name;
-    this.props.deleteContactChat(username, contact)
+    this.setState({ loading: true }, () => {
+      const username = this.props.user.name;
+      this.props.actionDeleteContactChat(username, contact, () => {
+        this.setState({ loading: false });
+      });
+    });
   }
 
   searchContact = () => {
@@ -49,19 +54,21 @@ class Chats extends Component {
   }
 
   fetchChatData = (contact) => {
-    const username = this.props.user.name;
-    this.props.fetchChatData(username, contact, this.navigateToConversation);
+    this.setState({ loading: true }, () => {
+      const username = this.props.user.name;
+      this.props.actionFetchChatData(username, contact, () => {
+        console.log(this.props);
+        this.setState({ loading: false })
+        // this.props.history.push('/conversation');
+      });
+    })
   }
-
-  navigateToConversation = () => {
-    console.log(this.props);
-    // this.props.history.push('/conversation');
-  }
-
   renderList() {
     const contacts = _.values(this.props.contactList);
+    let sortedAndFilteredContacts = filterBySearch(contacts, this.state.searchTerm);
+    sortedAndFilteredContacts = sortContactByLastMessageTime(sortedAndFilteredContacts);
     return (
-      contacts.map((contact) => {
+      sortedAndFilteredContacts.map((contact) => {
         return <Contact key={contact.info.name} contact={contact}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}
@@ -78,7 +85,7 @@ class Chats extends Component {
             <ChatsHeader />
           </div>
           <div className="scrollable-chats">
-            { this.state.loading ? getCircularProgress() : <span />}
+            { this.state.loading ? getCircularProgress() : <span /> }
               <List>
                 {this.renderList()}
               </List>

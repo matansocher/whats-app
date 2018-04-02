@@ -1,19 +1,18 @@
 // import _ from 'lodash';
-import fire from '../config';
+import fire from '../firebase';
 import {
   SIGNUP_USER,
   LOGIN_USER,
   LOGOUT_USER,
   FETCH_ALL_DATA_FOR_USER, // fetches all the data for a user
   FETCH_CHAT_DATA, // when selecting contact
-  // FETCH_USER_DATA,
-  // UPDATE_USER_DATA,
+  UPDATE_USER_DATA, // update the user data
   SEND_MESSAGE, // send messageto sender and reciever
   DELETE_MESSAGE, // delete individual message
   DELETE_CONTACT_CHAT,
 } from '../actions/types';
 
-export function signUpUser(username) {
+export function actionSignUpUser(username) {
   const randImg = Math.floor((Math.random() * 8) + 1);
   return dispatch => {
     fire.database().ref(`${username}/info`).set({
@@ -31,7 +30,7 @@ export function signUpUser(username) {
   };
 }
 
-export function loginUser(username) {
+export function actionLoginUser(username) {
   return dispatch => {
     fire.database().ref(`${username}/info`).once('value', snap => {
       const userFromDB = snap.val();
@@ -43,14 +42,14 @@ export function loginUser(username) {
   }
 }
 
-export function logoutUser() {
+export function actionLogoutUser() {
   return {
     type: LOGOUT_USER,
     payload: null
   }
 }
 
-export function fetchAllDataForUser(username, callback) {
+export function actinoFetchAllDataForUser(username, callback) {
   return dispatch => {
     fire.database().ref(`${username}`).once('value', snap => {
       const allDataForUser = snap.val();
@@ -63,33 +62,21 @@ export function fetchAllDataForUser(username, callback) {
   }
 }
 
-// export function fetchUserData(user) {
-//
-//   return dispatch => {
-//     fire.database().ref(`${user}/info`).once('value', snap => {
-//       const userData = snap.val();
-//       dispatch({
-//         type: FETCH_USER_DATA,
-//         payload: userData
-//       });
-//     });
-//   }
-// }
+export function actionUpdateUserData(user, callback) {
+  const { username } = user;
+  return dispatch => {
+    fire.database().ref(`${username}/info`).set({
+      username
+    });
+    callback();
+    dispatch({
+      type: UPDATE_USER_DATA,
+      payload: user
+    });
+  }
+}
 
-// export function updateUserData(user) {
-//   const { username } = user;
-//   return dispatch => {
-//     fire.database().ref(`${username}/info`).set({
-//       username
-//     });
-//     dispatch({
-//       type: UPDATE_USER_DATA,
-//       payload: user
-//     });
-//   }
-// }
-
-export function sendMessage(sender, reciever, message) {
+export function actionSendMessage(sender, reciever, message, callback) {
   const { id, content, date, hour } = message;
   return dispatch => {
     // problem in message - should be message id or something
@@ -107,6 +94,7 @@ export function sendMessage(sender, reciever, message) {
         hour,
         senderOrReciever: 2
       }).then(() => {
+        callback();
         dispatch({
           type: SEND_MESSAGE,
           payload: message
@@ -116,11 +104,11 @@ export function sendMessage(sender, reciever, message) {
   }
 }
 
-export function deleteMessage(username, contact, message) {
+export function actionDeleteMessage(username, contact, message, callback) {
   return dispatch => {
     fire.database().ref(`${username}/chats/${contact}/messages/${message.id}`).remove().then(() => {
       fire.database().ref(`${contact}/chats/${username}/messages/${message.id}`).remove();
-      // callback();
+      callback();
     });
     dispatch({
       type: DELETE_MESSAGE,
@@ -129,7 +117,7 @@ export function deleteMessage(username, contact, message) {
   }
 }
 
-export function fetchChatData(username, contactName, callback) {
+export function actionFetchChatData(username, contactName, callback) {
   return dispatch => {
     fire.database().ref(`${username}/chats/${contactName}`).once('value', snap => {
       const messages = snap.val();
@@ -142,10 +130,10 @@ export function fetchChatData(username, contactName, callback) {
   }
 }
 
-export function deleteContactChat(username, contact) {
+export function actionDeleteContactChat(username, contact, callback) {
   return dispatch => {
     fire.database().ref(`${username}/chats/${contact.info.name}`).remove().then(() => {
-      // callback();
+      callback();
     });
     dispatch({
       type: DELETE_CONTACT_CHAT,

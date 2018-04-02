@@ -29,7 +29,7 @@ class Contact extends Component {
   render() {
     console.log(this.props.lastMessage);
     const { name, image } = this.props.contact.info;
-    const lastMessage = this.props.lastMessage.content;
+    const { lastMessage } = this.props;
     console.log(lastMessage);
     return (
       <div className="contact">
@@ -38,10 +38,13 @@ class Contact extends Component {
             <ListItem
               onClick={this.fetchChatData}
               primaryText={name}
-              secondaryText={lastMessage}
+              secondaryText={lastMessage.content}
               style={{ color: '#ffffff' }}
               leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
             />
+
+            <span className="pull-right">{lastMessage.hour}</span>
+            
             <IconMenu
               className="three-dots-contact"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
