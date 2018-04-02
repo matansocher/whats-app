@@ -28,11 +28,9 @@ class Contact extends Component {
   }
 
   render() {
-    console.log(this.props.lastMessage);
     const { name, image } = this.props.contact.info;
     const { lastMessage } = this.props;
     const lastMessageTime = getLastMessageTime(lastMessage);
-    console.log(lastMessage);
     return (
       <div className="contact">
         <MuiThemeProvider>

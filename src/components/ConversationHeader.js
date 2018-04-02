@@ -18,7 +18,7 @@ class ConversationHeader extends Component {
     }
   }
 
-  נackClick = () => {
+  backClick = () => {
     this.props.history.push('/chats');
   }
 

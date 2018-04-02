@@ -9,8 +9,9 @@ import App from './components/App';
 import Chats from './components/Chats';
 import Conversation from './components/Conversation';
 import SignInOrSignUp from './components/SignInOrSignUp';
+import UserInfo from './components/UserInfo';
 import NoMatch from './components/NoMatch';
-import '../css/index.css';
+import './css/index.css';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -48,7 +49,7 @@ export function getCircularProgress() {
 }
 
 export function filterBySearch(array, subString) {
-  _.filter(array, (contact) => {
+  return _.filter(array, (contact) => {
     return contact.info.name.toLowerCase()
       .startsWith(subString.toLowerCase());
   });
@@ -57,24 +58,14 @@ export function filterBySearch(array, subString) {
 export function sortContactByLastMessageTime(array) {
   return array.sort((a, b) => {
     array.map((contact) => {
-      const { hour, date } = contact.lastMessage;
-      const splitDays = contact.date.split('-');
-      const splitHours = contact.hour.split(':');
-
+      const splitDays = contact.lastMessage.date.split('-');
+      const splitHours = contact.lastMessage.hour.split(':');
       const epoch = new Date(splitDays[0], splitDays[1], splitDays[2],
         splitHours[0], splitHours[1], splitHours[2]).getTime() / 1000;
       contact.epoch = epoch;
-
-      // const splitDays = contact.date.split('-');
-      // let numOfDays = 365*30*24*60*60*(splitDays[0]-2018)+30*24*60*60*splitDays[1]+24*60*60*splitDays[2];
-      // numOfDays = isNaN(numOfDays) ? 0 : numOfDays;
-      // const splitHours = contact.hour.split(':');
-      // let numOfHours = 60*60*splitHours[0]+60*splitHours[1]+splitHours[2];
-      // numOfHours = isNaN(numOfHours) ? 0 : numOfHours;
-      // contact.time = numOfDays + numOfHours;
-      // return contact;
+      return contact;
     });
-    return (a.epoch > b.epoch) ? 1 : ((b.epoch > a.epoch) ? -1 : 0);
+    return (a.epoch > b.epoch) ? -1 : ((b.epoch > a.epoch) ? 1 : 0);
   });
 }
 
@@ -82,16 +73,16 @@ export function getLastMessageTime(lastMessage) {
   const splitDate = lastMessage.date.split('-');
   const splitHour = lastMessage.hour.split(':');
   const today = new Date();
-  const dateObject = new Date(splitDate[0],splitDate[1],splitDate[2]);
+  const dateObject = new Date(splitDate[0],splitDate[1]-1,splitDate[2]);
   const sevenDaysInSeconds = 60*60*24*7;
-  if (today.getFullYear() === splitDate[0] &&
-    (today.getMonth() + 1) === splitDate[1] &&
-    today.getDate() === splitDate[2]) { // today
+  if (today.getFullYear() === Number(splitDate[0]) &&
+    (today.getMonth() + 1) === Number(splitDate[1]) &&
+    today.getDate() === Number(splitDate[2])) { // today
     return `${splitHour[0]}:${splitHour[1]}`;
   }
-  if (today.getFullYear() === splitDate[0] &&
-    (today.getMonth() + 1) === splitDate[1] &&
-    today.getDate() - 1 === splitDate[2]) { // yesterday
+  if (today.getFullYear() === Number(splitDate[0]) &&
+    (today.getMonth() + 1) === Number(splitDate[1]) &&
+    today.getDate() - 1 === Number(splitDate[2])) { // yesterday
     return "Yesterday";
   }
   if(((today.getTime()/1000) - (dateObject.getTime()/1000)) < sevenDaysInSeconds) { // not today or yesterday, but in this week
@@ -109,5 +100,6 @@ function getDayFromDayNumber(dayNumber) {
     case 4: return "Thursday";
     case 5: return "Friday";
     case 6: return "Saturday";
+    default: return "";
   }
 }

@@ -84,40 +84,26 @@ export function actionSendMessage(sender, reciever, message, callback) {
   const { id, content, date, hour } = message;
   return dispatch => {
     fire.database().ref(`${sender}/chats/${reciever}/messages/${message.id}`).set({
-      id,
-      content,
-      date,
-      hour,
-      senderOrReciever: 1
+      id, content, date, hour, senderOrReciever: 1
     }).then(() => {
       fire.database().ref(`${reciever}/chats/${sender}/messages/${message.id}`).set({
-        id,
-        content,
-        date,
-        hour,
-        senderOrReciever: 2
-      }).then(() => {
-        fire.database().ref(`${sender}/chats/${reciever}/lastMessage/`).set({
-          id,
-          content,
-          date,
-          hour,
-          senderOrReciever: 1
-      }).then(() => {
-        fire.database().ref(`${reciever}/chats/${sender}/lastMessage/`).set({
-          id,
-          content,
-          date,
-          hour,
-          senderOrReciever: 2
-      }).then(() => {
-        callback();
-        dispatch({
-          type: SEND_MESSAGE,
-          payload: message
-        });
+        id, content, date, hour, senderOrReciever: 2
+      })
+    }).then(() => {
+      fire.database().ref(`${sender}/chats/${reciever}/lastMessage/`).set({
+        id, content, date, hour, senderOrReciever: 1
+      })
+    }).then(() => {
+      fire.database().ref(`${reciever}/chats/${sender}/lastMessage/`).set({
+        id, content, date, hour, senderOrReciever: 2
+      })
+    }).then(() => {
+      callback();
+      dispatch({
+        type: SEND_MESSAGE,
+        payload: message
       });
-    })
+    });
   }
 }
 

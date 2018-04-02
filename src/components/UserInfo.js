@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import { getCircularProgress } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
@@ -25,7 +26,7 @@ class UserInfo extends Component {
   saveClick = () => {
     this.setState({ loading: true }, () => {
       const { username } = this.state;
-      cosnt user = { username };
+      const user = { username };
       this.props.actionUpdateUserData(user, () => {
         this.setState({ loading: false });
       });

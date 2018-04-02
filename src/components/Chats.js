@@ -19,7 +19,7 @@ class Chats extends Component {
     }
   }
 
-  comonentWillMount() {
+  // comonentWillMount() {
     // fire.auth().onAuthStateChanged(user => {
     //   if (user) {
     //     this.props.history.push('/');
@@ -27,7 +27,7 @@ class Chats extends Component {
     //     this.props.history.push('/SignInOrSignUp');
     //   }
     // });
-  }
+  // }
 
   componentDidMount() {
     if(_.isEmpty(this.props.contactList)) { // if logged in
@@ -49,26 +49,26 @@ class Chats extends Component {
     });
   }
 
-  searchContact = () => {
-    // todo - filter the list by the searchTerm
+  searchContact = (searchTerm) => {
+    this.setState({ searchTerm });
   }
 
   fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
       this.props.actionFetchChatData(username, contact, () => {
-        console.log(this.props);
         this.setState({ loading: false })
         // this.props.history.push('/conversation');
       });
     })
   }
   renderList() {
-    const contacts = _.values(this.props.contactList);
-    let sortedAndFilteredContacts = filterBySearch(contacts, this.state.searchTerm);
-    sortedAndFilteredContacts = sortContactByLastMessageTime(sortedAndFilteredContacts);
+    let contacts = _.values(this.props.contactList);
+    if(this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
+      contacts = filterBySearch(contacts, this.state.searchTerm);
+    contacts = sortContactByLastMessageTime(contacts);
     return (
-      sortedAndFilteredContacts.map((contact) => {
+      contacts.map((contact) => {
         return <Contact key={contact.info.name} contact={contact}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}
@@ -82,7 +82,7 @@ class Chats extends Component {
       <MuiThemeProvider>
         <div>
           <div className="chats-header">
-            <ChatsHeader />
+            <ChatsHeader searchContact={this.searchContact} />
           </div>
           <div className="scrollable-chats">
             { this.state.loading ? getCircularProgress() : <span /> }

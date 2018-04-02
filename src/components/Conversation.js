@@ -29,7 +29,7 @@ class Conversation extends Component {
     // });
   }
 
-  actionSendMessagesendMessage = (message, callback) => {
+  sendMessage = (message, callback) => {
     this.setState({ loading: true }, () => {
       const sender = this.props.user.name;
       const reciever = this.props.currentChatUser.name;

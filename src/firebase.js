@@ -8,6 +8,5 @@ const config = {
   storageBucket: "whats-app-c5bba.appspot.com",
   messagingSenderId: "638752731394"
 };
-
 const fire = firebase.initializeApp(config);
 export default fire;
