@@ -29,15 +29,24 @@ class Chats extends Component {
     // });
   // }
 
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   componentDidMount() {
     if(_.isEmpty(this.props.contactList)) { // if logged in
       this.setState({ loading: true }, () => {
         // this.props.actinoFetchAllDataForUser(fire.auth().currentUser.displayName, () => {
         this.props.actinoFetchAllDataForUser("matan", () => {
+          this.scrollToBottom();
           this.setState({ loading: false });
         });
       });
     }
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   deleteContactChat = (contact) => {
@@ -86,9 +95,12 @@ class Chats extends Component {
           </div>
           <div className="scrollable-chats">
             { this.state.loading ? getCircularProgress() : <span /> }
-              <List>
-                {this.renderList()}
-              </List>
+            <List>
+              {this.renderList()}
+            </List>
+            <div style={{ float:"left", clear: "both" }}
+              ref={(el) => { this.messagesEnd = el; }}>
+            </div>
           </div>
         </div>
       </MuiThemeProvider>
