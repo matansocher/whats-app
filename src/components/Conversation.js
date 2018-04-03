@@ -29,6 +29,10 @@ class Conversation extends Component {
     // });
   }
 
+  backToChats = () => {
+    this.props.history.push('/');
+  }
+
   sendMessage = (message, callback) => {
     this.setState({ loading: true }, () => {
       const sender = this.props.user.name;
@@ -72,7 +76,8 @@ class Conversation extends Component {
       <MuiThemeProvider>
         <div>
           <div className="conversation-header">
-            <ConversationHeader currentChatUser={this.props.currentChatUser} />
+            <ConversationHeader currentChatUser={this.props.currentChatUser}
+              backToChats={this.backToChats}/>
           </div>
           <div className="scrollable-conversation">
             { this.state.loading ? getCircularProgress() : <span />}

@@ -33,3 +33,14 @@
   width: 100%;
   padding: 10px;
 }
+
+.last-message-hour-div {
+  position: relative;
+}
+
+
+.last-message-hour {
+  position: absolute;
+  top: -47px;
+  right: 40px;
+}

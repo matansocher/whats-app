@@ -67,7 +67,7 @@ class Chats extends Component {
       const username = this.props.user.name;
       this.props.actionFetchChatData(username, contact, () => {
         this.setState({ loading: false })
-        // this.props.history.push('/conversation');
+        this.props.history.push('/conversation');
       });
     })
   }

@@ -84,47 +84,17 @@ export function getLastMessageTime(lastMessage) {
     return getDayFromDayNumber(dateObject.getDay());
 
   return `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`; // not today, and not in this week
-
-  // if (today.getFullYear() === dateObject.getFullYear()) &&
-  //   (today.getMonth()) === dateObject.getMonth()) &&
-  //   today.getDate() === dateObject.getDate()) { // today
-  //   return `${splitHour[0]}:${splitHour[1]}`;
-  // }
-  // if (today.getFullYear() === dateObject.getFullYear() &&
-  //   today.getMonth() === dateObject.getMonth() &&
-  //   today.getDate() - 1 === dateObject.getDate()) { // yesterday
-  //   return "Yesterday";
-  // }
-
-  // if (today.getFullYear() === Number(splitDate[0]) &&
-  //   (today.getMonth() + 1) === Number(splitDate[1]) &&
-  //   today.getDate() === Number(splitDate[2])) { // today
-  //   return `${splitHour[0]}:${splitHour[1]}`;
-  // }
-  // if (today.getFullYear() === Number(splitDate[0]) &&
-  //   (today.getMonth() + 1) === Number(splitDate[1]) &&
-  //   today.getDate() - 1 === Number(splitDate[2])) { // yesterday
-  //   return "Yesterday";
-  // }
-  // if(((today.getTime()/1000) - (dateObject.getTime()/1000)) < 7*dayInSeconds) { // not today or yesterday, but in this week
-  //   return getDayFromDayNumber(dateObject.getDay());
-  // }
-  // return `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`; // not today, and not in this week
 }
 
 function checkIfToday(today, dateObject) {
-  console.log(today);
-  console.log(dateObject);
-  if (today.getFullYear() === dateObject.getFullYear()) &&
-    (today.getMonth()) === dateObject.getMonth()) &&
-    (today.getDate() === dateObject.getDate()))
+  if (today.getFullYear() === dateObject.getFullYear() &&
+    today.getMonth() === dateObject.getMonth() &&
+    today.getDate() === dateObject.getDate())
     return true;
   return false;
 }
 
 function checkIfYesterday(today, dateObject) {
-  console.log(today);
-  console.log(dateObject);
   if(today.getFullYear() === dateObject.getFullYear() &&
     today.getMonth() === dateObject.getMonth() &&
     today.getDate() !== 1 &&
@@ -161,7 +131,6 @@ function getDayFromDayNumber(dayNumber) {
 }
 
 function getLastDayOfPrevMonth(month) {
-  let numOfDaysInMonth = 0;
   if(month === 1) return 28;
   else if (month === 3 || month === 5 || month === 8 || month === 10) return 30;
   else return 31;

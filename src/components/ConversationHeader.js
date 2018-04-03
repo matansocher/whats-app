@@ -19,7 +19,7 @@ class ConversationHeader extends Component {
   }
 
   backClick = () => {
-    this.props.history.push('/chats');
+    this.props.backToChats();
   }
 
   render() {
@@ -32,9 +32,10 @@ class ConversationHeader extends Component {
         <div>
 
           <BackIcon className="pull-left icon back-icon"
-             onClick={this.נackClick} />
+             onClick={this.backClick} />
 
           <ListItem
+            className="contact-info"
             primaryText={name}
             secondaryText="Online"
             leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
@@ -48,6 +49,7 @@ class ConversationHeader extends Component {
             <MenuItem primaryText="Clear Messages" />
             <MenuItem primaryText="Delete Chat" />
           </IconMenu>
+
         </div>
       </MuiThemeProvider>
     );

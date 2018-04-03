@@ -34,3 +34,17 @@
   width: 80%;
   padding: 10px;
 }
+
+.contact-info {
+  position: absolute;
+  right: -40px;
+}
+
+.back-icon {
+  position: absolute;
+  top: 5px;
+}
+
+.back-icon:hover {
+  cursor: pointer;
+}

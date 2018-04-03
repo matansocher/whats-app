@@ -43,7 +43,9 @@ class Contact extends Component {
               leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
             />
 
-            <span className="pull-right">{lastMessageTime}</span>
+            <div className="last-message-hour-div">
+              <span className="pull-right last-message-hour">{lastMessageTime}</span>
+            </div>
 
             <IconMenu
               className="three-dots-contact"
