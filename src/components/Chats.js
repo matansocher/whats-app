@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
-import { getCircularProgress, sortContactByLastMessageTime, filterBySearch } from '../actions/CommonFunctions';
+import { getCircularProgress, sortContactByLastMessageTime, filterBySearch, splitToPinned } from '../actions/CommonFunctions';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -71,9 +71,10 @@ class Chats extends Component {
     if(this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
       contacts = filterBySearch(contacts, this.state.searchTerm);
     contacts = sortContactByLastMessageTime(contacts);
+    contacts = splitToPinned(contacts);
     return (
       contacts.map((contact) => {
-        return <Contact key={contact.info.name} contact={contact}
+        return <Contact key={contact.info.email} contact={contact}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}
           deleteContactChat={this.deleteContactChat} />

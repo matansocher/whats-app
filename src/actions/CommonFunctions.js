@@ -69,6 +69,16 @@ export function sortContactByLastMessageTime(array) {
   });
 }
 
+export function splitToPinned(array) {
+  const pinned =  _.filter(array, (contact) => {
+    return contact.info.pinned;
+  });
+  const notPinned =  _.filter(array, (contact) => {
+    return !contact.info.pinned;
+  });
+  return [...pinned, ...notPinned];
+}
+
 export function getLastMessageTime(lastMessage) {
   const splitDate = lastMessage.date.split('-');
   const splitHour = lastMessage.hour.split(':');
@@ -125,11 +135,11 @@ function checkIfLastWeek(today, dateObject) {
 }
 
 export function compareDates(date1, date2) {
-  const splitDate1 = date1.split('-');
-  const splitDate2 = date2.split('-');
-  if(splitDate1[0] === splitDate2[0] &&
-    splitDate1[1] === splitDate2[1] &&
-    splitDate1[2] === splitDate2[2]) {
+  const split1 = date1.split('-');
+  const split2 = date2.split('-');
+  if(split1[0] === split2[0] &&
+    split1[1] === split2[1] &&
+    split1[2] === split2[2]) {
     return true;
   }
   return false;

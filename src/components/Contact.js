@@ -51,7 +51,7 @@ class Contact extends Component {
               <span className="pull-right last-message-hour">{lastMessageTime}</span>
               <MoreButton className="pull-right contact-more-icon" />
             </div>
-
+            pin icon
             <IconMenu
               className="three-dots-contact"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
