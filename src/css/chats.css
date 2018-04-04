@@ -3,10 +3,6 @@
   cursor: pointer;
 }
 
-.center {
-  text-align: center;
-}
-
 .chats-header {
   position: fixed;
   top: 0;
@@ -42,5 +38,11 @@
 .last-message-hour {
   position: absolute;
   top: -47px;
+  right: 40px;
+}
+
+.contact-more-icon {
+  position: absolute;
+  top: -27px;
   right: 40px;
 }

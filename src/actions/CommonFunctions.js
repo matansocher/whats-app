@@ -124,6 +124,17 @@ function checkIfLastWeek(today, dateObject) {
   return false;
 }
 
+export function compareDates(date1, date2) {
+  const splitDate1 = date1.split('-');
+  const splitDate2 = date2.split('-');
+  if(splitDate1[0] === splitDate2[0] &&
+    splitDate1[1] === splitDate2[1] &&
+    splitDate1[2] === splitDate2[2]) {
+    return true;
+  }
+  return false;
+}
+
 function getDayFromDayNumber(dayNumber) {
   dayNumber = dayNumber > 6 || dayNumber < 0 ? 0 : dayNumber;
   const daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

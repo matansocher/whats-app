@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { getCircularProgress } from '../actions/CommonFunctions';
+import { getCircularProgress, compareDates, getLastMessageTime } from '../actions/CommonFunctions';
 import ConversationHeader from './ConversationHeader';
 import ConversationFooter from './ConversationFooter';
 import Message from './Message';
@@ -27,6 +27,18 @@ class Conversation extends Component {
     //     this.props.history.push('/SignInOrSignUp');
     //   }
     // });
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   backToChats = () => {
@@ -59,17 +71,43 @@ class Conversation extends Component {
     if (!messages || messages.length === 0) {
       return <span />
     }
-    // messages = sortMessagesByDate(messages);
     return (
-      messages.map(message => {
-        if (message)
-          return (<Message key={message.id} message={message}
+      messages.map((message, index, messages) => {
+        if (message) {
+          let arrayToReturn = [];
+          if(index != messages.length - 1) { // not the last message
+            if(!compareDates(message.date, messages[index+1].date)) {
+              arrayToReturn.push(<div className="day-indicator">
+                {getLastMessageTime(messages[index+1])}
+              </div>)
+            }
+          }
+          arrayToReturn.push(<Message key={message.id} message={message}
             deleteMessage={this.deleteMessage} />);
+          return arrayToReturn;
+        }
         const random = Math.floor((Math.random() * 10000) + 1);
         return <span key={random} />
       })
     );
   }
+
+  // renderMessages() {
+  //   let messages = this.props.currentChatMessages;
+  //   if (!messages || messages.length === 0) {
+  //     return <span />
+  //   }
+  //   // messages = sortMessagesByDate(messages);
+  //   return (
+  //     messages.map(message => {
+  //       if (message)
+  //         return (<Message key={message.id} message={message}
+  //           deleteMessage={this.deleteMessage} />);
+  //       const random = Math.floor((Math.random() * 10000) + 1);
+  //       return <span key={random} />
+  //     })
+  //   );
+  // }
 
   render() {
     return (
@@ -82,6 +120,9 @@ class Conversation extends Component {
           <div className="scrollable-conversation">
             { this.state.loading ? getCircularProgress() : <span />}
             {this.renderMessages()}
+            <div style={{ float:"left", clear: "both" }}
+              ref={(el) => { this.messagesEnd = el; }}>
+            </div>
           </div>
           <div className="conversation-footer">
             <ConversationFooter sendMessage={this.sendMessage} />

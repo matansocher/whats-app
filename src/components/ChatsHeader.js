@@ -52,7 +52,7 @@ class ChatsHeader extends Component {
           <div className="center">
             <h1>Chats</h1>
             <div className="search-chats">
-              <input className="form-control" placeholder="Search" name="searchTerm"
+              <input className="form-control text-input" placeholder="Search" name="searchTerm"
               value={this.state.searchTerm} onChange={this.handleChange} />
             </div>
           </div>

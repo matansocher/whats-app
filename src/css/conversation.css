@@ -48,3 +48,11 @@
 .back-icon:hover {
   cursor: pointer;
 }
+
+.day-indicator {
+  text-align: center;
+  border-radius: 5px;
+  background: #7289DA;
+  font-size: 10px;
+  padding: 4px;
+}

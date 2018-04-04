@@ -38,15 +38,10 @@ class Chats extends Component {
       this.setState({ loading: true }, () => {
         // this.props.actinoFetchAllDataForUser(fire.auth().currentUser.displayName, () => {
         this.props.actinoFetchAllDataForUser("matan", () => {
-          this.scrollToBottom();
           this.setState({ loading: false });
         });
       });
     }
-  }
-
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   deleteContactChat = (contact) => {
@@ -98,9 +93,6 @@ class Chats extends Component {
             <List>
               {this.renderList()}
             </List>
-            <div style={{ float:"left", clear: "both" }}
-              ref={(el) => { this.messagesEnd = el; }}>
-            </div>
           </div>
         </div>
       </MuiThemeProvider>
