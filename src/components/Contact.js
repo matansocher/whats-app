@@ -10,6 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreButton from 'material-ui/svg-icons/navigation/chevron-right';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+// import PinIcon from 'material-ui/svg-icons/maps/person-pin-circle';
 
 class Contact extends Component {
   constructor(props) {
@@ -32,9 +33,10 @@ class Contact extends Component {
     const { name, image } = this.props.contact.info;
     const { lastMessage } = this.props;
     const lastMessageTime = getLastMessageTime(lastMessage);
-    let { contect } = lastMessage;
-    const textWidth = (screen.width - 100);
-    content = content.length > textWidth ? content.substr(0, textWidth): content;
+    let { content } = lastMessage;
+    // const textWidth = (screen.width - 100);
+    const textWidth = 27;
+    content = content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
     return (
       <div className="contact">
         <MuiThemeProvider>
@@ -51,7 +53,7 @@ class Contact extends Component {
               <span className="pull-right last-message-hour">{lastMessageTime}</span>
               <MoreButton className="pull-right contact-more-icon" />
             </div>
-            pin icon
+
             <IconMenu
               className="three-dots-contact"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

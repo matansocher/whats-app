@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { makeMessageID } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SmileyIcon from 'material-ui/svg-icons/social/mood';
-import RecordIcon from 'material-ui/svg-icons/av/mic';
 import SendIcon from 'material-ui/svg-icons/content/send';
 
 class ConversationFooter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: '',
-      empty: true
+      message: ''
     }
   }
 
@@ -32,26 +30,24 @@ class ConversationFooter extends Component {
     const { value, name } = e.target;
     change[name] = value;
     this.setState(change);
-    if (!value || value.length === 0 || value === '') {
-      this.setState({ empty: true });
-    } else {
-      this.setState({ empty: false });
-    }
   }
 
   render() {
     return (
       <div>
         <MuiThemeProvider>
-          <div className="cetner">
-            <div className="col-sm-1 ">
+          <div className="">
+            <div className="send-icon">
               <SmileyIcon className="pull-left" />
             </div>
-            <div className="col-sm-10 input-text">
-              <textarea value={this.state.message} name="message" className="form-control input-message" rows="1" placeholder="Type a message" onChange={this.handleChange}></textarea>
+            <div className="input-text">
+              <textarea value={this.state.message} name="message"
+                className="form-control input-message" rows="1"
+                placeholder="Type a message" onChange={this.handleChange}>
+              </textarea>
             </div>
-            <div className="col-sm-1 ">
-              {this.state.empty ? <RecordIcon className="pull-right" /> : <SendIcon className="pull-right" onClick={this.sendMessage} />}
+            <div className="smiley">
+              <SendIcon className="pull-right" onClick={this.sendMessage} />
             </div>
           </div>
         </MuiThemeProvider>

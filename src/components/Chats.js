@@ -29,10 +29,6 @@ class Chats extends Component {
     // });
   // }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
-
   componentDidMount() {
     if(_.isEmpty(this.props.contactList)) { // if logged in
       this.setState({ loading: true }, () => {

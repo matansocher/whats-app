@@ -56,3 +56,15 @@
   font-size: 10px;
   padding: 4px;
 }
+
+.send-icon {
+  position: absolute;
+  top: 25px;
+  left: 10px;
+}
+
+.smiley {
+  position: absolute;
+  top: 25px;
+  right: 10px;
+}

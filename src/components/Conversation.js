@@ -75,9 +75,9 @@ class Conversation extends Component {
       messages.map((message, index, messages) => {
         if (message) {
           let arrayToReturn = [];
-          if(index != messages.length - 1) { // not the last message
+          if(index !== messages.length - 1) { // not the last message
             if(!compareDates(message.date, messages[index+1].date)) {
-              arrayToReturn.push(<div className="day-indicator">
+              arrayToReturn.push(<div key={messages[index+1].date} className="day-indicator">
                 {getLastMessageTime(messages[index+1])}
               </div>)
             }
