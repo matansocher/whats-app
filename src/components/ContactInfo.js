@@ -5,8 +5,6 @@ import { getCircularProgress } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import BackIcon from 'material-ui/svg-icons/navigation/chevron-left';
 
 class ContactInfo extends Component {

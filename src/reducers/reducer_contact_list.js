@@ -14,14 +14,12 @@ export default function(state = [], action) {
       // const { id, date, hour, content, senderOrReciever } = action.payload;
       // const newLastMessage = { id, date, hour, content, senderOrReciever };
       // return newState.lastMessage.splice(index, 1, newLastMessage);
-      return;
+      return state;
     case DELETE_MESSAGE:
       // if() {
       //
       // }
-      // return state;
-      // TODO
-      break;
+      return state;
     default:
       return state;
   }

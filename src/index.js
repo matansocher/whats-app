@@ -9,6 +9,7 @@ import Chats from './components/Chats';
 import Conversation from './components/Conversation';
 import SignInOrSignUp from './components/SignInOrSignUp';
 import UserInfo from './components/UserInfo';
+import ContactInfo from './components/ContactInfo';
 import NoMatch from './components/NoMatch';
 import './css/index.css';
 
