@@ -45,6 +45,10 @@ class Conversation extends Component {
     this.props.history.push('/');
   }
 
+  contactInfoShow = () => {
+    this.props.history.push('/ContactInfo');
+  }
+
   sendMessage = (message, callback) => {
     this.setState({ loading: true }, () => {
       const sender = this.props.user.name;
@@ -115,7 +119,8 @@ class Conversation extends Component {
         <div>
           <div className="conversation-header">
             <ConversationHeader currentChatUser={this.props.currentChatUser}
-              backToChats={this.backToChats}/>
+              backToChats={this.backToChats}
+              contactInfoShow={this.contactInfoShow} />
           </div>
           <div className="scrollable-conversation">
             { this.state.loading ? getCircularProgress() : <span />}

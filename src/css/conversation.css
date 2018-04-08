@@ -30,11 +30,6 @@
   top: -60px;
 }
 
-.input-message {
-  width: 80%;
-  padding: 10px;
-}
-
 .contact-info {
   position: absolute;
   right: -40px;
@@ -67,4 +62,10 @@
   position: absolute;
   top: 25px;
   right: 10px;
+}
+
+.input-message {
+  border-radius: 10px;
+  width: 80%;
+  padding: 10px;
 }

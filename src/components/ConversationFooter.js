@@ -40,7 +40,7 @@ class ConversationFooter extends Component {
             <div className="send-icon">
               <SmileyIcon className="pull-left" />
             </div>
-            <div className="input-text">
+            <div className="center">
               <textarea value={this.state.message} name="message"
                 className="form-control input-message" rows="1"
                 placeholder="Type a message" onChange={this.handleChange}>

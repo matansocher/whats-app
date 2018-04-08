@@ -20,6 +20,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/SignInOrSignUp" component={SignInOrSignUp}/>
         <Route path="/UserInfo" component={UserInfo}/>
+        <Route path="/ContactInfo" component={ContactInfo}/>
         <Route path="/conversation" component={Conversation}/>
         <Route path="/" component={Chats}/>
         <Route path="*" component={NoMatch}/>

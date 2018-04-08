@@ -22,6 +22,10 @@ class ConversationHeader extends Component {
     this.props.backToChats();
   }
 
+  infoClicked = () => {
+    this.props.contactInfoShow();
+  }
+
   render() {
     if (!this.props.currentChatUser.name) {
       return <span />;
@@ -38,6 +42,7 @@ class ConversationHeader extends Component {
             className="contact-info"
             primaryText={name}
             secondaryText="Online"
+            onClick={this.infoClicked}
             leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
           />
           <IconMenu

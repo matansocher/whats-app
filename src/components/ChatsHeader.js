@@ -24,7 +24,7 @@ class ChatsHeader extends Component {
   }
 
   userInfoClicked = () => {
-    this.props.history.push('UserInfo');
+    this.props.userInfoShow();
   }
 
   handleChange = (e) => {

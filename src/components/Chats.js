@@ -53,6 +53,10 @@ class Chats extends Component {
     this.setState({ searchTerm });
   }
 
+  userInfoShow = () => {
+    this.props.history.push('UserInfo');
+  }
+
   fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
@@ -83,7 +87,8 @@ class Chats extends Component {
       <MuiThemeProvider>
         <div>
           <div className="chats-header">
-            <ChatsHeader searchContact={this.searchContact} />
+            <ChatsHeader searchContact={this.searchContact}
+              userInfoShow={this.userInfoShow} />
           </div>
           <div className="scrollable-chats">
             { this.state.loading ? getCircularProgress() : <span /> }

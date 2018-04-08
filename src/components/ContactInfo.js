@@ -9,11 +9,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import BackIcon from 'material-ui/svg-icons/navigation/chevron-left';
 
-class UserInfo extends Component {
+class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.user.info.name,
+      username: this.props.currentChatUser.info.name,
       picture: '',
       loading: true
     }
@@ -23,28 +23,11 @@ class UserInfo extends Component {
     this.props.history.push('/');
   }
 
-  saveClick = () => {
-    this.setState({ loading: true }, () => {
-      const { username } = this.state;
-      const user = { username };
-      this.props.actionUpdateUserData(user, () => {
-        this.setState({ loading: false });
-      });
-    })
-  }
-
-  handleChange = (e) => {
-    var change = {};
-    const { value, name } = e.target;
-    change[name] = value;
-    this.setState(change);
-  }
-
   render() {
     if(this.state.loading) {
       return getCircularProgress();
     } else {
-      const { image } = this.props.user.info;
+      const { image, name } = this.props.currentChatUser.info;
       return (
         <div>
           <MuiThemeProvider>
@@ -57,25 +40,17 @@ class UserInfo extends Component {
                 </div>
 
                 <div className="center">
-                  <h1>Edit Profile</h1>
+                  <h1>{`${name}'s`} Profile</h1>
                 </div>
               </div>
-
-              { this.state.loading ? getCircularProgress() : <span /> }
 
               <br />
 
               <div className="center">
                 <Avatar size={90} src={require(`../images/${image}`)} />
 
-                <TextField
-                  hintText="Username"
-                  value={this.state.username}
-                  name="username"
-                  fullWidth={true} />
+                {name}
               </div>
-
-              <RaisedButton primary={true} label="Update Info" fullWidth={true} />
             </div>
           </MuiThemeProvider>
         </div>
@@ -86,8 +61,8 @@ class UserInfo extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    currentChatUser: state.currentChatUser
   };
 }
 
-export default connect(mapStateToProps, actions)(UserInfo);
+export default connect(mapStateToProps, actions)(ContactInfo);
