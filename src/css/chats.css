@@ -53,3 +53,8 @@
   top: 45px;
   right: 40px;
 }
+
+.three-dots-chats-header {
+  position: relative;
+  top: -15px;
+}

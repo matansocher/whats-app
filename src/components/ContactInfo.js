@@ -10,31 +10,33 @@ import BackIcon from 'material-ui/svg-icons/navigation/chevron-left';
 class ContactInfo extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {
-      username: this.props.currentChatUser.info.name,
+      username: this.props.currentChatUser.name,
       picture: '',
-      loading: true
+      loading: false
     }
   }
 
   backClick = () => {
-    this.props.history.push('/');
+    this.props.history.push('/conversation');
   }
 
   render() {
     if(this.state.loading) {
       return getCircularProgress();
     } else {
-      const { image, name } = this.props.currentChatUser.info;
+      const { image, name } = this.props.currentChatUser;
       return (
         <div>
           <MuiThemeProvider>
             <div>
 
               <div className="user-info-header">
-                <div className="pull-left">
-                  <BackIcon onClick={this.backClick} />
-                  <FlatButton label="Primary" primary={true} />
+                <div>
+                  <FlatButton className="pull-left back-button-user-info" label="Back" primary={true}  onClick={this.backClick}>
+                    <BackIcon className="pull-left back-user-info" />
+                  </FlatButton>
                 </div>
 
                 <div className="center">
@@ -46,8 +48,8 @@ class ContactInfo extends Component {
 
               <div className="center">
                 <Avatar size={90} src={require(`../images/${image}`)} />
-
-                {name}
+                <br />
+                <h2>{name}</h2>
               </div>
             </div>
           </MuiThemeProvider>

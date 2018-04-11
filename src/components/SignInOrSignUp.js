@@ -26,16 +26,17 @@ class SignInOrSignUp extends Component {
     }
   }
 
-  comonentWillMount() {
+  componentWillMount(prevProps, prevState, snapshot) {
+    console.log('ComponentDidUpdate');
     fire.auth().onAuthStateChanged(user => {
       if (user) { // logged in
         console.log(user);
-        // this.props.actionLoginUser(user.username);
-        // this.props.history.push('/');
+        this.props.actionLoginUser(user.username);
+        this.props.history.push('/');
       } else { // NOT logged in
         console.log('not logged in');
-        // this.props.actionLogoutUser();
-        // this.props.history.push('/SignInOrSignUp');
+        this.props.actionLogoutUser();
+        this.props.history.push('/SignInOrSignUp');
       }
     });
   }
@@ -65,7 +66,7 @@ class SignInOrSignUp extends Component {
         console.log(user);
         signInMessage = `Welcome ${user.email}`;
         this.setState({ loading: false, signInMessage });
-        // this.props.history.push('/');
+        // this.props.actionLoginUser(SIemail);
       }).catch(e => {
         signInMessage = e.message;
         this.setState({ loading: false, signInMessage });
@@ -95,7 +96,7 @@ class SignInOrSignUp extends Component {
           signUpMessage = `Welcome ${user.email}`;
           console.log(user);
           this.setState({ loading: false, signUpMessage });
-          // this.props.history.push('/');
+          this.props.actionSignUpUser(SUusername);
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
 import { getCircularProgress, sortContactByLastMessageTime, filterBySearch, splitToPinned } from '../actions/CommonFunctions';
+import fire from '../firebase';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -19,15 +20,16 @@ class Chats extends Component {
     }
   }
 
-  // comonentWillMount() {
-    // fire.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     this.props.history.push('/');
-    //   } else {
-    //     this.props.history.push('/SignInOrSignUp');
-    //   }
-    // });
-  // }
+  comonentWillMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.history.push('/');
+      } else {
+        this.props.actionLogoutUser();
+        this.props.history.push('/SignInOrSignUp');
+      }
+    });
+  }
 
   componentDidMount() {
     if(_.isEmpty(this.props.contactList)) { // if logged in
@@ -49,6 +51,10 @@ class Chats extends Component {
     });
   }
 
+  navigateToRoute = (route) => {
+    this.props.history.push(route);
+  }
+
   searchContact = (searchTerm) => {
     this.setState({ searchTerm });
   }
@@ -58,6 +64,8 @@ class Chats extends Component {
   }
 
   fetchChatData = (contact) => {
+    console.log(contact);
+    console.log(this.props.user);
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
       this.props.actionFetchChatData(username, contact, () => {
@@ -88,7 +96,8 @@ class Chats extends Component {
         <div>
           <div className="chats-header">
             <ChatsHeader searchContact={this.searchContact}
-              userInfoShow={this.userInfoShow} />
+              userInfoShow={this.userInfoShow}
+              navigateToRoute={this.navigateToRoute} />
           </div>
           <div className="scrollable-chats">
             { this.state.loading ? getCircularProgress() : <span /> }

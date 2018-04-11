@@ -69,3 +69,19 @@
   width: 80%;
   padding: 10px;
 }
+
+.user-info-header {
+  position: relative;
+}
+
+.back-button-user-info {
+  position: absolute;
+  /* top: 10px; */
+  left: 15px;
+}
+
+.back-user-info {
+  position: absolute;
+  top: 5px;
+  left: -2px;
+}

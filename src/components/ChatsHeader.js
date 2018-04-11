@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-// import fire from '../firebase';
+import firebase from '../firebase';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -18,9 +18,13 @@ class ChatsHeader extends Component {
   }
 
   logout = () => {
-    // fire.auth().logout();
-    this.props.logoutUser();
-    this.props.history.push('SignInOrSignUp');
+    firebase.auth().signOut().then(() => {
+      console.log('logout');
+      this.props.actionLogoutUser();
+      this.props.navigateToRoute('SignInOrSignUp');
+    }, error => {
+      console.log(error);
+    });
   }
 
   userInfoClicked = () => {
@@ -41,12 +45,12 @@ class ChatsHeader extends Component {
         <div>
 
           <IconMenu
-            className="three-dots-contact"
+            className="pull-right three-dots-chats-header"
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuItem primaryText="User Info" />
+            <MenuItem primaryText="Log Out" onClick={this.logout} />
           </IconMenu>
 
           <div className="center">
