@@ -7,3 +7,4 @@ export const UPDATE_USER_DATA = 'update_user_data';
 export const SEND_MESSAGE = 'send_message';
 export const DELETE_MESSAGE = 'delete_message';
 export const DELETE_CONTACT_CHAT = 'delete_contact_chat';
+export const PINUNPIN_CHAT = 'pin_chat';

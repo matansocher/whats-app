@@ -37,7 +37,7 @@ class ConversationFooter extends Component {
       <div>
         <MuiThemeProvider>
           <div className="">
-            <div className="send-icon">
+            <div className="smiley">
               <SmileyIcon className="pull-left" />
             </div>
             <div className="center">
@@ -46,7 +46,7 @@ class ConversationFooter extends Component {
                 placeholder="Type a message" onChange={this.handleChange}>
               </textarea>
             </div>
-            <div className="smiley">
+            <div className="send-icon">
               <SendIcon className="pull-right" onClick={this.sendMessage} />
             </div>
           </div>

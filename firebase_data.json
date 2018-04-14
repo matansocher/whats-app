@@ -1,311 +1,96 @@
 {
-  "matan": {
-    "info": {
-      "email": "matan@gmail.com",
-      "name": "matan",
-      "image": "contact1.png"
-    },
-    "chats": {
-      "tuta": {
-        "name": "tuta",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to Tuta",
-            "date": "2018-03-18",
-            "hour": "17:37:00",
-            "sendOrRecieve": 1
+  "matansocher@gmail.com" : {
+    "chats" : {
+      "ron@gmail.com" : {
+        "info" : {
+          "email" : "ron@gmail.com",
+          "image" : "contact3.png",
+          "name" : "ron",
+          "pinned" : false
+        },
+        "lastMessage" : {
+          "content" : "Matan to Ron",
+          "date" : "2018-04-05",
+          "hour" : "17:37:03",
+          "id" : "SCSRlg",
+          "senderOrReciever" : 1
+        },
+        "messages" : {
+          "SCSRlg" : {
+            "content" : "Matan to Ron",
+            "date" : "2018-03-18",
+            "hour" : "17:37:02",
+            "id" : "SCSRlg",
+            "senderOrReciever" : 1
           }
         },
-        "info": {
-          "name": "tuta",
-          "email": "tuta@gmail.com",
-          "image": "contact2.png",
-          "pinned": "true"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to Tuta",
-          "date": "2018-03-18",
-          "hour": "17:37:01",
-          "senderOrReciever": 1
-        }
+        "email" : "ron@gmail.com"
       },
-      "ron": {
-        "name": "ron",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to Ron",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
+      "tuta@gmail.com" : {
+        "info" : {
+          "email" : "tuta@gmail.com",
+          "image" : "contact2.png",
+          "name" : "tuta",
+          "pinned" : true
+        },
+        "lastMessage" : {
+          "content" : "Hi tuti",
+          "date" : "2018-4-13",
+          "hour" : "16:0:18",
+          "id" : "SDNQAS",
+          "senderOrReciever" : 1
+        },
+        "messages" : {
+          "SCSRlg" : {
+            "content" : "Matan to Tuta",
+            "date" : "2018-03-18",
+            "hour" : "17:37:00",
+            "id" : "SCSRlg",
+            "senderOrReciever" : 1
+          },
+          "SDFMjq" : {
+            "content" : "hello",
+            "date" : "2018-4-5",
+            "hour" : "12:35:42",
+            "id" : "SDFMjq",
+            "senderOrReciever" : 1
+          },
+          "SDFMmG" : {
+            "content" : "whatsapp",
+            "date" : "2018-4-5",
+            "hour" : "12:38:6",
+            "id" : "SDFMmG",
+            "senderOrReciever" : 1
+          },
+          "SDMAjY" : {
+            "content" : "dsfv",
+            "date" : "2018-4-12",
+            "hour" : "0:35:24",
+            "id" : "SDMAjY",
+            "senderOrReciever" : 1
+          },
+          "SDMAju" : {
+            "content" : "sdvsdfvsdfv",
+            "date" : "2018-4-12",
+            "hour" : "0:35:46",
+            "id" : "SDMAju",
+            "senderOrReciever" : 1
+          },
+          "SDNQAS" : {
+            "content" : "Hi tuti",
+            "date" : "2018-4-13",
+            "hour" : "16:0:18",
+            "id" : "SDNQAS",
+            "senderOrReciever" : 1
           }
         },
-        "info": {
-          "email": "ron@gmail.com",
-          "name": "ron",
-          "image": "contact3.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to Ron",
-          "date": "2018-04-05",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "eli": {
-        "name": "eli",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to Eli",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "eli@gmail.com",
-          "name": "eli",
-          "image": "contact4.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to Eli",
-          "date": "2018-04-04",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "aviad": {
-        "name": "aviad",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to aviad",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "aviad@gmail.com",
-          "name": "aviad",
-          "image": "contact5.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to aviad",
-          "date": "2018-04-04",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "avner": {
-        "name": "avner",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to avner",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "avner@gmail.com",
-          "name": "avner",
-          "image": "contact6.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to avner",
-          "date": "2018-03-31",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "ruhama": {
-        "name": "ruhama",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to ruhama",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "ruhama@gmail.com",
-          "name": "ruhama",
-          "image": "contact7.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to ruhama",
-          "date": "2018-03-28",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "yarona": {
-        "name": "yarona",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to yarona",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "yarona@gmail.com",
-          "name": "yarona",
-          "image": "contact8.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to yarona",
-          "date": "2018-04-01",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "shaul": {
-        "name": "shaul",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to shaul",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "shaul@gmail.com",
-          "name": "shaul",
-          "image": "contact3.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to shaul",
-          "date": "2018-04-02",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "arie": {
-        "name": "arie",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to arie",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "arien@gmail.com",
-          "name": "arie",
-          "image": "contact4.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to arie",
-          "date": "2018-03-01",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "eliyahu": {
-        "name": "eliyahu",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to eliyahu",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "eliyahu@gmail.com",
-          "name": "eliyahu",
-          "image": "contact5.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to eliyahu",
-          "date": "2018-03-18",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "steve": {
-        "name": "steve",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to steve",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "steve@gmail.com",
-          "name": "steve",
-          "image": "contact6.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to steve",
-          "date": "2018-03-18",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
-      },
-      "eran": {
-        "name": "eran",
-        "messages": {
-          "SCSRlg": {
-            "id": "SCSRlg",
-            "content": "Matan to eran",
-            "date": "2018-03-18",
-            "hour": "17:37:02",
-            "sendOrRecieve": 1
-          }
-        },
-        "info": {
-          "email": "eran@gmail.com",
-          "name": "eran",
-          "image": "contact7.png",
-          "pinned": "false"
-        },
-        "lastMessage": {
-          "id": "SCSRlg",
-          "content": "Matan to eran",
-          "date": "2018-03-18",
-          "hour": "17:37:03",
-          "senderOrReciever": 1
-        }
+        "email" : "tuta@gmail.com"
       }
+    },
+    "info" : {
+      "email" : "matansocher@gmail.com",
+      "image" : "contact1.png",
+      "name" : "matan"
     }
   }
 }

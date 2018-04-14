@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { getCircularProgress, compareDates, getLastMessageTime } from '../actions/CommonFunctions';
+import _ from 'lodash';
 import ConversationHeader from './ConversationHeader';
 import ConversationFooter from './ConversationFooter';
 import Message from './Message';
@@ -19,7 +20,7 @@ class Conversation extends Component {
     }
   }
 
-  comonentWillMount() {
+  componentWillMount() {
     // fire.auth().onAuthStateChanged(user => {
     //   if (user) {
     //     this.props.history.push('/');
@@ -30,6 +31,9 @@ class Conversation extends Component {
   }
 
   componentDidMount() {
+    if(_.isEmpty(this.props.user)) {
+      this.props.history.push('/');
+    }
     this.scrollToBottom();
   }
 

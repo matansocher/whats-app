@@ -1,8 +1,5 @@
-automatically scroll to bottom in chat list
 message design
-chat settings design
-input message design
 
-sign up
+sign up - with email and not with name
 sign in
 sign out

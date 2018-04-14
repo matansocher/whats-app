@@ -81,11 +81,10 @@ export function splitToPinned(array) {
 
 export function getLastMessageTime(lastMessage) {
   const splitDate = lastMessage.date.split('-');
-  const splitHour = lastMessage.hour.split(':');
   const today = new Date();
   const dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
   if (checkIfToday(today, dateObject))
-    return `${splitHour[0]}:${splitHour[1]}`;
+    return getCorrectHour(lastMessage.hour);
 
   if(checkIfYesterday(today, dateObject))
     return "Yesterday";
@@ -137,9 +136,8 @@ function checkIfLastWeek(today, dateObject) {
 export function compareDates(date1, date2) {
   const split1 = date1.split('-');
   const split2 = date2.split('-');
-  if(split1[0] === split2[0] &&
-    split1[1] === split2[1] &&
-    split1[2] === split2[2]) {
+  if(split1[0] === split2[0] && split1[1] === split2[1] &&
+    split1[2] === split2[2]) { // not on the same day
     return true;
   }
   return false;

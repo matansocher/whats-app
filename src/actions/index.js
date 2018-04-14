@@ -10,16 +10,19 @@ import {
   SEND_MESSAGE, // send messageto sender and reciever
   DELETE_MESSAGE, // delete individual message
   DELETE_CONTACT_CHAT,
+  PINUNPIN_CHAT
 } from '../actions/types';
 
-export function actionSignUpUser(username) {
-  const randImg = Math.floor((Math.random() * 8) + 1);
+export function actionSignUpUser(email, username) {
+  const numOfImages = 8;
+  const randImg = Math.floor((Math.random() * numOfImages) + 1);
   return dispatch => {
-    fire.database().ref(`${username}/info`).set({
+    fire.database().ref(`${email}/info`).set({
+      email: email,
       name: username,
       image: `contact${randImg}.png`
     }).then(() => {
-      fire.database().ref(`${username}/info`).once('value', snap => {
+      fire.database().ref(`${email}/info`).once('value', snap => {
         const userFromDB = snap.val();
         dispatch({
           type: SIGNUP_USER,
@@ -30,9 +33,9 @@ export function actionSignUpUser(username) {
   };
 }
 
-export function actionLoginUser(username) {
+export function actionLoginUser(email, username) {
   return dispatch => {
-    fire.database().ref(`${username}/info`).once('value', snap => {
+    fire.database().ref(`${email}/info`).once('value', snap => {
       const userFromDB = snap.val();
       dispatch({
         type: LOGIN_USER,
@@ -49,9 +52,9 @@ export function actionLogoutUser() {
   }
 }
 
-export function actinoFetchAllDataForUser(username, callback) {
+export function actinoFetchAllDataForUser(email, callback) {
   return dispatch => {
-    fire.database().ref(`${username}`).once('value', snap => {
+    fire.database().ref(`${email}`).once('value', snap => {
       const allDataForUser = snap.val();
       callback();
       dispatch({
@@ -63,12 +66,12 @@ export function actinoFetchAllDataForUser(username, callback) {
 }
 
 export function actionUpdateUserData(user, callback) {
-  const { username } = user;
+  const { email, username } = user;
   return dispatch => {
-    fire.database().ref(`${username}/info`).set({
+    fire.database().ref(`${email}/info`).set({
       name: username
     }).then(() => {
-      fire.database().ref(`${username}`).set({
+      fire.database().ref(`${email}`).set({
         name: username
       });
       callback();
@@ -107,10 +110,10 @@ export function actionSendMessage(sender, reciever, message, callback) {
   }
 }
 
-export function actionDeleteMessage(username, contact, message, callback) {
+export function actionDeleteMessage(email, contact, message, callback) {
   return dispatch => {
-    fire.database().ref(`${username}/chats/${contact}/messages/${message.id}`).remove().then(() => {
-      fire.database().ref(`${contact}/chats/${username}/messages/${message.id}`).remove();
+    fire.database().ref(`${email}/chats/${contact}/messages/${message.id}`).remove().then(() => {
+      fire.database().ref(`${contact}/chats/${email}/messages/${message.id}`).remove();
       callback();
     });
     dispatch({
@@ -120,9 +123,9 @@ export function actionDeleteMessage(username, contact, message, callback) {
   }
 }
 
-export function actionFetchChatData(username, contactName, callback) {
+export function actionFetchChatData(email, contactName, callback) {
   return dispatch => {
-    fire.database().ref(`${username}/chats/${contactName}`).once('value', snap => {
+    fire.database().ref(`${email}/chats/${contactName}`).once('value', snap => {
       const messages = snap.val();
       callback();
       dispatch({
@@ -133,13 +136,29 @@ export function actionFetchChatData(username, contactName, callback) {
   }
 }
 
-export function actionDeleteContactChat(username, contact, callback) {
+export function actionDeleteContactChat(email, contact, callback) {
   return dispatch => {
-    fire.database().ref(`${username}/chats/${contact.info.name}`).remove().then(() => {
+    fire.database().ref(`${email}/chats/${contact.info.name}`).remove().then(() => {
       callback();
     });
     dispatch({
       type: DELETE_CONTACT_CHAT,
+      payload: contact
+    });
+  }
+}
+
+export function actionPinUnpinChat(userEmail, contact, isPinned) {
+  const { email, image, name } = contact;
+  console.log(contact.pinned);
+  contact.pinned = isPinned;
+  console.log(contact);
+  return dispatch => {
+    fire.database().ref(`${userEmail}/chats/${name}/info/`).set({
+      email, image, name, pinned: isPinned
+    });
+    dispatch({
+      type: PINUNPIN_CHAT,
       payload: contact
     });
   }

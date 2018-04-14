@@ -23,7 +23,7 @@
   float: right;
   position: relative;
   top: -60px;
-  right: 10px;
+  right: 15px;
 }
 
 .search-chats {
@@ -38,8 +38,8 @@
 
 .last-message-hour {
   position: absolute;
-  top: -45px;
-  right: 45px;
+  top: -55px;
+  right: 55px;
 }
 
 .contact-more-icon {
@@ -50,8 +50,8 @@
 
 .pin-icon {
   position: absolute;
-  top: 45px;
-  right: 40px;
+  top: -35px;
+  right: 50px;
 }
 
 .three-dots-chats-header {

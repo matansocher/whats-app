@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { getCircularProgress } from '../actions/CommonFunctions';
+import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
@@ -16,6 +17,12 @@ class UserInfo extends Component {
       username: this.props.user.info.name,
       picture: '',
       loading: true
+    }
+  }
+
+  componentWillMount() {
+    if(_.isEmpty(this.props.user)) {
+      this.props.history.push('/');
     }
   }
 

@@ -66,7 +66,7 @@ class SignInOrSignUp extends Component {
         console.log(user);
         signInMessage = `Welcome ${user.email}`;
         this.setState({ loading: false, signInMessage });
-        // this.props.actionLoginUser(SIemail);
+        this.props.actionLoginUser(SIemail);
       }).catch(e => {
         signInMessage = e.message;
         this.setState({ loading: false, signInMessage });
@@ -96,7 +96,7 @@ class SignInOrSignUp extends Component {
           signUpMessage = `Welcome ${user.email}`;
           console.log(user);
           this.setState({ loading: false, signUpMessage });
-          this.props.actionSignUpUser(SUusername);
+          this.props.actionSignUpUser(SUemail, SUusername);
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });

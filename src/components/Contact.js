@@ -10,7 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreButton from 'material-ui/svg-icons/navigation/chevron-right';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-// import PinIcon from 'material-ui/svg-icons/maps/person-pin-circle';
+import PinIcon from 'material-ui/svg-icons/toggle/star-border';
 
 class Contact extends Component {
   constructor(props) {
@@ -29,29 +29,33 @@ class Contact extends Component {
     this.props.fetchChatData(contactName)
   }
 
+  pinUnpinChat = () => {
+    const contactInfo = this.props.contact.info;
+    const isPinned = contactInfo.pinned ? true : false;
+    this.props.pinUnpinChat(contactInfo, !isPinned); // reverse the pin bool
+  }
+
   render() {
-    const { name, image } = this.props.contact.info;
+    const { name, image, pinned } = this.props.contact.info;
     const { lastMessage } = this.props;
     const lastMessageTime = getLastMessageTime(lastMessage);
     let { content } = lastMessage;
-    // const textWidth = (screen.width - 100);
-    const textWidth = 27;
+    const textWidth = (window.innerWidth - 100)/9;
     content = content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
     return (
       <div className="contact">
         <MuiThemeProvider>
           <div>
             <ListItem
-              onClick={this.fetchChatData}
-              primaryText={name}
-              secondaryText={content}
-              style={{ color: '#ffffff' }}
+              onClick={this.fetchChatData} style={{ color: '#ffffff' }}
+              primaryText={name} secondaryText={content}
               leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
             />
 
             <div className="last-message-hour-div">
               <span className="pull-right last-message-hour">{lastMessageTime}</span>
               <MoreButton className="pull-right contact-more-icon" />
+              {pinned ? <PinIcon className="pull-right pin-icon" /> : <span />}
             </div>
 
             <IconMenu
@@ -63,7 +67,8 @@ class Contact extends Component {
               <MenuItem primaryText="Archive Chat" />
               <MenuItem primaryText="Mute" />
               <MenuItem primaryText="Delete Chat" onClick={this.deleteContactChat} />
-              <MenuItem primaryText="Pin Chat" />
+              <MenuItem primaryText={ pinned ? "Unpin Chat" : "Pin Chat" }
+                onClick={this.pinUnpinChat} />
               <MenuItem primaryText="Mark As Unread" />
             </IconMenu>
             <Divider />

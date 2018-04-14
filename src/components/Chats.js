@@ -32,10 +32,14 @@ class Chats extends Component {
   }
 
   componentDidMount() {
+    // console.log(fire.auth());
+    // console.log(fire.auth().currentUser.email);
     if(_.isEmpty(this.props.contactList)) { // if logged in
       this.setState({ loading: true }, () => {
-        // this.props.actinoFetchAllDataForUser(fire.auth().currentUser.displayName, () => {
-        this.props.actinoFetchAllDataForUser("matan", () => {
+        // const email = "matansocher@gmail.com";
+        const email = "matan";
+        // const email = fire.auth().currentUser.email;
+        this.props.actinoFetchAllDataForUser(email, () => {
           this.setState({ loading: false });
         });
       });
@@ -51,6 +55,12 @@ class Chats extends Component {
     });
   }
 
+  pinUnpinChat = (contactInfo, isPinned) => {
+    const username = this.props.user.name;
+    console.log(contactInfo, isPinned);
+    this.props.actionPinUnpinChat(username, contactInfo, isPinned);
+  }
+
   navigateToRoute = (route) => {
     this.props.history.push(route);
   }
@@ -64,8 +74,6 @@ class Chats extends Component {
   }
 
   fetchChatData = (contact) => {
-    console.log(contact);
-    console.log(this.props.user);
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
       this.props.actionFetchChatData(username, contact, () => {
@@ -85,7 +93,8 @@ class Chats extends Component {
         return <Contact key={contact.info.email} contact={contact}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}
-          deleteContactChat={this.deleteContactChat} />
+          deleteContactChat={this.deleteContactChat}
+          pinUnpinChat={this.pinUnpinChat} />
       })
     );
   }
