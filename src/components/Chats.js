@@ -56,9 +56,13 @@ class Chats extends Component {
   }
 
   pinUnpinChat = (contactInfo, isPinned) => {
-    const username = this.props.user.name;
-    console.log(contactInfo, isPinned);
-    this.props.actionPinUnpinChat(username, contactInfo, isPinned);
+    this.setState({ loading: true }, () => {
+      const username = this.props.user.name;
+      console.log(contactInfo, isPinned);
+      this.props.actionPinUnpinChat(username, contactInfo, isPinned, () => {
+        this.setState({ loading: false });
+      });
+    });
   }
 
   navigateToRoute = (route) => {

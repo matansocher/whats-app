@@ -18,9 +18,6 @@ class Message extends Component {
   render() {
     let { content, hour, senderOrReciever } = this.props.message;
     hour = getCorrectHour(hour);
-    console.log(
-      content,senderOrReciever
-    );
     return (
       <MuiThemeProvider>
         <div className={senderOrReciever === 1 ? "message sent" : "message recieved"}>

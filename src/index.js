@@ -12,11 +12,13 @@ import UserInfo from './components/UserInfo';
 import ContactInfo from './components/ContactInfo';
 import NoMatch from './components/NoMatch';
 import './css/index.css';
+import { LOGIN_USER } from '../actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={store}}>
     <Router>
       <Switch>
         <Route path="/SignInOrSignUp" component={SignInOrSignUp}/>

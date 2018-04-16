@@ -56,11 +56,11 @@ export function actinoFetchAllDataForUser(email, callback) {
   return dispatch => {
     fire.database().ref(`${email}`).once('value', snap => {
       const allDataForUser = snap.val();
-      callback();
       dispatch({
         type: FETCH_ALL_DATA_FOR_USER,
         payload: allDataForUser
       });
+      callback();
     });
   }
 }
@@ -74,12 +74,12 @@ export function actionUpdateUserData(user, callback) {
       fire.database().ref(`${email}`).set({
         name: username
       });
-      callback();
     });
     dispatch({
       type: UPDATE_USER_DATA,
       payload: user
     });
+    callback();
   }
 }
 
@@ -101,11 +101,11 @@ export function actionSendMessage(sender, reciever, message, callback) {
         id, content, date, hour, senderOrReciever: 2
       })
     }).then(() => {
-      callback();
       dispatch({
         type: SEND_MESSAGE,
         payload: message
       });
+      callback();
     });
   }
 }
@@ -114,12 +114,12 @@ export function actionDeleteMessage(email, contact, message, callback) {
   return dispatch => {
     fire.database().ref(`${email}/chats/${contact}/messages/${message.id}`).remove().then(() => {
       fire.database().ref(`${contact}/chats/${email}/messages/${message.id}`).remove();
-      callback();
     });
     dispatch({
       type: DELETE_MESSAGE,
       payload: message
     });
+    callback();
   }
 }
 
@@ -127,28 +127,27 @@ export function actionFetchChatData(email, contactName, callback) {
   return dispatch => {
     fire.database().ref(`${email}/chats/${contactName}`).once('value', snap => {
       const messages = snap.val();
-      callback();
       dispatch({
         type: FETCH_CHAT_DATA,
         payload: messages
       });
+      callback();
     });
   }
 }
 
 export function actionDeleteContactChat(email, contact, callback) {
   return dispatch => {
-    fire.database().ref(`${email}/chats/${contact.info.name}`).remove().then(() => {
-      callback();
-    });
+    fire.database().ref(`${email}/chats/${contact.info.name}`).remove();
     dispatch({
       type: DELETE_CONTACT_CHAT,
       payload: contact
     });
+    callback();
   }
 }
 
-export function actionPinUnpinChat(userEmail, contact, isPinned) {
+export function actionPinUnpinChat(userEmail, contact, isPinned, callback) {
   const { email, image, name } = contact;
   console.log(contact.pinned);
   contact.pinned = isPinned;
@@ -161,5 +160,6 @@ export function actionPinUnpinChat(userEmail, contact, isPinned) {
       type: PINUNPIN_CHAT,
       payload: contact
     });
+    callback();
   }
 }
