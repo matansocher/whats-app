@@ -19,9 +19,8 @@ class ChatsHeader extends Component {
 
   logout = () => {
     firebase.auth().signOut().then(() => {
-      console.log('logout');
       this.props.actionLogoutUser();
-      this.props.navigateToRoute('SignInOrSignUp');
+      this.props.navigateToRoute('SignIn');
     }, error => {
       console.log(error);
     });
@@ -50,6 +49,7 @@ class ChatsHeader extends Component {
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
+            <MenuItem primaryText="User Info" onClick={this.userInfoClicked} />
             <MenuItem primaryText="Log Out" onClick={this.logout} />
           </IconMenu>
 

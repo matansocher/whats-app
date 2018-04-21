@@ -14,9 +14,9 @@ class UserInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.user.info.name,
+      username: this.props.user.name,
       picture: '',
-      loading: true
+      loading: false
     }
   }
 
@@ -32,9 +32,8 @@ class UserInfo extends Component {
 
   saveClick = () => {
     this.setState({ loading: true }, () => {
-      const { username } = this.state;
-      const user = { username };
-      this.props.actionUpdateUserData(user, () => {
+      const newUsername = this.state.username;
+      this.props.actionUpdateUserData(this.props.user, newUsername, () => {
         this.setState({ loading: false });
       });
     })
@@ -51,16 +50,17 @@ class UserInfo extends Component {
     if(this.state.loading) {
       return getCircularProgress();
     } else {
-      const { image } = this.props.user.info;
+      const { image } = this.props.user;
       return (
         <div>
           <MuiThemeProvider>
             <div>
 
               <div className="user-info-header">
-                <div className="pull-left">
-                  <BackIcon onClick={this.backClick} />
-                  <FlatButton label="Primary" primary={true} />
+                <div>
+                  <FlatButton className="pull-left back-button-user-info" label="Back" primary={true}  onClick={this.backClick}>
+                    <BackIcon className="pull-left back-user-info" />
+                  </FlatButton>
                 </div>
 
                 <div className="center">
@@ -78,11 +78,11 @@ class UserInfo extends Component {
                 <TextField
                   hintText="Username"
                   value={this.state.username}
-                  name="username"
-                  fullWidth={true} />
+                  onChange={this.handleChange}
+                  name="username" />
               </div>
 
-              <RaisedButton primary={true} label="Update Info" fullWidth={true} />
+              <RaisedButton primary={true} label="Update Info" onClick={this.saveClick} />
             </div>
           </MuiThemeProvider>
         </div>

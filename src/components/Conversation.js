@@ -20,16 +20,6 @@ class Conversation extends Component {
     }
   }
 
-  componentWillMount() {
-    // fire.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     this.props.history.push('/');
-    //   } else {
-    //     this.props.history.push('/SignInOrSignUp');
-    //   }
-    // });
-  }
-
   componentDidMount() {
     if(_.isEmpty(this.props.user)) {
       this.props.history.push('/');
@@ -99,23 +89,6 @@ class Conversation extends Component {
       })
     );
   }
-
-  // renderMessages() {
-  //   let messages = this.props.currentChatMessages;
-  //   if (!messages || messages.length === 0) {
-  //     return <span />
-  //   }
-  //   // messages = sortMessagesByDate(messages);
-  //   return (
-  //     messages.map(message => {
-  //       if (message)
-  //         return (<Message key={message.id} message={message}
-  //           deleteMessage={this.deleteMessage} />);
-  //       const random = Math.floor((Math.random() * 10000) + 1);
-  //       return <span key={random} />
-  //     })
-  //   );
-  // }
 
   render() {
     return (

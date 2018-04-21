@@ -49,7 +49,10 @@ class Contact extends Component {
             <ListItem
               onClick={this.fetchChatData} style={{ color: '#ffffff' }}
               primaryText={name} secondaryText={content}
-              leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
+              leftAvatar={
+                <Avatar size={45} src={require(`../images/${image}`)}
+                  style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
+              }
             />
 
             <div className="last-message-hour-div">

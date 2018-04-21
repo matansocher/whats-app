@@ -22,8 +22,6 @@ export default function(state = [], action) {
       return state;
     case PINUNPIN_CHAT:
       const index = _.findIndex(newState, { name: action.payload.name }); // return ron\tuta
-      console.log(newState[index].info);
-      console.log(action.payload);
       newState[index].info = action.payload;
       return newState;
     default:

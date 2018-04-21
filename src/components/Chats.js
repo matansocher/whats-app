@@ -19,31 +19,25 @@ class Chats extends Component {
       loading: false
     }
   }
-
-  comonentWillMount() {
+  componentDidMount() {
+    let currentUser = null;
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        this.props.history.push('/');
+        console.log(user);
+        // this.fetchData(user.displayName);
       } else {
         this.props.actionLogoutUser();
-        this.props.history.push('/SignInOrSignUp');
+        this.props.history.push('/SignIn');
       }
     });
   }
 
-  componentDidMount() {
-    // console.log(fire.auth());
-    // console.log(fire.auth().currentUser.email);
-    if(_.isEmpty(this.props.contactList)) { // if logged in
-      this.setState({ loading: true }, () => {
-        // const email = "matansocher@gmail.com";
-        const email = "matan";
-        // const email = fire.auth().currentUser.email;
-        this.props.actinoFetchAllDataForUser(email, () => {
-          this.setState({ loading: false });
-        });
+  fetchData = (currentUser) => {
+    this.setState({ loading: true }, () => {
+      this.props.actinoFetchAllDataForUser(currentUser, () => {
+        this.setState({ loading: false });
       });
-    }
+    });
   }
 
   deleteContactChat = (contact) => {
@@ -58,7 +52,6 @@ class Chats extends Component {
   pinUnpinChat = (contactInfo, isPinned) => {
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
-      console.log(contactInfo, isPinned);
       this.props.actionPinUnpinChat(username, contactInfo, isPinned, () => {
         this.setState({ loading: false });
       });

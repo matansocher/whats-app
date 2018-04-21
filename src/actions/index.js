@@ -53,6 +53,7 @@ export function actionLogoutUser() {
 }
 
 export function actinoFetchAllDataForUser(email, callback) {
+  console.log(email);
   return dispatch => {
     fire.database().ref(`${email}`).once('value', snap => {
       const allDataForUser = snap.val();
@@ -65,19 +66,19 @@ export function actinoFetchAllDataForUser(email, callback) {
   }
 }
 
-export function actionUpdateUserData(user, callback) {
-  const { email, username } = user;
+export function actionUpdateUserData(currentUser, newUsername, callback) {
+  const { email, username } = currentUser;
   return dispatch => {
-    fire.database().ref(`${email}/info`).set({
-      name: username
+    fire.database().ref(`${username}/info`).set({
+      name: newUsername
     }).then(() => {
-      fire.database().ref(`${email}`).set({
-        name: username
+      fire.database().ref(`${username}`).set({
+        name: newUsername
       });
     });
     dispatch({
       type: UPDATE_USER_DATA,
-      payload: user
+      payload: currentUser
     });
     callback();
   }
@@ -149,9 +150,7 @@ export function actionDeleteContactChat(email, contact, callback) {
 
 export function actionPinUnpinChat(userEmail, contact, isPinned, callback) {
   const { email, image, name } = contact;
-  console.log(contact.pinned);
   contact.pinned = isPinned;
-  console.log(contact);
   return dispatch => {
     fire.database().ref(`${userEmail}/chats/${name}/info/`).set({
       email, image, name, pinned: isPinned

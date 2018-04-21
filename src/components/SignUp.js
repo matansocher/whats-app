@@ -7,18 +7,12 @@ import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import Checkbox from 'material-ui/Checkbox';
+import FlatButton from 'material-ui/FlatButton';
 
-class SignInOrSignUp extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      signInMessage: '',
-      signUpMessage: '',
-      SIemail: '',
-      SIpassword: '',
-      // SICheck: false,
       SUemail: '',
       SUusername: '',
       SUpassword: '',
@@ -26,51 +20,30 @@ class SignInOrSignUp extends Component {
     }
   }
 
-  componentWillMount(prevProps, prevState, snapshot) {
-    console.log('ComponentDidUpdate');
+  componentDidMount(prevProps, prevState, snapshot) {
     fire.auth().onAuthStateChanged(user => {
       if (user) { // logged in
-        console.log(user);
-        this.props.actionLoginUser(user.username);
-        this.props.history.push('/');
-      } else { // NOT logged in
+        this.updateProfileAndLoginAfterSignUp(user);
+      }  else { // NOT logged in
         console.log('not logged in');
         this.props.actionLogoutUser();
-        this.props.history.push('/SignInOrSignUp');
+        this.props.history.push('/SignIn');
       }
     });
   }
 
-  handleChange = (e) => {
-    var change = {};
-    change[e.target.name] = e.target.value;
-    this.setState(change, () => {
-    });
-  }
-
-  // handleChangeCheckBox = () => {
-  //   this.setState((oldState) => {
-  //     return {
-  //       SICheck: !oldState.SICheck
-  //     }
-  //   });
-  // }
-
-  singIn = () => {
-    this.setState({ loading: true }, () => {
-      let signInMessage = '';
-      const { SIemail, SIpassword } = this.state;
-      console.log(SIemail, SIpassword);
-      fire.auth().signInWithEmailAndPassword(SIemail, SIpassword)
-      .then(user => {
-        console.log(user);
-        signInMessage = `Welcome ${user.email}`;
-        this.setState({ loading: false, signInMessage });
-        this.props.actionLoginUser(SIemail);
-      }).catch(e => {
-        signInMessage = e.message;
-        this.setState({ loading: false, signInMessage });
-      });
+  updateProfileAndLoginAfterSignUp = (user) => {
+    const { SIemail, SUusername } = this.state;
+    console.log(SUusername);
+    const numOfImages = 8;
+    const randImg = Math.floor((Math.random() * numOfImages) + 1);
+    const photoURL = `contact${randImg}.png`;
+    user.updateProfile({ SUusername, photoURL }).then(() => {
+      console.log(user);
+      this.props.actionLoginUser(user.username);
+      this.props.history.push('/');
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -90,12 +63,11 @@ class SignInOrSignUp extends Component {
         return;
       }
       if(validateEmail(SUemail) && validatePassword(SUpassword)) {
-        console.log('aaaaa');
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
           signUpMessage = `Welcome ${user.email}`;
           console.log(user);
-          this.setState({ loading: false, signUpMessage });
+          this.setState({ loading: false, signUpMessage, inOrUp: 2 });
           this.props.actionSignUpUser(SUemail, SUusername);
         }).catch(e => {
           signUpMessage = e.message;
@@ -108,37 +80,21 @@ class SignInOrSignUp extends Component {
     });
   }
 
+  handleChange = (e) => {
+    var change = {};
+    change[e.target.name] = e.target.value;
+    this.setState(change, () => {
+    });
+  }
+
   render() {
     return (
       <div className="container container-fluid center">
-
-
         <MuiThemeProvider>
           <div className="row">
-          { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
             <div className="col-5">
               <div>
-                <h3>Sign In</h3>
-                <TextField hintText="Email" name="SIemail"
-                  value={this.state.SIemail} onChange={this.handleChange}
-                />
-                <br />
-                <TextField hintText="Password" name="SIpassword" type="password"
-                  value={this.state.SIpassword} onChange={this.handleChange}
-                />
-
-                <br />
-                <p>{this.state.signInMessage}</p>
-                <span>forgot my password</span>
-
-                <button className="btn btn-primary"
-                  onClick={this.singIn}>
-                    Sign In
-                </button>
-
-
-                <br />
-
+                { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
                 <h3>Create An Acount</h3>
                 <TextField hintText="Email" name="SUemail"
                   value={this.state.SUemail} onChange={this.handleChange}
@@ -159,6 +115,9 @@ class SignInOrSignUp extends Component {
                     Sign Up
                 </button>
 
+                <FlatButton label="Already A Member? Sign In" primary={true}
+                onClick={this.toggleInOrUp} />
+
               </div>
             </div>
           </div>
@@ -168,8 +127,4 @@ class SignInOrSignUp extends Component {
   }
 }
 
-  // <Checkbox label="Keep Me Signed In" labelPosition="left"
-  //   checked={this.state.SICheck} onChange={this.handleChangeCheckBox}
-  // />
-
-export default connect(null, actions)(SignInOrSignUp);
+export default connect(null, actions)(SignUp);

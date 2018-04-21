@@ -7,21 +7,23 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import Chats from './components/Chats';
 import Conversation from './components/Conversation';
-import SignInOrSignUp from './components/SignInOrSignUp';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import UserInfo from './components/UserInfo';
 import ContactInfo from './components/ContactInfo';
 import NoMatch from './components/NoMatch';
 import './css/index.css';
-import { LOGIN_USER } from '../actions/types';
+// import { LOGIN_USER } from './actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
 ReactDOM.render(
-  <Provider store={store}}>
+  <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/SignInOrSignUp" component={SignInOrSignUp}/>
+        <Route path="/SignIn" component={SignIn}/>
+        <Route path="/SignUp" component={SignUp}/>
         <Route path="/UserInfo" component={UserInfo}/>
         <Route path="/ContactInfo" component={ContactInfo}/>
         <Route path="/conversation" component={Conversation}/>

@@ -43,7 +43,10 @@ class ConversationHeader extends Component {
             primaryText={name}
             secondaryText="Online"
             onClick={this.infoClicked}
-            leftAvatar={<Avatar size={45} src={require(`../images/${image}`)} />}
+            leftAvatar={
+              <Avatar size={45} src={require(`../images/${image}`)}
+                style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}/>
+            }
           />
           <IconMenu
             className="three-dots-conversation-header"
