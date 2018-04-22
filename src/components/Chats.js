@@ -24,7 +24,7 @@ class Chats extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user);
-        // this.fetchData(user.displayName);
+        this.fetchData(user.displayName);
       } else {
         this.props.actionLogoutUser();
         this.props.history.push('/SignIn');

@@ -21,26 +21,23 @@ class SignUp extends Component {
   }
 
   componentDidMount(prevProps, prevState, snapshot) {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) { // logged in
-        this.updateProfileAndLoginAfterSignUp(user);
-      }  else { // NOT logged in
-        console.log('not logged in');
-        this.props.actionLogoutUser();
-        this.props.history.push('/SignIn');
-      }
-    });
+    // fire.auth().onAuthStateChanged(user => {
+    //   if (user) { // logged in
+    //     this.updateProfileAndLogin(user);
+    //   }
+      // else { // NOT logged in
+      //   console.log('not logged in');
+      //   this.props.actionLogoutUser();
+      //   this.props.history.push('/SignIn');
+      // }
+    // });
   }
 
-  updateProfileAndLoginAfterSignUp = (user) => {
-    const { SIemail, SUusername } = this.state;
+  updateProfileAndLogin = (user) => {
+    const { SUemail, SUusername } = this.state;
     console.log(SUusername);
-    const numOfImages = 8;
-    const randImg = Math.floor((Math.random() * numOfImages) + 1);
-    const photoURL = `contact${randImg}.png`;
-    user.updateProfile({ SUusername, photoURL }).then(() => {
+    user.updateProfile({ displayName: SUusername }).then(() => {
       console.log(user);
-      this.props.actionLoginUser(user.username);
       this.props.history.push('/');
     }, error => {
       console.log(error);
@@ -65,10 +62,11 @@ class SignUp extends Component {
       if(validateEmail(SUemail) && validatePassword(SUpassword)) {
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
-          signUpMessage = `Welcome ${user.email}`;
+          signUpMessage = `Welcome ${user.displayName}`;
           console.log(user);
-          this.setState({ loading: false, signUpMessage, inOrUp: 2 });
+          this.setState({ loading: false, signUpMessage });
           this.props.actionSignUpUser(SUemail, SUusername);
+          this.updateProfileAndLogin(user);
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });
@@ -78,6 +76,10 @@ class SignUp extends Component {
         this.setState({ loading: false, signUpMessage });
       }
     });
+  }
+
+  signInClick = () => {
+    this.props.history.push('SignIn');
   }
 
   handleChange = (e) => {
@@ -116,7 +118,7 @@ class SignUp extends Component {
                 </button>
 
                 <FlatButton label="Already A Member? Sign In" primary={true}
-                onClick={this.toggleInOrUp} />
+                  onClick={this.signInClick} />
 
               </div>
             </div>

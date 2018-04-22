@@ -19,40 +19,35 @@ class SignIn extends Component {
   }
 
   componentDidMount(prevProps, prevState, snapshot) {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) { // logged in
-        this.loginAfterSignIn(user);
-      } else { // NOT logged in
-        console.log('not logged in');
-        this.props.actionLogoutUser();
-        this.props.history.push('/SignIn');
-      }
-    });
-  }
-
-  loginAfterSignIn = (user) => {
-    const { SIemail } = this.state;
-    console.log(SIemail);
-    const displayName = SIemail;
-    console.log(user);
-    this.props.actionLoginUser(user.username);
-    this.props.history.push('/');
+    // fire.auth().onAuthStateChanged(user => {
+    //   if (user) { // logged in
+    //     this.loginAfterSignIn(user);
+    //   }
+      // else { // NOT logged in
+      //   console.log('not logged in');
+      //   this.props.actionLogoutUser();
+      // }
+    // });
   }
 
   singIn = () => {
     this.setState({ loading: true }, () => {
       let signInMessage = '';
       const { SIemail, SIpassword } = this.state;
-      fire.auth().signInWithEmailAndPassword(SIemail, SIpassword)
-      .then(user => {
+      fire.auth().signInWithEmailAndPassword(SIemail, SIpassword).then(user => {
         signInMessage = `Welcome ${user.displayName}`;
-        this.setState({ loading: false, signInMessage, inOrUp: 1 });
-        this.props.actionLoginUser(SIemail, SIpassword);
+        this.setState({ loading: false, signInMessage });
+        this.props.actionLoginUser(user.displayName);
+        this.props.history.push('/');
       }).catch(e => {
         signInMessage = e.message;
         this.setState({ loading: false, signInMessage });
       });
     });
+  }
+
+  signUpClick = () => {
+    this.props.history.push('SignUp');
   }
 
   handleChange = (e) => {
@@ -88,7 +83,7 @@ class SignIn extends Component {
                 </button>
 
                 <FlatButton label="Sign Up For Whats-app" primary={true}
-                  onClick={this.toggleInOrUp} />
+                  onClick={this.signUpClick} />
 
               </div>
             </div>

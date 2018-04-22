@@ -17,12 +17,12 @@ export function actionSignUpUser(email, username) {
   const numOfImages = 8;
   const randImg = Math.floor((Math.random() * numOfImages) + 1);
   return dispatch => {
-    fire.database().ref(`${email}/info`).set({
+    fire.database().ref(`${username}/info`).set({
       email: email,
       name: username,
       image: `contact${randImg}.png`
     }).then(() => {
-      fire.database().ref(`${email}/info`).once('value', snap => {
+      fire.database().ref(`${username}/info`).once('value', snap => {
         const userFromDB = snap.val();
         dispatch({
           type: SIGNUP_USER,
@@ -33,9 +33,9 @@ export function actionSignUpUser(email, username) {
   };
 }
 
-export function actionLoginUser(email, username) {
+export function actionLoginUser(username) {
   return dispatch => {
-    fire.database().ref(`${email}/info`).once('value', snap => {
+    fire.database().ref(`${username}/info`).once('value', snap => {
       const userFromDB = snap.val();
       dispatch({
         type: LOGIN_USER,
@@ -83,6 +83,33 @@ export function actionUpdateUserData(currentUser, newUsername, callback) {
     callback();
   }
 }
+
+// export function actionSendMessage(sender, reciever, message, callback) {
+//   const { id, content, date, hour } = message;
+//   return dispatch => {
+//     fire.database().ref(`${sender}/chats/${reciever}/messages/${message.id}`).set({
+//       id, content, date, hour, senderOrReciever: 1
+//     }).then(() => {
+//       fire.database().ref(`${reciever}/chats/${sender}/messages/${message.id}`).set({
+//         id, content, date, hour, senderOrReciever: 2
+//       })
+//     }).then(() => {
+//       fire.database().ref(`${sender}/chats/${reciever}/lastMessage/`).set({
+//         id, content, date, hour, senderOrReciever: 1
+//       })
+//     }).then(() => {
+//       fire.database().ref(`${reciever}/chats/${sender}/lastMessage/`).set({
+//         id, content, date, hour, senderOrReciever: 2
+//       })
+//     }).then(() => {
+//       dispatch({
+//         type: SEND_MESSAGE,
+//         payload: message
+//       });
+//       callback();
+//     });
+//   }
+// }
 
 export function actionSendMessage(sender, reciever, message, callback) {
   const { id, content, date, hour } = message;
