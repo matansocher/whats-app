@@ -1,0 +1,20 @@
+.search-chats {
+  width: 100%;
+  padding: 10px;
+}
+
+.back-button-user-info {
+  position: absolute;
+  left: 15px;
+}
+
+.back-user-info {
+  position: absolute;
+  top: 5px;
+  left: -2px;
+}
+
+.three-dots-add-friend {
+  position: relative;
+  top: -58px;
+}

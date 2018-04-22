@@ -34,10 +34,8 @@ class SignUp extends Component {
   }
 
   updateProfileAndLogin = (user) => {
-    const { SUemail, SUusername } = this.state;
-    console.log(SUusername);
+    const { SUusername } = this.state;
     user.updateProfile({ displayName: SUusername }).then(() => {
-      console.log(user);
       this.props.history.push('/');
     }, error => {
       console.log(error);
@@ -48,7 +46,6 @@ class SignUp extends Component {
     this.setState({ loading: true }, () => {
       let signUpMessage = '';
       const { SUemail, SUpassword, SUusername } = this.state;
-      console.log(SUemail, SUpassword, SUusername);
       if(validatePassword(SUpassword) === 'short') {
         signUpMessage = `Password should contain at least 6 chars`;
         this.setState({ loading: false, signUpMessage });
@@ -63,7 +60,6 @@ class SignUp extends Component {
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
           signUpMessage = `Welcome ${user.displayName}`;
-          console.log(user);
           this.setState({ loading: false, signUpMessage });
           this.props.actionSignUpUser(SUemail, SUusername);
           this.updateProfileAndLogin(user);

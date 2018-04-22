@@ -11,6 +11,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import UserInfo from './components/UserInfo';
 import ContactInfo from './components/ContactInfo';
+import SearchFriends from './components/SearchFriends';
 import NoMatch from './components/NoMatch';
 import './css/index.css';
 // import { LOGIN_USER } from './actions/types';
@@ -22,6 +23,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
+        <Route path="/SearchFriends" component={SearchFriends}/>
         <Route path="/SignIn" component={SignIn}/>
         <Route path="/SignUp" component={SignUp}/>
         <Route path="/UserInfo" component={UserInfo}/>

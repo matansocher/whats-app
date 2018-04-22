@@ -30,6 +30,10 @@ class ChatsHeader extends Component {
     this.props.userInfoShow();
   }
 
+  searchFriendsClicked = () => {
+    this.props.searchFriendsShow();
+  }
+
   handleChange = (e) => {
     var change = {};
     const { value, name } = e.target;
@@ -50,6 +54,7 @@ class ChatsHeader extends Component {
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
             <MenuItem primaryText="User Info" onClick={this.userInfoClicked} />
+            <MenuItem primaryText="Search Friends" onClick={this.searchFriendsClicked} />
             <MenuItem primaryText="Log Out" onClick={this.logout} />
           </IconMenu>
 
@@ -57,7 +62,7 @@ class ChatsHeader extends Component {
             <h1>Chats</h1>
             <div className="search-chats">
               <input className="form-control text-input" placeholder="Search" name="searchTerm"
-              value={this.state.searchTerm} onChange={this.handleChange} />
+                value={this.state.searchTerm} onChange={this.handleChange} />
             </div>
           </div>
         </div>

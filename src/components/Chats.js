@@ -7,7 +7,7 @@ import fire from '../firebase';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import MobileTearSheet from '../../../MobileTearSheet';
+import FlatButton from 'material-ui/FlatButton';
 import { List } from 'material-ui/List';
 import '../css/chats.css';
 
@@ -20,10 +20,8 @@ class Chats extends Component {
     }
   }
   componentDidMount() {
-    let currentUser = null;
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user);
         this.fetchData(user.displayName);
       } else {
         this.props.actionLogoutUser();
@@ -70,6 +68,14 @@ class Chats extends Component {
     this.props.history.push('UserInfo');
   }
 
+  searchFriendsShow = () => {
+    this.props.history.push('SearchFriends');
+  }
+
+  searchFriendsClick = () => {
+    this.props.history.push('SearchFriends');
+  }
+
   fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
@@ -80,6 +86,15 @@ class Chats extends Component {
     })
   }
   renderList() {
+    if(_.isEmpty(this.props.contactList)) {
+      return(
+        <div className="center">
+          <h3>You have no conversations yet</h3>
+          <FlatButton label="Find Friends" primary={true}
+            onClick={this.searchFriendsClick} />
+        </div>
+      );
+    }
     let contacts = _.values(this.props.contactList);
     if(this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
       contacts = filterBySearch(contacts, this.state.searchTerm);
@@ -103,7 +118,8 @@ class Chats extends Component {
           <div className="chats-header">
             <ChatsHeader searchContact={this.searchContact}
               userInfoShow={this.userInfoShow}
-              navigateToRoute={this.navigateToRoute} />
+              navigateToRoute={this.navigateToRoute}
+              searchFriendsShow={this.searchFriendsShow} />
           </div>
           <div className="scrollable-chats">
             { this.state.loading ? getCircularProgress() : <span /> }

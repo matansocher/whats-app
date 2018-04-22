@@ -10,19 +10,19 @@ import {
   SEND_MESSAGE, // send messageto sender and reciever
   DELETE_MESSAGE, // delete individual message
   DELETE_CONTACT_CHAT,
-  PINUNPIN_CHAT
+  PINUNPIN_CHAT,
+  SEARCH_FRIENDS, // when trying to fetch new friends
+  ADD_AS_FRIEND // when adding a friend
 } from '../actions/types';
 
-export function actionSignUpUser(email, username) {
+export function actionSignUpUser(email, name) {
   const numOfImages = 8;
   const randImg = Math.floor((Math.random() * numOfImages) + 1);
   return dispatch => {
-    fire.database().ref(`${username}/info`).set({
-      email: email,
-      name: username,
-      image: `contact${randImg}.png`
+    fire.database().ref(`${name}/info`).set({
+      email, name, image: `contact${randImg}.png`
     }).then(() => {
-      fire.database().ref(`${username}/info`).once('value', snap => {
+      fire.database().ref(`${name}/info`).once('value', snap => {
         const userFromDB = snap.val();
         dispatch({
           type: SIGNUP_USER,
@@ -53,7 +53,6 @@ export function actionLogoutUser() {
 }
 
 export function actinoFetchAllDataForUser(email, callback) {
-  console.log(email);
   return dispatch => {
     fire.database().ref(`${email}`).once('value', snap => {
       const allDataForUser = snap.val();
@@ -67,7 +66,7 @@ export function actinoFetchAllDataForUser(email, callback) {
 }
 
 export function actionUpdateUserData(currentUser, newUsername, callback) {
-  const { email, username } = currentUser;
+  const { username } = currentUser;
   return dispatch => {
     fire.database().ref(`${username}/info`).set({
       name: newUsername
@@ -187,5 +186,36 @@ export function actionPinUnpinChat(userEmail, contact, isPinned, callback) {
       payload: contact
     });
     callback();
+  }
+}
+
+export function actionSearchFriends(username, callback) {
+  return dispatch => {
+    fire.database().ref(`users`).once('value', snap => {
+      dispatch({
+        type: SEARCH_FRIENDS,
+        payload: snap.val()
+      });
+      callback();
+    });
+  }
+}
+
+export function actionAddAsFriend(username, friend, callback) {
+  const { name, email, image } = friend;
+  console.log(username, friend);
+  return dispatch => {
+    fire.database().ref(`${username}/chats/${name}`).set({
+      name
+    }).then(() => {
+      fire.database().ref(`${username}/chats/${name}/info`).set({
+        email, image, name, pinned: false
+      });
+      dispatch({
+        type: ADD_AS_FRIEND,
+        payload: friend
+      });
+      callback();
+    });
   }
 }

@@ -49,8 +49,9 @@ export function getCircularProgress() {
 }
 
 export function filterBySearch(array, subString) {
+  console.log(array, subString);
   return _.filter(array, (contact) => {
-    return contact.info.name.toLowerCase()
+    return contact.name.toLowerCase()
       .startsWith(subString.toLowerCase());
   });
 }
