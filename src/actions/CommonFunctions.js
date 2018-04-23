@@ -71,7 +71,9 @@ export function sortContactByLastMessageTime(array) {
 }
 
 export function splitToPinned(array) {
+  console.log(array);
   const pinned =  _.filter(array, (contact) => {
+    console.log(contact);
     return contact.info.pinned;
   });
   const notPinned =  _.filter(array, (contact) => {
@@ -81,6 +83,9 @@ export function splitToPinned(array) {
 }
 
 export function getLastMessageTime(lastMessage) {
+  if(!lastMessage) {
+    return "";
+  }
   const splitDate = lastMessage.date.split('-');
   const today = new Date();
   const dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);

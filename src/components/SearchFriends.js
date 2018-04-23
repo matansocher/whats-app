@@ -60,6 +60,13 @@ class SearchFriends extends Component {
   }
 
   renderList() {
+    if(_.isEmpty(this.props.searchFriends)) {
+      return(
+        <div className="center">
+          <h3>You have no more friends to add</h3>
+        </div>
+      );
+    }
     let friendsAvailable = _.values(this.props.searchFriends);
     if(this.state.searchTerm !== '' && friendsAvailable && !_.isEmpty(friendsAvailable))
       friendsAvailable = filterBySearch(friendsAvailable, this.state.searchTerm);

@@ -1,5 +1,9 @@
 import _ from 'lodash';
-import { ADD_AS_FRIEND, DELETE_CONTACT_CHAT, FETCH_ALL_DATA_FOR_USER, SEND_MESSAGE, DELETE_MESSAGE, PINUNPIN_CHAT } from '../actions/types';
+import {
+  LOGOUT_USER, ADD_AS_FRIEND, DELETE_CONTACT_CHAT,
+  FETCH_ALL_DATA_FOR_USER, SEND_MESSAGE, DELETE_MESSAGE,
+  PINUNPIN_CHAT
+} from '../actions/types';
 
 export default function(state = [], action) {
   let newState = state;
@@ -10,6 +14,7 @@ export default function(state = [], action) {
     case DELETE_CONTACT_CHAT:
       return _.without(newState, action.payload);
     case ADD_AS_FRIEND:
+      console.log([...state, action.payload]);
       return [...state, action.payload];
     case SEND_MESSAGE:
       // const { id, date, hour, content, senderOrReciever } = action.payload;
@@ -26,6 +31,8 @@ export default function(state = [], action) {
       const index = _.findIndex(newState, { name: action.payload.name }); // return ron\tuta
       newState[index].info = action.payload;
       return newState;
+    case LOGOUT_USER:
+      return [];
     default:
       return state;
   }

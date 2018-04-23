@@ -208,6 +208,14 @@ export function actionAddAsFriend(username, friend, callback) {
     fire.database().ref(`${username}/chats/${name}`).set({
       name
     }).then(() => {
+      fire.database().ref(`${username}/chats/${name}/lastMessage`).set({
+        id: "aaaaaa",
+        content: " ",
+        date: " ",
+        hour: "0:0:0",
+        senderOrReciever: 1
+      });
+    }).then(() => {
       fire.database().ref(`${username}/chats/${name}/info`).set({
         email, image, name, pinned: false
       });
