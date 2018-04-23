@@ -27,11 +27,11 @@ class ChatsHeader extends Component {
   }
 
   userInfoClicked = () => {
-    this.props.userInfoShow();
+    this.props.navigateToRoute('UserInfo');
   }
 
   searchFriendsClicked = () => {
-    this.props.searchFriendsShow();
+    this.props.navigateToRoute('SearchFriends');
   }
 
   handleChange = (e) => {

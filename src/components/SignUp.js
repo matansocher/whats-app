@@ -20,19 +20,6 @@ class SignUp extends Component {
     }
   }
 
-  componentDidMount(prevProps, prevState, snapshot) {
-    // fire.auth().onAuthStateChanged(user => {
-    //   if (user) { // logged in
-    //     this.updateProfileAndLogin(user);
-    //   }
-      // else { // NOT logged in
-      //   console.log('not logged in');
-      //   this.props.actionLogoutUser();
-      //   this.props.history.push('/SignIn');
-      // }
-    // });
-  }
-
   updateProfileAndLogin = (user) => {
     const { SUusername } = this.state;
     user.updateProfile({ displayName: SUusername }).then(() => {

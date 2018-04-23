@@ -18,7 +18,7 @@ export default class NoMatch extends Component {
             <Link to="/">App</Link>
           </li>
           <li className="list-group-item list-group-item-warning">
-            <Link to="/SignIn">Sign In Or Sign Up</Link>
+            <Link to="/SignIn">Sign In</Link>
           </li>
         </ul>
       </div>

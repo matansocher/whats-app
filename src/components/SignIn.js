@@ -18,18 +18,6 @@ class SignIn extends Component {
     }
   }
 
-  componentDidMount(prevProps, prevState, snapshot) {
-    // fire.auth().onAuthStateChanged(user => {
-    //   if (user) { // logged in
-    //     this.loginAfterSignIn(user);
-    //   }
-      // else { // NOT logged in
-      //   console.log('not logged in');
-      //   this.props.actionLogoutUser();
-      // }
-    // });
-  }
-
   singIn = () => {
     this.setState({ loading: true }, () => {
       let signInMessage = '';

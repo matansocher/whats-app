@@ -64,14 +64,6 @@ class Chats extends Component {
     this.setState({ searchTerm });
   }
 
-  userInfoShow = () => {
-    this.props.history.push('UserInfo');
-  }
-
-  searchFriendsShow = () => {
-    this.props.history.push('SearchFriends');
-  }
-
   searchFriendsClick = () => {
     this.props.history.push('SearchFriends');
   }
@@ -117,9 +109,7 @@ class Chats extends Component {
         <div>
           <div className="chats-header">
             <ChatsHeader searchContact={this.searchContact}
-              userInfoShow={this.userInfoShow}
-              navigateToRoute={this.navigateToRoute}
-              searchFriendsShow={this.searchFriendsShow} />
+              navigateToRoute={this.navigateToRoute} />
           </div>
           <div className="scrollable-chats">
             { this.state.loading ? getCircularProgress() : <span /> }
