@@ -54,7 +54,7 @@ class Conversation extends Component {
     });
   }
 
-  actionDeleteMessagedeleteMessage = (message) => {
+  actionDeleteMessage = (message) => {
     this.setState({ loading: true }, () => {
       const sender = this.props.user.name;
       const reciever = this.props.currentChatUser.name;
@@ -71,7 +71,7 @@ class Conversation extends Component {
     }
     return (
       messages.map((message, index, messages) => {
-        if (message) {
+        if (message && message.content !== " ") {
           let arrayToReturn = [];
           if(index !== messages.length - 1) { // not the last message
             if(!compareDates(message.date, messages[index+1].date)) {
@@ -84,8 +84,7 @@ class Conversation extends Component {
             deleteMessage={this.deleteMessage} />);
           return arrayToReturn;
         }
-        const random = Math.floor((Math.random() * 10000) + 1);
-        return <span key={random} />
+        return <span key={1} />
       })
     );
   }
