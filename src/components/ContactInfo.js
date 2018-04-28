@@ -1,24 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { getCircularProgress } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import BackIcon from 'material-ui/svg-icons/navigation/chevron-left';
 
-import 'emoji-mart/css/emoji-mart.css';
-import { Picker } from 'emoji-mart';
-
 class ContactInfo extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
-      username: this.props.currentChatUser.name,
-      picture: '',
-      loading: false
+
     }
   }
 
@@ -33,8 +26,8 @@ class ContactInfo extends Component {
   }
 
   render() {
-    if(this.state.loading || !this.props.currentChatUser) {
-      return getCircularProgress();
+    if(_.isEmpty(this.props.currentChatUser)) {
+      return <span />;
     } else {
       const { image, name } = this.props.currentChatUser;
       return (
@@ -53,11 +46,6 @@ class ContactInfo extends Component {
                   <h1>{`${name}'s`} Profile</h1>
                 </div>
 
-                <Picker set='emojione' />
-                <Picker onSelect={this.addEmoji} />
-                <Picker title='Pick your emoji…' emoji='point_up' />
-                <Picker style={{ position: 'absolute', bottom: '20px', right: '20px' }} />
-                <Picker i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
               </div>
 
               <br />
@@ -67,6 +55,7 @@ class ContactInfo extends Component {
                 <br />
                 <h2>{name}</h2>
               </div>
+
             </div>
           </MuiThemeProvider>
         </div>

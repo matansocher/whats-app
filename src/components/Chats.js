@@ -64,10 +64,6 @@ class Chats extends Component {
     this.setState({ searchTerm });
   }
 
-  searchFriendsClick = () => {
-    this.props.history.push('SearchFriends');
-  }
-
   fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
       const username = this.props.user.name;
@@ -83,7 +79,7 @@ class Chats extends Component {
         <div className="center">
           <h3>You have no conversations yet</h3>
           <FlatButton label="Find Friends" primary={true}
-            onClick={this.searchFriendsClick} />
+            onClick={() => this.navigateToRoute('SearchFriends')} />
         </div>
       );
     }

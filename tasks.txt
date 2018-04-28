@@ -1,1 +1,6 @@
 message design - don't copy from whatsapp, make your own
+
+last seen
+emoji
+tests
+db

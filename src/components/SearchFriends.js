@@ -25,8 +25,11 @@ class SearchFriends extends Component {
     }
     this.setState({ loading: true }, () => {
       if(_.isEmpty(this.props.searchFriends)) {
-        this.props.actionSearchFriends(this.props.user.username, () => {
-          this.setState({ loading: false });
+        const { name } = this.props.user;
+        const friendsNames = _.map(this.props.contactList, e => e.name);
+        friendsNames.push(this.props.user.name); // this user
+        this.props.actionSearchFriends(name, friendsNames, () => {
+        this.setState({ loading: false });
         });
       } else {
         this.setState({ loading: false });
@@ -36,8 +39,8 @@ class SearchFriends extends Component {
 
   addAsFriend = (friend) => {
     this.setState({ loading: true }, () => {
-      const username = this.props.user.name;
-      this.props.actionAddAsFriend(username, friend, () => {
+      const { name } = this.props.user;
+      this.props.actionAddAsFriend(name, friend, () => {
         this.setState({ loading: false });
       });
     });
@@ -113,9 +116,9 @@ class SearchFriends extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     user: state.user,
+    contactList: state.contactList,
     searchFriends: state.searchFriends
   };
 }

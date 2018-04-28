@@ -71,9 +71,9 @@ export function sortContactByLastMessageTime(array) {
 }
 
 export function splitToPinned(array) {
-  console.log(array);
+  // console.log(array);
   const pinned =  _.filter(array, (contact) => {
-    console.log(contact);
+    // console.log(contact);
     return contact.info.pinned;
   });
   const notPinned =  _.filter(array, (contact) => {
@@ -83,7 +83,7 @@ export function splitToPinned(array) {
 }
 
 export function getLastMessageTime(lastMessage) {
-  if(!lastMessage) {
+  if(!lastMessage || lastMessage.date === " " || lastMessage.hour === "0:0:0") {
     return "";
   }
   const splitDate = lastMessage.date.split('-');

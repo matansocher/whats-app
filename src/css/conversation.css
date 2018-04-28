@@ -15,6 +15,10 @@
   overflow: auto;
 }
 
+.scrollable-conversation-short {
+  bottom: 300px;
+}
+
 .conversation-footer {
   position: fixed;
   bottom: 0;
@@ -22,6 +26,10 @@
   width: 100%;
   z-index: 100;
   background: #262B34;
+}
+
+.conversation-footer-long {
+  height: 300px;
 }
 
 .three-dots-conversation-header {
@@ -56,26 +64,27 @@
 
 .send-icon {
   position: absolute;
-  top: 18px;
+  bottom: 18px;
   right: 10px;
 }
 
 .smiley {
   position: absolute;
-  top: 18px;
+  bottom: 18px;
   left: 10px;
 }
 
 .input-message {
   position: absolute;
   margin: auto;
-  top: 10px;
-  bottom: 10px;
+  margin-top: 10px;
+  /* top: 10px;
+  bottom: 10px; */
   right: 0;
   left: 0;
   border-radius: 15px;
   width: 75%;
-  height: 75%;
+  height: 25%;
   padding: 10px;
 }
 

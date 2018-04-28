@@ -8,10 +8,6 @@ import ConversationFooter from './ConversationFooter';
 import Message from './Message';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import '../css/conversation.css';
-
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 class Conversation extends Component {
   constructor(props) {
     super(props);
@@ -75,8 +71,10 @@ class Conversation extends Component {
           let arrayToReturn = [];
           if(index !== messages.length - 1) { // not the last message
             if(!compareDates(message.date, messages[index+1].date)) {
+              let lastTime = getLastMessageTime(messages[index+1]);
+              lastTime = lastTime.includes(":") ? "Toady" : lastTime;
               arrayToReturn.push(<div key={messages[index+1].date} className="day-indicator">
-                {getLastMessageTime(messages[index+1])}
+                {lastTime}
               </div>)
             }
           }
@@ -92,20 +90,24 @@ class Conversation extends Component {
   render() {
     return (
       <MuiThemeProvider>
+
         <div>
+
           <div className="conversation-header">
             <ConversationHeader currentChatUser={this.props.currentChatUser}
               backToChats={this.backToChats}
               contactInfoShow={this.contactInfoShow} />
           </div>
-          <div className="scrollable-conversation">
+          <div id="scrollable-conversation" className="scrollable-conversation">
             { this.state.loading ? getCircularProgress() : <span />}
-            {this.renderMessages()}
+            { this.renderMessages() }
+
             <div style={{ float:"left", clear: "both" }}
               ref={(el) => { this.messagesEnd = el; }}>
             </div>
           </div>
-          <div className="conversation-footer">
+
+          <div id="conversation-footer" className="conversation-footer">
             <ConversationFooter sendMessage={this.sendMessage} />
           </div>
         </div>
@@ -119,7 +121,8 @@ function mapStateToProps(state) {
     currentChatUser: state.currentChatUser,
     currentChatMessages: state.currentChatMessages,
     // currentChat: state.currentChat,
-    user: state.user
+    user: state.user,
+    message: state.message
   };
 }
 

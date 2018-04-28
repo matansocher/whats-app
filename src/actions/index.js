@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 import fire from '../firebase';
 import {
   SIGNUP_USER,
@@ -189,12 +189,19 @@ export function actionPinUnpinChat(userEmail, contact, isPinned, callback) {
   }
 }
 
-export function actionSearchFriends(username, callback) {
+export function actionSearchFriends(username, friendsNames, callback) {
   return dispatch => {
     fire.database().ref(`users`).once('value', snap => {
+      const users = snap.val();
+      const notFriends = [];
+      _.map(users, u => {
+        if(!_.includes(friendsNames, u.name)) {
+          notFriends.push(u);
+        }
+      })
       dispatch({
         type: SEARCH_FRIENDS,
-        payload: snap.val()
+        payload: notFriends
       });
       callback();
     });
