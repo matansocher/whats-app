@@ -16,7 +16,7 @@ class Contact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      
     }
   }
 
@@ -26,7 +26,7 @@ class Contact extends Component {
 
   fetchChatData = () => {
     const contactName = this.props.contact.info.name;
-    this.props.fetchChatData(contactName)
+    this.props.fetchChatData(contactName);
   }
 
   pinUnpinChat = () => {
