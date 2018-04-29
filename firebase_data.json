@@ -1,96 +1,75 @@
 {
-  "matansocher@gmail.com" : {
-    "chats" : {
-      "ron@gmail.com" : {
-        "info" : {
-          "email" : "ron@gmail.com",
-          "image" : "contact3.png",
-          "name" : "ron",
-          "pinned" : false
-        },
-        "lastMessage" : {
-          "content" : "Matan to Ron",
-          "date" : "2018-04-05",
-          "hour" : "17:37:03",
-          "id" : "SCSRlg",
-          "senderOrReciever" : 1
-        },
-        "messages" : {
-          "SCSRlg" : {
-            "content" : "Matan to Ron",
-            "date" : "2018-03-18",
-            "hour" : "17:37:02",
-            "id" : "SCSRlg",
-            "senderOrReciever" : 1
-          }
-        },
-        "email" : "ron@gmail.com"
+  "users" : {
+    "h48dj398vnr4jc6matan" : {
+      "userId": "h48dj398vnr4jc6matan",
+      "email" : "matan@gmail.com",
+      "image" : "contact4.png",
+      "name" : "matan"
+    },
+    "9cur84jcmi93nckksron" : {
+      "userId": "9cur84jcmi93nckksron",
+      "email" : "ron@gmail.com",
+      "image" : "contact3.png",
+      "name" : "ron"
+    },
+    "8fhcnalwq9cmzie4tuta" : {
+      "userId": "8fhcnalwq9cmzie4tuta",
+      "email" : "tuta@gmail.com",
+      "image" : "contact2.png",
+      "name" : "tuta"
+    }
+  },
+  "friendships": {
+    "h48dj398vnr4jc6matan": {
+      "9cur84jcmi93nckksron": "",
+      "8fhcnalwq9cmzie4tuta": ""
+    },
+    "9cur84jcmi93nckksron": {
+      "8fhcnalwq9cmzie4tuta": ""
+    },
+    "8fhcnalwq9cmzie4tuta": {
+      "9cur84jcmi93nckksron": ""
+    }
+  },
+  "messages" : {
+    "matan:ron" : {
+      "SDbNdp" : {
+        "content" : "Matan to Ron",
+        "date" : "2018-4-27",
+        "hour" : "13:29:41",
+        "id" : "SDbNdp",
+        "sender" : "matan"
       },
-      "tuta@gmail.com" : {
-        "info" : {
-          "email" : "tuta@gmail.com",
-          "image" : "contact2.png",
-          "name" : "tuta",
-          "pinned" : true
-        },
-        "lastMessage" : {
-          "content" : "Hi tuti",
-          "date" : "2018-4-13",
-          "hour" : "16:0:18",
-          "id" : "SDNQAS",
-          "senderOrReciever" : 1
-        },
-        "messages" : {
-          "SCSRlg" : {
-            "content" : "Matan to Tuta",
-            "date" : "2018-03-18",
-            "hour" : "17:37:00",
-            "id" : "SCSRlg",
-            "senderOrReciever" : 1
-          },
-          "SDFMjq" : {
-            "content" : "hello",
-            "date" : "2018-4-5",
-            "hour" : "12:35:42",
-            "id" : "SDFMjq",
-            "senderOrReciever" : 1
-          },
-          "SDFMmG" : {
-            "content" : "whatsapp",
-            "date" : "2018-4-5",
-            "hour" : "12:38:6",
-            "id" : "SDFMmG",
-            "senderOrReciever" : 1
-          },
-          "SDMAjY" : {
-            "content" : "dsfv",
-            "date" : "2018-4-12",
-            "hour" : "0:35:24",
-            "id" : "SDMAjY",
-            "senderOrReciever" : 1
-          },
-          "SDMAju" : {
-            "content" : "sdvsdfvsdfv",
-            "date" : "2018-4-12",
-            "hour" : "0:35:46",
-            "id" : "SDMAju",
-            "senderOrReciever" : 1
-          },
-          "SDNQAS" : {
-            "content" : "Hi tuti",
-            "date" : "2018-4-13",
-            "hour" : "16:0:18",
-            "id" : "SDNQAS",
-            "senderOrReciever" : 1
-          }
-        },
-        "email" : "tuta@gmail.com"
+      "lastMessage" : {
+        "content" : " ",
+        "date" : " ",
+        "hour" : " ",
+        "id" : "aaaaaa",
+        "sender" : "matan"
       }
     },
-    "info" : {
-      "email" : "matansocher@gmail.com",
-      "image" : "contact1.png",
-      "name" : "matan"
+    "matan:tuta" : {
+      "SCSRlg" : {
+        "content" : "Matan To Tuta",
+        "date" : "2018-03-18",
+        "hour" : "17:37:00",
+        "id" : "SCSRlg",
+        "sender" : "matan"
+      },
+      "SDbNdp" : {
+        "content" : "Hi Guzi",
+        "date" : "2018-4-27",
+        "hour" : "13:29:41",
+        "id" : "SDbNdp",
+        "sender" : "tuta"
+      },
+      "lastMessage" : {
+        "content" : "Hi Guzi",
+        "date" : "2018-4-27",
+        "hour" : "13:29:41",
+        "id" : "SDbNdp",
+        "sender" : "tuta"
+      }
     }
   }
 }

@@ -20,8 +20,9 @@ class SignUp extends Component {
     }
   }
 
-  updateProfileAndLogin = (user) => {
+  updateProfile = (user) => {
     const { SUusername } = this.state;
+    console.log(user);
     user.updateProfile({ displayName: SUusername }).then(() => {
       this.props.history.push('/');
     }, error => {
@@ -48,8 +49,8 @@ class SignUp extends Component {
         .then(user => {
           signUpMessage = `Welcome ${user.displayName}`;
           this.setState({ loading: false, signUpMessage });
-          this.props.actionSignUpUser(SUemail, SUusername);
-          this.updateProfileAndLogin(user);
+          this.updateProfile(user);
+          this.props.actionSignUpUser(SUemail, SUusername, user.uid);
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });

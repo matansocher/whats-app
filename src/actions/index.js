@@ -15,14 +15,37 @@ import {
   ADD_AS_FRIEND // when adding a friend
 } from '../actions/types';
 
-export function actionSignUpUser(email, name) {
+import { makeUserID } from './CommonFunctions';
+
+// export function actionSignUpUser(email, name) {
+//   const numOfImages = 8;
+//   const randImg = Math.floor((Math.random() * numOfImages) + 1);
+//   return dispatch => {
+//     fire.database().ref(`${name}/info`).set({
+//       email, name, image: `contact${randImg}.png`
+//     }).then(() => {
+//       fire.database().ref(`${name}/info`).once('value', snap => {
+//         const userFromDB = snap.val();
+//         dispatch({
+//           type: SIGNUP_USER,
+//           payload: userFromDB
+//         });
+//       });
+//     });
+//   };
+// }
+
+export function actionSignUpUser(email, name, userId) {
   const numOfImages = 8;
   const randImg = Math.floor((Math.random() * numOfImages) + 1);
+  const image = `contact${randImg}.png`;
+  console.log(userId, email, name,image);
   return dispatch => {
-    fire.database().ref(`${name}/info`).set({
-      email, name, image: `contact${randImg}.png`
+    fire.database().ref(`users/${userId}`).set({
+      userId, email, name, image
     }).then(() => {
-      fire.database().ref(`${name}/info`).once('value', snap => {
+      fire.database().ref(`users/${userId}`).once('value', snap => {
+        console.log(snap, snap.val());
         const userFromDB = snap.val();
         dispatch({
           type: SIGNUP_USER,
@@ -234,3 +257,12 @@ export function actionAddAsFriend(username, friend, callback) {
     });
   }
 }
+
+// const first = "ron";
+// const second = "matan";
+// const array = [first, second];
+// array.sort();
+// fire.database().ref(`messages/${array[0]}:${array[1]}`).once('value', snap => {
+//   const result = snap.val();
+//   console.log(result);
+// });
