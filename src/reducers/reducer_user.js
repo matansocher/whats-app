@@ -5,7 +5,7 @@ export default function(state = {}, action) {
   // let newState = state;
   switch (action.type) {
     case FETCH_ALL_DATA_FOR_USER:
-      return action.payload.info;
+      return action.payload.user;
     case SIGNUP_USER:
       return action.payload;
     case LOGIN_USER:

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { getLastMessageTime } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import MoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';

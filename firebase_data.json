@@ -1,74 +1,119 @@
 {
-  "users" : {
-    "h48dj398vnr4jc6matan" : {
-      "userId": "h48dj398vnr4jc6matan",
-      "email" : "matan@gmail.com",
-      "image" : "contact4.png",
-      "name" : "matan"
+  "users": {
+    "a48dj398vnr4jc6matan": {
+      "uid": "a48dj398vnr4jc6matan",
+      "email": "matan@gmail.com",
+      "image": "contact4.png",
+      "name": "matan"
     },
-    "9cur84jcmi93nckksron" : {
-      "userId": "9cur84jcmi93nckksron",
-      "email" : "ron@gmail.com",
-      "image" : "contact3.png",
-      "name" : "ron"
+    "bcur84jcmi93nckksron": {
+      "uid": "bcur84jcmi93nckksron",
+      "email": "ron@gmail.com",
+      "image": "contact3.png",
+      "name": "ron"
     },
-    "8fhcnalwq9cmzie4tuta" : {
-      "userId": "8fhcnalwq9cmzie4tuta",
-      "email" : "tuta@gmail.com",
-      "image" : "contact2.png",
-      "name" : "tuta"
+    "cfhcnalwq9cmzie4tuta": {
+      "uid": "cfhcnalwq9cmzie4tuta",
+      "email": "tuta@gmail.com",
+      "image": "contact2.png",
+      "name": "tuta"
     }
   },
   "friendships": {
-    "h48dj398vnr4jc6matan": {
-      "9cur84jcmi93nckksron": "",
-      "8fhcnalwq9cmzie4tuta": ""
+    "a48dj398vnr4jc6matan": {
+      "bcur84jcmi93nckksron": "0",
+      "cfhcnalwq9cmzie4tuta": "0"
     },
-    "9cur84jcmi93nckksron": {
-      "8fhcnalwq9cmzie4tuta": ""
+    "bcur84jcmi93nckksron": {
+      "cfhcnalwq9cmzie4tuta": "0"
     },
-    "8fhcnalwq9cmzie4tuta": {
-      "9cur84jcmi93nckksron": ""
+    "cfhcnalwq9cmzie4tuta": {
+      "bcur84jcmi93nckksron": "0"
     }
   },
-  "messages" : {
-    "matan:ron" : {
-      "SDbNdp" : {
-        "content" : "Matan to Ron",
-        "date" : "2018-4-27",
-        "hour" : "13:29:41",
-        "id" : "SDbNdp",
-        "sender" : "matan"
+  "messages": {
+    "a48dj398vnr4jc6matan": {
+      "bcur84jcmi93nckksron": {
+        "SDbNdp": {
+          "content": "Matan to Ron",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "a48dj398vnr4jc6matan"
+        },
+        "lastMessage": {
+          "content": "Matan to Ron",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "a48dj398vnr4jc6matan"
+        }
       },
-      "lastMessage" : {
-        "content" : " ",
-        "date" : " ",
-        "hour" : " ",
-        "id" : "aaaaaa",
-        "sender" : "matan"
+      "cfhcnalwq9cmzie4tuta": {
+        "SCSRlg": {
+          "content": "Matan To Tuta",
+          "date": "2018-03-18",
+          "hour": "17:37:00",
+          "id": "SCSRlg",
+          "sender": "a48dj398vnr4jc6matan"
+        },
+        "SDbNdp": {
+          "content": "Hi Guzi",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "cfhcnalwq9cmzie4tuta"
+        },
+        "lastMessage": {
+          "content": "Hi Guzi",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "cfhcnalwq9cmzie4tuta"
+        }
       }
     },
-    "matan:tuta" : {
-      "SCSRlg" : {
-        "content" : "Matan To Tuta",
-        "date" : "2018-03-18",
-        "hour" : "17:37:00",
-        "id" : "SCSRlg",
-        "sender" : "matan"
-      },
-      "SDbNdp" : {
-        "content" : "Hi Guzi",
-        "date" : "2018-4-27",
-        "hour" : "13:29:41",
-        "id" : "SDbNdp",
-        "sender" : "tuta"
-      },
-      "lastMessage" : {
-        "content" : "Hi Guzi",
-        "date" : "2018-4-27",
-        "hour" : "13:29:41",
-        "id" : "SDbNdp",
-        "sender" : "tuta"
+    "bcur84jcmi93nckksron": {
+      "a48dj398vnr4jc6matan": {
+        "SDbNdp": {
+          "content": "Matan to Ron",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "a48dj398vnr4jc6matan"
+        },
+        "lastMessage": {
+          "content": " ",
+          "date": " ",
+          "hour": " ",
+          "id": "aaaaaa",
+          "sender": "a48dj398vnr4jc6matan"
+        }
+      }
+    },
+    "cfhcnalwq9cmzie4tuta": {
+      "a48dj398vnr4jc6matan": {
+        "SCSRlg": {
+          "content": "Matan To Tuta",
+          "date": "2018-03-18",
+          "hour": "17:37:00",
+          "id": "SCSRlg",
+          "sender": "a48dj398vnr4jc6matan"
+        },
+        "SDbNdp": {
+          "content": "Hi Guzi",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "cfhcnalwq9cmzie4tuta"
+        },
+        "lastMessage": {
+          "content": "Hi Guzi",
+          "date": "2018-4-27",
+          "hour": "13:29:41",
+          "id": "SDbNdp",
+          "sender": "cfhcnalwq9cmzie4tuta"
+        }
       }
     }
   }

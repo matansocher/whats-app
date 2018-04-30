@@ -10,7 +10,7 @@ export default function(state = [], action) {
   // console.log(state);
   switch (action.type) {
     case FETCH_ALL_DATA_FOR_USER:
-      return _.values(action.payload.chats);
+      return _.values(action.payload.friends);
     case DELETE_CONTACT_CHAT:
       return _.without(newState, action.payload);
     case ADD_AS_FRIEND:

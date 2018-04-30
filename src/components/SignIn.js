@@ -25,7 +25,7 @@ class SignIn extends Component {
       fire.auth().signInWithEmailAndPassword(SIemail, SIpassword).then(user => {
         signInMessage = `Welcome ${user.displayName}`;
         this.setState({ loading: false, signInMessage });
-        this.props.actionLoginUser(user.displayName);
+        this.props.actionLoginUser(user.uid);
         this.props.history.push('/');
       }).catch(e => {
         signInMessage = e.message;

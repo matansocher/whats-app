@@ -5,7 +5,7 @@ export default function(state = {}, action) {
   // let newState = state;
   switch (action.type) {
     case FETCH_CHAT_DATA:
-      return action.payload.info;
+      return action.payload.contact;
     default:
       return state;
   }

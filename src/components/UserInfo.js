@@ -14,8 +14,9 @@ class UserInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.user.name,
-      picture: '',
+      name: this.props.user.name,
+      email: this.props.user.email,
+      picture: this.props.user.image,
       loading: false
     }
   }
@@ -32,8 +33,9 @@ class UserInfo extends Component {
 
   saveClick = () => {
     this.setState({ loading: true }, () => {
-      const newUsername = this.state.username;
-      this.props.actionUpdateUserData(this.props.user, newUsername, () => {
+      const { name, email, picture } = this.state;
+      const newUser = { uid: this.props.user.uid, name, email, picture }
+      this.props.actionUpdateUserData(newUser, () => {
         this.setState({ loading: false });
       });
     })
@@ -76,10 +78,10 @@ class UserInfo extends Component {
                 <Avatar size={90} src={require(`../images/${image}`)} />
 
                 <TextField
-                  hintText="Username"
-                  value={this.state.username}
+                  hintText="Name"
+                  value={this.state.name}
                   onChange={this.handleChange}
-                  name="username" />
+                  name="name" />
               </div>
 
               <RaisedButton primary={true} label="Update Info" onClick={this.saveClick} />

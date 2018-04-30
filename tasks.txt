@@ -1,5 +1,7 @@
 message design - don't copy from whatsapp, make your own
 
+pin on unpin
+last message
 last seen
 emoji
 tests

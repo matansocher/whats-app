@@ -14,16 +14,16 @@ class SignUp extends Component {
     super(props);
     this.state = {
       SUemail: '',
-      SUusername: '',
+      SUname: '',
       SUpassword: '',
       loading: false
     }
   }
 
   updateProfile = (user) => {
-    const { SUusername } = this.state;
+    const { SUname } = this.state;
     console.log(user);
-    user.updateProfile({ displayName: SUusername }).then(() => {
+    user.updateProfile({ displayName: SUname }).then(() => {
       this.props.history.push('/');
     }, error => {
       console.log(error);
@@ -33,14 +33,14 @@ class SignUp extends Component {
   singUp = () => {
     this.setState({ loading: true }, () => {
       let signUpMessage = '';
-      const { SUemail, SUpassword, SUusername } = this.state;
+      const { SUemail, SUpassword, SUname } = this.state;
       if(validatePassword(SUpassword) === 'short') {
         signUpMessage = `Password should contain at least 6 chars`;
         this.setState({ loading: false, signUpMessage });
         return;
       }
-      if(!SUusername || SUusername.length === 0) {
-        signUpMessage = `Username is empty`;
+      if(!SUname || SUname.length === 0) {
+        signUpMessage = `Name is empty`;
         this.setState({ loading: false, signUpMessage });
         return;
       }
@@ -49,8 +49,7 @@ class SignUp extends Component {
         .then(user => {
           signUpMessage = `Welcome ${user.displayName}`;
           this.setState({ loading: false, signUpMessage });
-          this.updateProfile(user);
-          this.props.actionSignUpUser(SUemail, SUusername, user.uid);
+          this.props.actionSignUpUser(SUemail, SUname, user.uid, this.updateProfile(user));
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });
@@ -86,8 +85,8 @@ class SignUp extends Component {
                   value={this.state.SUemail} onChange={this.handleChange}
                 />
                 <br />
-                <TextField hintText="Username" name="SUusername"
-                  value={this.state.SUusername} onChange={this.handleChange}
+                <TextField hintText="Name" name="SUname"
+                  value={this.state.SUname} onChange={this.handleChange}
                 />
                 <br />
                 <TextField hintText="Password" name="SUpassword" type="password"

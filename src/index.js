@@ -14,7 +14,6 @@ import ContactInfo from './components/ContactInfo';
 import SearchFriends from './components/SearchFriends';
 import NoMatch from './components/NoMatch';
 import './css/index.css';
-// import { LOGIN_USER } from './actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);

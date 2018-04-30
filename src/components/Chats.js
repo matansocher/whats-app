@@ -22,7 +22,7 @@ class Chats extends Component {
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        this.fetchData(user.displayName);
+        this.fetchData(user.uid);
       } else {
         this.props.actionLogoutUser();
         this.props.history.push('/SignIn');
@@ -30,9 +30,9 @@ class Chats extends Component {
     });
   }
 
-  fetchData = (currentUser) => {
+  fetchData = (uid) => {
     this.setState({ loading: true }, () => {
-      this.props.actinoFetchAllDataForUser(currentUser, () => {
+      this.props.actionFetchAllDataForUser(uid, () => {
         this.setState({ loading: false });
       });
     });
@@ -40,8 +40,8 @@ class Chats extends Component {
 
   deleteContactChat = (contact) => {
     this.setState({ loading: true }, () => {
-      const username = this.props.user.name;
-      this.props.actionDeleteContactChat(username, contact, () => {
+      const useruid = this.props.user.uid;
+      this.props.actionDeleteContactChat(useruid, contact.uid, () => {
         this.setState({ loading: false });
       });
     });
@@ -49,8 +49,8 @@ class Chats extends Component {
 
   pinUnpinChat = (contactInfo, isPinned) => {
     this.setState({ loading: true }, () => {
-      const username = this.props.user.name;
-      this.props.actionPinUnpinChat(username, contactInfo, isPinned, () => {
+      const useruid = this.props.user.uid;
+      this.props.actionPinUnpinChat(useruid, contactInfo, isPinned, () => {
         this.setState({ loading: false });
       });
     });
@@ -66,8 +66,8 @@ class Chats extends Component {
 
   fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
-      const username = this.props.user.name;
-      this.props.actionFetchChatData(username, contact, () => {
+      const useruid = this.props.user.uid;
+      this.props.actionFetchChatData(useruid, contact.uid, () => {
         this.setState({ loading: false })
         this.props.history.push('/conversation');
       });

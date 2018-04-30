@@ -41,9 +41,9 @@ class Conversation extends Component {
 
   sendMessage = (message, callback) => {
     this.setState({ loading: true }, () => {
-      const sender = this.props.user.name;
-      const reciever = this.props.currentChatUser.name;
-      this.props.actionSendMessage(sender, reciever, message, () => {
+      const senderuid = this.props.user.uid;
+      const recieveruid = this.props.currentChatUser.uid;
+      this.props.actionSendMessage(senderuid, recieveruid, message, () => {
         this.setState({ loading: false });
         callback();
       });
@@ -52,9 +52,9 @@ class Conversation extends Component {
 
   actionDeleteMessage = (message) => {
     this.setState({ loading: true }, () => {
-      const sender = this.props.user.name;
-      const reciever = this.props.currentChatUser.name;
-      this.props.actionDeleteMessage(sender, reciever, message, () => {
+      const senderuid = this.props.user.uid;
+      const recieveruid = this.props.currentChatUser.uid;
+      this.props.actionDeleteMessage(senderuid, recieveruid, message, () => {
         this.setState({ loading: false });
       });
     });
