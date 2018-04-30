@@ -21,9 +21,7 @@ export function actionFetchImages(callback) {
   return dispatch => {
     const arrayOfImages = [];
       for (let i = 1; i <= numberOfImages; i++) {
-        console.log(i)
-        var starsRef = firebase.storage().ref(`/images/contact${i}.png`);
-        starsRef.getDownloadURL().then(url => {
+        fire.storage().ref(`/images/contact${i}.png`).getDownloadURL().then(url => {
           arrayOfImages.push(url);
         }).catch(error => {
           return arrayOfImages;
@@ -31,8 +29,8 @@ export function actionFetchImages(callback) {
         });
       }
     dispatch({
-      type: SIGNUP_USER,
-      payload: userFromDB
+      type: FETCH_IMAGES,
+      payload: arrayOfImages
     });
     callback();
   }
@@ -126,27 +124,24 @@ export function actionFetchAllDataForUser(uid, callback) {
   const fullData = { user: {}, friends: [] };
   return dispatch => {
     fire.database().ref(`friendships/${uid}`).once('value', friendsSnap => {
+      console.log(friendsSnap);
       const friendsKeys = Object.keys(friendsSnap.val());
       friendsKeys.map(friendKey => {
         fire.database().ref(`users/${friendKey}`).once('value', friendSnap => {
           fullData.friends.push(friendSnap.val());
         });
+        return friendKey;
       });
     }).then(() => {
-      fire.database().ref(`users/${uid}`).once('value'), userSnap => {
+      fire.database().ref(`users/${uid}`).once('value', userSnap => {
         fullData.user = userSnap;
         dispatch({
           type: FETCH_ALL_DATA_FOR_USER,
           payload: fullData
         });
         callback();
-      }
+      });
     });
-      // dispatch({
-      //   type: FETCH_ALL_DATA_FOR_USER,
-      //   payload: allDataForUser
-      // });
-      // callback();
   }
 }
 
@@ -275,8 +270,8 @@ export function actionFetchChatData(useruid, contactuid, callback) {
 
   return dispatch => {
     fire.database().ref(`messages/${useruid}:${contactuid}`).once('value', messagesSnap => {
-      const messages = snap.val();
-      chatData.messages.push(messagesSnap.val());
+      const messages = messagesSnap.val();
+      chatData.messages.push(messages);
     }).then(() => {
       fire.database().ref(`users/${contactuid}`).once('value', contactSnap => {
         chatData.contact(contactSnap.val());
@@ -294,7 +289,7 @@ export function actionDeleteContactChat(useruid, contactuid, callback) {
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).remove().then(() => {
       fire.database().ref(`friendships/${useruid}/${contactuid}`).remove().then(() => {
-        fire.database().ref(`friendships/${contactuid}/${conuseruidtactuid}`).remove();
+        fire.database().ref(`friendships/${contactuid}/${useruid}`).remove();
       });
     });
     dispatch({
@@ -320,11 +315,11 @@ export function actionDeleteContactChat(useruid, contactuid, callback) {
 //   }
 // }
 
-export function actionPinUnpinChat(useruid, contactuid, isPinned, callback) {
+export function actionPinUnpinChat(useruid, contact, isPinned, callback) {
   const { email, image, name } = contact;
   contact.pinned = isPinned;
   return dispatch => {
-    fire.database().ref(`${userEmail}/chats/${name}/info/`).set({
+    fire.database().ref(`${useruid}/chats/${contact.uid}/info/`).set({
       email, image, name, pinned: isPinned
     });//******************************************************************** */
     dispatch({
@@ -354,15 +349,16 @@ export function actionSearchFriends(uid, friendsUids, callback) {
   }
 }
 
-export function actionAddAsFriend(useruid, frienduid, callback) {
-  console.log(uid, friend);
+export function actionAddAsFriend(useruid, contact, callback) {
+  const contactuid = contact.uid;
+  console.log(useruid, contactuid);
   return dispatch => {
-    fire.database().ref(`friendships/${userUid}/${friendUid}`).set({
-      friendUid: "0"
+    fire.database().ref(`friendships/${useruid}/${contactuid}`).set({
+      somethingggggg: contactuid
       // ********************************************** lo meduiak
     }).then(() => {
-      fire.database().ref(`friendships/${friendUid}/${userUid}`).set({
-        userUid: "0"
+      fire.database().ref(`friendships/${contactuid}/${useruid}`).set({
+        somethingggggg: useruid
       })
     })
     // .then(() => {
@@ -384,7 +380,7 @@ export function actionAddAsFriend(useruid, frienduid, callback) {
     // });
     dispatch({
       type: ADD_AS_FRIEND,
-      payload: friend
+      payload: contact
     });
     callback();
   }

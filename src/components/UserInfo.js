@@ -4,7 +4,7 @@ import * as actions from '../actions/index';
 import { getCircularProgress } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MobileTearSheet from '../../../MobileTearSheet';
+// import MobileTearSheet from '../../../MobileTearSheet';
 import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
@@ -112,11 +112,9 @@ class UserInfo extends Component {
                   name="email" />
 
                 <div>
-                  <MobileTearSheet>
                     <List>
                       {this.renderImages()}
                     </List>
-                  </MobileTearSheet>
                 </div>
 
               </div>

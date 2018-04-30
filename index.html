@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script>
+    
+    var config = {
+        apiKey: "AIzaSyDPWq3lQLvl3FJ_9o_QfffYqovo3qtOaas",
+        authDomain: "whats-app-c5bba.firebaseapp.com",
+        databaseURL: "https://whats-app-c5bba.firebaseio.com",
+        projectId: "whats-app-c5bba",
+        storageBucket: "whats-app-c5bba.appspot.com",
+        messagingSenderId: "638752731394"
+    };
+    const fire = firebase.initializeApp(config);
+
+        fire.database().ref("friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2").once('value', function(snapshot) {
+            console.log(snapshot);
+        });
+
+        firebase.database().ref("friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2").once('value', function(snapshot) {
+            console.log(snapshot);
+        });
+
+        fire.database().ref("users").once('value', snap => {
+            console.log(snap);
+        });
+
+        fire.database().ref("messages").once('value', snap => {
+            console.log(snap);
+        });
+
+
+    </script>
+</body>
+</html>

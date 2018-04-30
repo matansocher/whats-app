@@ -22,6 +22,7 @@ class SearchFriends extends Component {
   componentDidMount() {
     if(_.isEmpty(this.props.user)) {
       this.props.history.push('/');
+      return;
     }
     this.setState({ loading: true }, () => {
       if(_.isEmpty(this.props.searchFriends)) {

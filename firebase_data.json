@@ -1,118 +1,118 @@
 {
   "users": {
-    "a48dj398vnr4jc6matan": {
-      "uid": "a48dj398vnr4jc6matan",
+    "6NXDlDWAikUjblf1TuoPPn9dQ6X2": {
+      "uid": "6NXDlDWAikUjblf1TuoPPn9dQ6X2",
       "email": "matan@gmail.com",
       "image": "contact4.png",
       "name": "matan"
     },
-    "bcur84jcmi93nckksron": {
-      "uid": "bcur84jcmi93nckksron",
+    "ow53xj093cO3Xdl4LU9nFCYwof62": {
+      "uid": "ow53xj093cO3Xdl4LU9nFCYwof62",
       "email": "ron@gmail.com",
       "image": "contact3.png",
       "name": "ron"
     },
-    "cfhcnalwq9cmzie4tuta": {
-      "uid": "cfhcnalwq9cmzie4tuta",
+    "X5SPMZudBGURAwkLQwTWDFCO9tj2": {
+      "uid": "X5SPMZudBGURAwkLQwTWDFCO9tj2",
       "email": "tuta@gmail.com",
       "image": "contact2.png",
       "name": "tuta"
     }
   },
   "friendships": {
-    "a48dj398vnr4jc6matan": {
-      "bcur84jcmi93nckksron": "0",
-      "cfhcnalwq9cmzie4tuta": "0"
+    "6NXDlDWAikUjblf1TuoPPn9dQ6X2": {
+      "ow53xj093cO3Xdl4LU9nFCYwof62": "0",
+      "X5SPMZudBGURAwkLQwTWDFCO9tj2": "0"
     },
-    "bcur84jcmi93nckksron": {
-      "cfhcnalwq9cmzie4tuta": "0"
+    "ow53xj093cO3Xdl4LU9nFCYwof62": {
+      "X5SPMZudBGURAwkLQwTWDFCO9tj2": "0"
     },
-    "cfhcnalwq9cmzie4tuta": {
-      "bcur84jcmi93nckksron": "0"
+    "X5SPMZudBGURAwkLQwTWDFCO9tj2": {
+      "ow53xj093cO3Xdl4LU9nFCYwof62": "0"
     }
   },
   "messages": {
-    "a48dj398vnr4jc6matan": {
-      "bcur84jcmi93nckksron": {
+    "6NXDlDWAikUjblf1TuoPPn9dQ6X2": {
+      "ow53xj093cO3Xdl4LU9nFCYwof62": {
         "SDbNdp": {
           "content": "Matan to Ron",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "a48dj398vnr4jc6matan"
+          "sender": "6NXDlDWAikUjblf1TuoPPn9dQ6X2"
         },
         "lastMessage": {
           "content": "Matan to Ron",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "a48dj398vnr4jc6matan"
+          "sender": "6NXDlDWAikUjblf1TuoPPn9dQ6X2"
         }
       },
-      "cfhcnalwq9cmzie4tuta": {
+      "X5SPMZudBGURAwkLQwTWDFCO9tj2": {
         "SCSRlg": {
           "content": "Matan To Tuta",
           "date": "2018-03-18",
           "hour": "17:37:00",
           "id": "SCSRlg",
-          "sender": "a48dj398vnr4jc6matan"
+          "sender": "6NXDlDWAikUjblf1TuoPPn9dQ6X2"
         },
         "SDbNdp": {
           "content": "Hi Guzi",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "cfhcnalwq9cmzie4tuta"
+          "sender": "X5SPMZudBGURAwkLQwTWDFCO9tj2"
         },
         "lastMessage": {
           "content": "Hi Guzi",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "cfhcnalwq9cmzie4tuta"
+          "sender": "X5SPMZudBGURAwkLQwTWDFCO9tj2"
         }
       }
     },
-    "bcur84jcmi93nckksron": {
-      "a48dj398vnr4jc6matan": {
+    "ow53xj093cO3Xdl4LU9nFCYwof62": {
+      "6NXDlDWAikUjblf1TuoPPn9dQ6X2": {
         "SDbNdp": {
           "content": "Matan to Ron",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "a48dj398vnr4jc6matan"
+          "sender": "6NXDlDWAikUjblf1TuoPPn9dQ6X2"
         },
         "lastMessage": {
           "content": " ",
           "date": " ",
           "hour": " ",
           "id": "aaaaaa",
-          "sender": "a48dj398vnr4jc6matan"
+          "sender": "6NXDlDWAikUjblf1TuoPPn9dQ6X2"
         }
       }
     },
-    "cfhcnalwq9cmzie4tuta": {
-      "a48dj398vnr4jc6matan": {
+    "X5SPMZudBGURAwkLQwTWDFCO9tj2": {
+      "6NXDlDWAikUjblf1TuoPPn9dQ6X2": {
         "SCSRlg": {
           "content": "Matan To Tuta",
           "date": "2018-03-18",
           "hour": "17:37:00",
           "id": "SCSRlg",
-          "sender": "a48dj398vnr4jc6matan"
+          "sender": "6NXDlDWAikUjblf1TuoPPn9dQ6X2"
         },
         "SDbNdp": {
           "content": "Hi Guzi",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "cfhcnalwq9cmzie4tuta"
+          "sender": "X5SPMZudBGURAwkLQwTWDFCO9tj2"
         },
         "lastMessage": {
           "content": "Hi Guzi",
           "date": "2018-4-27",
           "hour": "13:29:41",
           "id": "SDbNdp",
-          "sender": "cfhcnalwq9cmzie4tuta"
+          "sender": "X5SPMZudBGURAwkLQwTWDFCO9tj2"
         }
       }
     }

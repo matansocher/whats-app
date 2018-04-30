@@ -29,9 +29,9 @@ class Contact extends Component {
   }
 
   pinUnpinChat = () => {
-    const contactInfo = this.props.contact.info;
-    const isPinned = contactInfo.pinned ? true : false;
-    this.props.pinUnpinChat(contactInfo, !isPinned); // reverse the pin bool
+    const contact = this.props.contact.info;
+    const isPinned = contact.pinned ? true : false;
+    this.props.pinUnpinChat(contact, !isPinned); // reverse the pin bool
   }
 
   render() {

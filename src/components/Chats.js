@@ -47,10 +47,10 @@ class Chats extends Component {
     });
   }
 
-  pinUnpinChat = (contactInfo, isPinned) => {
+  pinUnpinChat = (contact, isPinned) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionPinUnpinChat(useruid, contactInfo, isPinned, () => {
+      this.props.actionPinUnpinChat(useruid, contact, isPinned, () => {
         this.setState({ loading: false });
       });
     });

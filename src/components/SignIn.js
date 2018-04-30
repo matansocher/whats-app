@@ -62,8 +62,15 @@ class SignIn extends Component {
                   value={this.state.SIpassword} onChange={this.handleChange}
                 />
 
+                <br /><br />
+
+                {this.state.signInMessage ? 
+                  <div className="alert alert-danger">
+                    <strong>{this.state.signInMessage}</strong>
+                  </div> 
+                : <span />}
+
                 <br />
-                <p>{this.state.signInMessage}</p>
 
                 <button className="btn btn-primary"
                   onClick={this.singIn}>

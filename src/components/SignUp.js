@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fire from '../firebase';
 import * as actions from '../actions/index';
+import _ from 'lodash';
 import '../css/signIn.css';
 import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MobileTearSheet from '../../../MobileTearSheet';
-import { List, ListItem } from 'material-ui/List';
+// import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -19,20 +20,19 @@ class SignUp extends Component {
       SUemail: '',
       SUname: '',
       SUpassword: '',
-      SUimage: '',
+      SUimage: 'contact4.png',
       loading: false
     }
   }
 
   componentDidMount() {
-    this.setState({ loading: true }, () => {
-      if(_.isEmpty(this.props.currentChatUser)) {
+    if(_.isEmpty(this.props.currentChatUser)) {
+      this.setState({ loading: true }, () => {
         this.props.actionFetchImages(() => {
           this.setState({ loading: false });
         });
-      }
-    });
-    
+      });
+    }
   }
   
 
@@ -49,7 +49,7 @@ class SignUp extends Component {
   singUp = () => {
     this.setState({ loading: true }, () => {
       let signUpMessage = '';
-      const { SUemail, SUpassword, SUname } = this.state;
+      const { SUemail, SUpassword, SUname, SUimage } = this.state;
       if(validatePassword(SUpassword) === 'short') {
         signUpMessage = `Password should contain at least 6 chars`;
         this.setState({ loading: false, signUpMessage });
@@ -88,6 +88,7 @@ class SignUp extends Component {
   }
 
   handleChangeImage = (e) => {
+    console.log(e.target.value);
     this.setState({ SUimage: e.target.value });
   }
 
@@ -97,20 +98,21 @@ class SignUp extends Component {
     // for (let i = 1; i <= numOfImages; i++) {
     //   arrayOfImages[i] = `contact${i}.png`;
     // }
-    this.props.images.map((image) => {
-      return(
-        <ListItem onClick={this.handleChangeImage} primaryText="Sent mail" leftIcon={
-          <Avatar size={45} src={require(`../images/${image}`)}
-            style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
-        } />
-      );
-    });
+    if(_.isEmpty(this.props.images)) {
+      return <span />;
+    }
+    return (
+      this.props.images.map(image => {
+        return(
+          <MenuItem key ={image} onClick={this.handleChangeImage} leftIcon={
+            <Avatar className="center" size={45} src={image}/>
+          } />
+        );
+      })
+    )
   }
 
   render() {
-    const style = {
-      paper: { display: 'inline-block', float: 'left', margin: '16px 32px 16px 0' }
-    };
     return (
       <div className="container container-fluid center">
         <MuiThemeProvider>
@@ -120,26 +122,15 @@ class SignUp extends Component {
                 { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
                 <h3>Create An Acount</h3>
                 <TextField hintText="Email" name="SUemail"
-                  value={this.state.SUemail} onChange={this.handleChange}
-                />
+                  value={this.state.SUemail} onChange={this.handleChange} />
                 <br />
                 <TextField hintText="Name" name="SUname"
-                  value={this.state.SUname} onChange={this.handleChange}
-                />
+                  value={this.state.SUname} onChange={this.handleChange} />
                 <br />
                 <TextField hintText="Password" name="SUpassword" type="password"
-                  value={this.state.SUpassword} onChange={this.handleChange}
-                />
+                  value={this.state.SUpassword} onChange={this.handleChange} />
                 <br />
                 <p>{this.state.signUpMessage}</p>
-
-                <div>
-                  <MobileTearSheet>
-                    <List>
-                      {this.renderImages()}
-                    </List>
-                  </MobileTearSheet>
-                </div>
 
                 <button className="btn btn-primary"
                   onClick={this.singUp}>
@@ -159,9 +150,21 @@ class SignUp extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
     images: state.images
   };
 }
 
-export default connect(null, actions)(SignUp);
+export default connect(mapStateToProps, actions)(SignUp);
+
+
+// style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}
+
+/* <div className="center">
+<Paper style={style.paper}>
+  <Menu>
+    {this.renderImages()}
+  </Menu>
+</Paper>
+</div> */
