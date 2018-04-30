@@ -60,7 +60,7 @@ export function filterBySearch(array, subString) {
   });
 }
 
-export function sortContactByLastMessageTime(array) {
+export function sortContactsByLastMessageTime(array) {
   return array.sort((a, b) => {
     array.map((contact) => {
       const splitDays = contact.lastMessage.date.split('-');

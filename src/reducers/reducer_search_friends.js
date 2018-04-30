@@ -7,7 +7,7 @@ export default function(state = [], action) {
     case SEARCH_FRIENDS:
       return action.payload;
     case ADD_AS_FRIEND:
-     return _.without(state, action.payload);
+      return _.without(state, action.payload);
     default:
       return state;
   }

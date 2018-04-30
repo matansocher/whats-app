@@ -12,10 +12,31 @@ import {
   DELETE_CONTACT_CHAT,
   PINUNPIN_CHAT,
   SEARCH_FRIENDS, // when trying to fetch new friends
-  ADD_AS_FRIEND // when adding a friend
+  ADD_AS_FRIEND, // when adding a friend
+  FETCH_IMAGES
 } from '../actions/types';
 
-import { sortByUid } from './CommonFunctions';
+export function actionFetchImages(callback) {
+  const numberOfImages = 8;
+  return dispatch => {
+    const arrayOfImages = [];
+      for (let i = 1; i <= numberOfImages; i++) {
+        console.log(i)
+        var starsRef = firebase.storage().ref(`/images/contact${i}.png`);
+        starsRef.getDownloadURL().then(url => {
+          arrayOfImages.push(url);
+        }).catch(error => {
+          return arrayOfImages;
+          // console.log(error)
+        });
+      }
+    dispatch({
+      type: SIGNUP_USER,
+      payload: userFromDB
+    });
+    callback();
+  }
+}
 
 // export function actionSignUpUser(email, name) {
 //   const numOfImages = 8;
@@ -35,10 +56,10 @@ import { sortByUid } from './CommonFunctions';
 //   };
 // }
 
-export function actionSignUpUser(email, name, uid, callback) {
-  const numOfImages = 8;
-  const randImg = Math.floor((Math.random() * numOfImages) + 1);
-  const image = `contact${randImg}.png`;
+export function actionSignUpUser(email, name, image, uid, callback) {
+  // const numOfImages = 8;
+  // const randImg = Math.floor((Math.random() * numOfImages) + 1);
+  // const image = `contact${randImg}.png`;
   console.log(uid, email, name, image);
   return dispatch => {
     fire.database().ref(`users/${uid}`).set({

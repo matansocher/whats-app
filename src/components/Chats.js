@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
-import { getCircularProgress, sortContactByLastMessageTime, filterBySearch, splitToPinned } from '../actions/CommonFunctions';
+import { getCircularProgress, sortContactsByLastMessageTime, filterBySearch, splitToPinned } from '../actions/CommonFunctions';
 import fire from '../firebase';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
@@ -73,6 +73,7 @@ class Chats extends Component {
       });
     })
   }
+  
   renderList() {
     if(_.isEmpty(this.props.contactList)) {
       return(
@@ -86,7 +87,7 @@ class Chats extends Component {
     let contacts = _.values(this.props.contactList);
     if(this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
       contacts = filterBySearch(contacts, this.state.searchTerm);
-    contacts = sortContactByLastMessageTime(contacts);
+    contacts = sortContactsByLastMessageTime(contacts);
     contacts = splitToPinned(contacts);
     return (
       contacts.map((contact) => {

@@ -5,6 +5,9 @@ import * as actions from '../actions/index';
 import '../css/signIn.css';
 import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MobileTearSheet from '../../../MobileTearSheet';
+import { List, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import FlatButton from 'material-ui/FlatButton';
@@ -16,9 +19,22 @@ class SignUp extends Component {
       SUemail: '',
       SUname: '',
       SUpassword: '',
+      SUimage: '',
       loading: false
     }
   }
+
+  componentDidMount() {
+    this.setState({ loading: true }, () => {
+      if(_.isEmpty(this.props.currentChatUser)) {
+        this.props.actionFetchImages(() => {
+          this.setState({ loading: false });
+        });
+      }
+    });
+    
+  }
+  
 
   updateProfile = (user) => {
     const { SUname } = this.state;
@@ -49,7 +65,7 @@ class SignUp extends Component {
         .then(user => {
           signUpMessage = `Welcome ${user.displayName}`;
           this.setState({ loading: false, signUpMessage });
-          this.props.actionSignUpUser(SUemail, SUname, user.uid, this.updateProfile(user));
+          this.props.actionSignUpUser(SUemail, SUname, SUimage, user.uid, this.updateProfile(user));
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });
@@ -68,11 +84,33 @@ class SignUp extends Component {
   handleChange = (e) => {
     var change = {};
     change[e.target.name] = e.target.value;
-    this.setState(change, () => {
+    this.setState(change);
+  }
+
+  handleChangeImage = (e) => {
+    this.setState({ SUimage: e.target.value });
+  }
+
+  renderImages() {
+    // const numOfImages = 8;
+    // const arrayOfImages = [];
+    // for (let i = 1; i <= numOfImages; i++) {
+    //   arrayOfImages[i] = `contact${i}.png`;
+    // }
+    this.props.images.map((image) => {
+      return(
+        <ListItem onClick={this.handleChangeImage} primaryText="Sent mail" leftIcon={
+          <Avatar size={45} src={require(`../images/${image}`)}
+            style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
+        } />
+      );
     });
   }
 
   render() {
+    const style = {
+      paper: { display: 'inline-block', float: 'left', margin: '16px 32px 16px 0' }
+    };
     return (
       <div className="container container-fluid center">
         <MuiThemeProvider>
@@ -95,6 +133,14 @@ class SignUp extends Component {
                 <br />
                 <p>{this.state.signUpMessage}</p>
 
+                <div>
+                  <MobileTearSheet>
+                    <List>
+                      {this.renderImages()}
+                    </List>
+                  </MobileTearSheet>
+                </div>
+
                 <button className="btn btn-primary"
                   onClick={this.singUp}>
                     Sign Up
@@ -110,6 +156,12 @@ class SignUp extends Component {
       </div>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    images: state.images
+  };
 }
 
 export default connect(null, actions)(SignUp);
