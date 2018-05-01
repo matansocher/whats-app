@@ -18,23 +18,27 @@
         storageBucket: "whats-app-c5bba.appspot.com",
         messagingSenderId: "638752731394"
     };
-    const fire = firebase.initializeApp(config);
+    var fire = firebase.initializeApp(config);
 
-        fire.database().ref("friendships").once('value', function(snapshot) {
-            console.log(snapshot);
-        });
+    fire.database().ref("friendships").once('value', function(snapshot) {
+        console.log(snapshot);
+    });
 
-        firebase.database().ref("friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2").once('value', function(snapshot) {
-            console.log(snapshot);
-        });
+    firebase.database().ref("friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2").once('value', function(snapshot) {
+        console.log(snapshot);
+    });
 
-        fire.database().ref("users").once('value', snap => {
-            console.log(snap);
-        });
+    fire.database().ref("users").once('value').then(snap => {
+        console.log(snap.child("ref"));
+    });
 
-        fire.database().ref("messages").once('value', snap => {
-            console.log(snap);
-        });
+    fire.database().ref("messages/6NXDlDWAikUjblf1TuoPPn9dQ6X2/X5SPMZudBGURAwkLQwTWDFCO9tj2").once('value', snap => {
+        console.log(snap);
+    });
+
+    fire.database().ref("messages/6NXDlDWAikUjbslf1TuoPPn9dQ6X2/X5SPMZudBGURAwkLQwTWDFCO9tj2").once('value', snap => {
+        console.log(snap);
+    });
 
 
     </script>
