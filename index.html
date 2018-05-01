@@ -20,7 +20,7 @@
     };
     const fire = firebase.initializeApp(config);
 
-        fire.database().ref("friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2").once('value', function(snapshot) {
+        fire.database().ref("friendships").once('value', function(snapshot) {
             console.log(snapshot);
         });
 

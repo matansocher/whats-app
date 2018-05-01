@@ -17,7 +17,7 @@ import {
 } from '../actions/types';
 
 export function actionFetchImages(callback) {
-  const numberOfImages = 8;
+  const numberOfImages = 32;
   return dispatch => {
     const arrayOfImages = [];
       for (let i = 1; i <= numberOfImages; i++) {

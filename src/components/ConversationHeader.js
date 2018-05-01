@@ -18,12 +18,16 @@ class ConversationHeader extends Component {
     }
   }
 
+  deleteContactChat = () => {
+    this.props.deleteContactChat(this.props.currentChatUser);
+  }
+
   backClick = () => {
-    this.props.backToChats();
+    this.props.navigateToRoute('/');
   }
 
   infoClicked = () => {
-    this.props.contactInfoShow();
+    this.props.navigateToRoute('ContactInfo');
   }
 
   render() {
@@ -54,8 +58,7 @@ class ConversationHeader extends Component {
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuItem primaryText="Clear Messages" />
-            <MenuItem primaryText="Delete Chat" />
+            <MenuItem onClick={this.deleteContactChat} primaryText="Delete Chat" />
           </IconMenu>
 
         </div>
@@ -64,4 +67,10 @@ class ConversationHeader extends Component {
   }
 }
 
-export default connect(null, actions)(ConversationHeader);
+function mapStateToProps(state) {
+  return {
+    currentChatUser: state.currentChatUser
+  };
+}
+
+export default connect(mapStateToProps, actions)(ConversationHeader);

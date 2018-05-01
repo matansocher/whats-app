@@ -31,12 +31,17 @@ class Conversation extends Component {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
-  backToChats = () => {
-    this.props.history.push('/');
+  navigateToRoute = (route) => {
+    this.props.history.push(route);
   }
 
-  contactInfoShow = () => {
-    this.props.history.push('/ContactInfo');
+  deleteContactChat = (contact) => {
+    this.setState({ loading: true }, () => {
+      const useruid = this.props.user.uid;
+      this.props.actionDeleteContactChat(useruid, contact.uid, () => {
+        this.setState({ loading: false });
+      });
+    });
   }
 
   sendMessage = (message, callback) => {
@@ -95,8 +100,9 @@ class Conversation extends Component {
 
           <div className="conversation-header">
             <ConversationHeader currentChatUser={this.props.currentChatUser}
-              backToChats={this.backToChats}
-              contactInfoShow={this.contactInfoShow} />
+              backToChats={this.navigateToRoute}
+              contactInfoShow={this.navigateToRoute}
+              deleteContactChat={this.deleteContactChat} />
           </div>
           <div id="scrollable-conversation" className="scrollable-conversation">
             { this.state.loading ? getCircularProgress() : <span />}
