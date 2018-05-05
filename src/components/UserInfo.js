@@ -36,7 +36,8 @@ class UserInfo extends Component {
   saveClick = () => {
     this.setState({ loading: true }, () => {
       const { name, email, picture } = this.state;
-      const newUser = { uid: this.props.user.uid, name, email, picture }
+      const { uid } = this.props.user;
+      const newUser = { uid, name, email, picture }
       this.props.actionUpdateUserData(newUser, () => {
         this.setState({ loading: false });
       });
@@ -71,7 +72,7 @@ class UserInfo extends Component {
   }
 
   render() {
-    if(this.state.loading) {
+    if(_.isEmpty(this.props.user)) {
       return getCircularProgress();
     } else {
       const { image } = this.props.user;
@@ -104,6 +105,8 @@ class UserInfo extends Component {
                   value={this.state.name}
                   onChange={this.handleChange}
                   name="name" />
+
+                <br />
 
                 <TextField
                   hintText="Email"

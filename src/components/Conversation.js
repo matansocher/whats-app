@@ -49,13 +49,13 @@ class Conversation extends Component {
       const senderuid = this.props.user.uid;
       const recieveruid = this.props.currentChatUser.uid;
       this.props.actionSendMessage(senderuid, recieveruid, message, () => {
-        this.setState({ loading: false });
         callback();
+        this.setState({ loading: false });
       });
     });
   }
 
-  actionDeleteMessage = (message) => {
+  deleteMessage = (message) => {
     this.setState({ loading: true }, () => {
       const senderuid = this.props.user.uid;
       const recieveruid = this.props.currentChatUser.uid;
@@ -84,6 +84,7 @@ class Conversation extends Component {
             }
           }
           arrayToReturn.push(<Message key={message.id} message={message}
+            user={this.props.user}
             deleteMessage={this.deleteMessage} />);
           return arrayToReturn;
         }
@@ -102,7 +103,8 @@ class Conversation extends Component {
             <ConversationHeader currentChatUser={this.props.currentChatUser}
               backToChats={this.navigateToRoute}
               contactInfoShow={this.navigateToRoute}
-              deleteContactChat={this.deleteContactChat} />
+              deleteContactChat={this.deleteContactChat}
+              navigateToRoute={this.navigateToRoute} />
           </div>
           <div id="scrollable-conversation" className="scrollable-conversation">
             { this.state.loading ? getCircularProgress() : <span />}

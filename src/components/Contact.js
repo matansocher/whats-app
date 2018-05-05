@@ -24,21 +24,22 @@ class Contact extends Component {
   }
 
   fetchChatData = () => {
-    const contactName = this.props.contact.info.name;
-    this.props.fetchChatData(contactName);
+    const contactUid = this.props.contact.info.uid;
+    this.props.fetchChatData(contactUid);
   }
 
   pinUnpinChat = () => {
-    const contact = this.props.contact.info;
+    const contact = this.props.contact;
     const isPinned = contact.pinned ? true : false;
     this.props.pinUnpinChat(contact, !isPinned); // reverse the pin bool
   }
 
   render() {
-    const { name, image, pinned } = this.props.contact.info;
+    const { name, image } = this.props.contact.info;
+    const { pinned } = this.props.contact;
     const { lastMessage } = this.props;
-    const lastMessageTime = getLastMessageTime(lastMessage);
-    let { content } = lastMessage;
+    const lastMessageTime = lastMessage ? getLastMessageTime(lastMessage) : " ";
+    let content = lastMessage ? lastMessage.content : " ";
     const textWidth = (window.innerWidth - 100)/9;
     content = content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
     return (

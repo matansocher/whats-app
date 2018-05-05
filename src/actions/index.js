@@ -107,34 +107,23 @@ export function actionLogoutUser() {
   }
 }
 
-// export function actionFetchAllDataForUser(email, callback) {
-//   return dispatch => {
-//     fire.database().ref(`${email}`).once('value', snap => {
-//       const allDataForUser = snap.val();
-//       dispatch({
-//         type: FETCH_ALL_DATA_FOR_USER,
-//         payload: allDataForUser
-//       });
-//       callback();
-//     });
-//   }
-// }
-
-export function actionFetchAllDataForUser(uid, callback) {
+export function actionInitialDataForUser(uid, callback) {
   const fullData = { user: {}, friends: [] };
   return dispatch => {
     fire.database().ref(`friendships/${uid}`).once('value', friendsSnap => {
-      console.log(friendsSnap);
-      const friendsKeys = Object.keys(friendsSnap.val());
-      friendsKeys.map(friendKey => {
-        fire.database().ref(`users/${friendKey}`).once('value', friendSnap => {
-          fullData.friends.push(friendSnap.val());
+      const friends = friendsSnap.val();
+      Object.keys(friends).map((objectkey, index) => {
+        const { key, lastMessage, pinned } = friends[objectkey];
+        const friend = { key, lastMessage, pinned };
+        fire.database().ref(`users/${key}`).once('value', friendSnap => {
+          friend.info = friendSnap.val();
+          fullData.friends.push(friend);
         });
-        return friendKey;
+        return friend;
       });
     }).then(() => {
       fire.database().ref(`users/${uid}`).once('value', userSnap => {
-        fullData.user = userSnap;
+        fullData.user = userSnap.val();
         dispatch({
           type: FETCH_ALL_DATA_FOR_USER,
           payload: fullData
@@ -146,6 +135,7 @@ export function actionFetchAllDataForUser(uid, callback) {
 }
 
 export function actionUpdateUserData(newUser, callback) {
+  // ************ also need to update in auth ************
   const { uid, name, email, image } = newUser;
   return dispatch => {
     fire.database().ref(`users/${uid}`).set({
@@ -159,76 +149,23 @@ export function actionUpdateUserData(newUser, callback) {
   }
 }
 
-// export function actionSendMessage(sender, reciever, message, callback) {
-//   const { id, content, date, hour } = message;
-//   return dispatch => {
-//     fire.database().ref(`${sender}/chats/${reciever}/messages/${message.id}`).set({
-//       id, content, date, hour, senderOrReciever: 1
-//     }).then(() => {
-//       fire.database().ref(`${reciever}/chats/${sender}/messages/${message.id}`).set({
-//         id, content, date, hour, senderOrReciever: 2
-//       })
-//     }).then(() => {
-//       fire.database().ref(`${sender}/chats/${reciever}/lastMessage/`).set({
-//         id, content, date, hour, senderOrReciever: 1
-//       })
-//     }).then(() => {
-//       fire.database().ref(`${reciever}/chats/${sender}/lastMessage/`).set({
-//         id, content, date, hour, senderOrReciever: 2
-//       })
-//     }).then(() => {
-//       dispatch({
-//         type: SEND_MESSAGE,
-//         payload: message
-//       });
-//       callback();
-//     });
-//   }
-// }
-
-// export function actionSendMessage(sender, reciever, message, callback) {
-//   const { id, content, date, hour } = message;
-//   return dispatch => {
-//     fire.database().ref(`${sender}/chats/${reciever}/messages/${message.id}`).set({
-//       id, content, date, hour, senderOrReciever: 1
-//     }).then(() => {
-//       fire.database().ref(`${reciever}/chats/${sender}/messages/${message.id}`).set({
-//         id, content, date, hour, senderOrReciever: 2
-//       })
-//     }).then(() => {
-//       fire.database().ref(`${sender}/chats/${reciever}/lastMessage/`).set({
-//         id, content, date, hour, senderOrReciever: 1
-//       })
-//     }).then(() => {
-//       fire.database().ref(`${reciever}/chats/${sender}/lastMessage/`).set({
-//         id, content, date, hour, senderOrReciever: 2
-//       })
-//     }).then(() => {
-//       dispatch({
-//         type: SEND_MESSAGE,
-//         payload: message
-//       });
-//       callback();
-//     });
-//   }
-// }
-
 export function actionSendMessage(senderuid, recieveruid, message, callback) {
   const { id, content, date, hour } = message;
+  const sender = senderuid;
   return dispatch => {
     fire.database().ref(`messages/${senderuid}/${recieveruid}/${message.id}`).set({
-      id, content, date, hour, sender: senderuid
+      id, content, date, hour, sender
     }).then(() => {
       fire.database().ref(`messages/${recieveruid}/${senderuid}/${message.id}`).set({
-        id, content, date, hour, sender: senderuid
+        id, content, date, hour, sender
       })
     }).then(() => {
-      fire.database().ref(`messages/${senderuid}/${recieveruid}/lastMessage`).set({
-        id, content, date, hour, sender: senderuid
+      fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).set({
+        id, content, date, hour, sender
       })
     }).then(() => {
-      fire.database().ref(`messages/${recieveruid}/${senderuid}/lastMessage`).set({
-        id, content, date, hour, sender: senderuid
+      fire.database().ref(`friendships/${recieveruid}/${senderuid}/lastMessage`).set({
+        id, content, date, hour, sender
       })
     }).then(() => {
       dispatch({
@@ -243,7 +180,10 @@ export function actionSendMessage(senderuid, recieveruid, message, callback) {
 export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
 
   return dispatch => {
-    fire.database().ref(`messages/${senderuid}:${recieveruid}/${message.id}`).remove()
+    fire.database().ref(`messages/${senderuid}/${recieveruid}/${message.id}`).remove()
+      .then(() => {
+        fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).remove()
+      })
     dispatch({
       type: DELETE_MESSAGE,
       payload: message
@@ -252,29 +192,17 @@ export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
   }
 }
 
-// export function actionFetchChatData(email, contactName, callback) {
-//   return dispatch => {
-//     fire.database().ref(`${email}/chats/${contactName}`).once('value', snap => {
-//       const messages = snap.val();
-//       dispatch({
-//         type: FETCH_CHAT_DATA,
-//         payload: messages
-//       });
-//       callback();
-//     });
-//   }
-// }
-
 export function actionFetchChatData(useruid, contactuid, callback) {
   const chatData = { contact: {}, messages: [] };
 
   return dispatch => {
-    fire.database().ref(`messages/${useruid}:${contactuid}`).once('value', messagesSnap => {
+    fire.database().ref(`messages/${useruid}/${contactuid}`).once('value', messagesSnap => {
       const messages = messagesSnap.val();
-      chatData.messages.push(messages);
+      chatData.messages = messages;
     }).then(() => {
       fire.database().ref(`users/${contactuid}`).once('value', contactSnap => {
-        chatData.contact(contactSnap.val());
+        const contact = contactSnap.val();
+        chatData.contact = contact;
         dispatch({
           type: FETCH_CHAT_DATA,
           payload: chatData
@@ -300,27 +228,13 @@ export function actionDeleteContactChat(useruid, contactuid, callback) {
   }
 }
 
-// export function actionPinUnpinChat(userEmail, contact, isPinned, callback) {
-//   const { email, image, name } = contact;
-//   contact.pinned = isPinned;
-//   return dispatch => {
-//     fire.database().ref(`${userEmail}/chats/${name}/info/`).set({
-//       email, image, name, pinned: isPinned
-//     });//******************************************************************** */
-//     dispatch({
-//       type: PINUNPIN_CHAT,
-//       payload: contact
-//     });
-//     callback();
-//   }
-// }
-
 export function actionPinUnpinChat(useruid, contact, isPinned, callback) {
-  const { email, image, name } = contact;
+  // const { email, image, name } = contact;
   contact.pinned = isPinned;
+  console.log(`friendships/${useruid}/${contact.info.uid}/pinned`)
   return dispatch => {
-    fire.database().ref(`${useruid}/chats/${contact.uid}/info/`).set({
-      email, image, name, pinned: isPinned
+    fire.database().ref(`friendships/${useruid}/${contact.info.uid}/pinned`).set({
+      true: "ew"
     });//******************************************************************** */
     dispatch({
       type: PINUNPIN_CHAT,

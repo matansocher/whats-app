@@ -75,13 +75,11 @@ export function sortContactsByLastMessageTime(array) {
 }
 
 export function splitToPinned(array) {
-  // console.log(array);
   const pinned =  _.filter(array, (contact) => {
-    // console.log(contact);
-    return contact.info.pinned;
+    return contact.pinned;
   });
   const notPinned =  _.filter(array, (contact) => {
-    return !contact.info.pinned;
+    return !contact.pinned;
   });
   return [...pinned, ...notPinned];
 }

@@ -32,7 +32,7 @@ class Chats extends Component {
 
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
-      this.props.actionFetchAllDataForUser(uid, () => {
+      this.props.actionInitialDataForUser(uid, () => {
         this.setState({ loading: false });
       });
     });
@@ -64,10 +64,10 @@ class Chats extends Component {
     this.setState({ searchTerm });
   }
 
-  fetchChatData = (contact) => {
+  fetchChatData = (contactUid) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionFetchChatData(useruid, contact.uid, () => {
+      this.props.actionFetchChatData(useruid, contactUid, () => {
         this.setState({ loading: false })
         this.props.history.push('/conversation');
       });
