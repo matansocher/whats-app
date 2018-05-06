@@ -38,7 +38,7 @@ class Conversation extends Component {
   deleteContactChat = (contact) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionDeleteContactChat(useruid, contact.uid, () => {
+      this.props.actionDeleteContactChat(useruid, contact, () => {
         this.setState({ loading: false });
       });
     });

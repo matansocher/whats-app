@@ -1,6 +1,6 @@
 message design - don't copy from whatsapp, make your own
 
-images
+avatars
 last seen
 emoji
 tests

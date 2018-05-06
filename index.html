@@ -20,27 +20,22 @@
     };
     var fire = firebase.initializeApp(config);
 
-    fire.database().ref("friendships").once('value', function(snapshot) {
-        console.log(snapshot);
-    });
+    const fullData = { user: {}, friends: [] };
 
-    firebase.database().ref("friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2").once('value', function(snapshot) {
-        console.log(snapshot);
-    });
+    fire.database().ref(`friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2`).once('value', friendsSnap => {
+      const friends = friendsSnap.val();
+      Object.keys(friends).map((objectkey, index) => {
+        const { key, lastMessage, pinned } = friends[objectkey];
+        const friend = { key, lastMessage, pinned };
+        fire.database().ref(`users/6NXDlDWAikUjblf1TuoPPn9dQ6X2`).once('value', friendSnap => {
+          friend.info = friendSnap.val();
+          fullData.friends.push(friend);
+        });
+        return friend;
+      });
+    })
 
-    fire.database().ref("users").once('value').then(snap => {
-        console.log(snap.child("ref"));
-    });
-
-    fire.database().ref("messages/6NXDlDWAikUjblf1TuoPPn9dQ6X2/X5SPMZudBGURAwkLQwTWDFCO9tj2/SCSRlg").once('value', snap => {
-        console.log(snap);
-    });
-
-    fire.database().ref("messages/6NXDlDWAikUjblf1TuoPPn9dQ6X2/X5SPMZudBGURAwkLQwTWDFCO9tj2/SCSRlg").once('value', snap => {
-        console.log(snap);
-    });
-
-
+    console.log(fullData.friends)
     </script>
 </body>
 </html>

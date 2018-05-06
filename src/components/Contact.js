@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getLastMessageTime } from '../actions/CommonFunctions';
+import { getLastMessageTime, getLastMessageContent } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -19,15 +19,15 @@ class Contact extends Component {
     }
   }
 
-  deleteContactChat = () => {
-    this.props.deleteContactChat(this.props.contact);
-  }
-
   fetchChatData = () => {
     const contactUid = this.props.contact.info.uid;
     this.props.fetchChatData(contactUid);
   }
-
+  
+  deleteContactChat = () => {
+    this.props.deleteContactChat(this.props.contact);
+  }
+  
   pinUnpinChat = () => {
     const contact = this.props.contact;
     const isPinned = contact.pinned ? true : false;
@@ -35,22 +35,20 @@ class Contact extends Component {
   }
 
   render() {
-    const { name, image } = this.props.contact.info;
+    const { name, avatar } = this.props.contact.info;
     const { pinned } = this.props.contact;
     const { lastMessage } = this.props;
     const lastMessageTime = lastMessage ? getLastMessageTime(lastMessage) : " ";
-    let content = lastMessage ? lastMessage.content : " ";
-    const textWidth = (window.innerWidth - 100)/9;
-    content = content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
+    const lmContent = lastMessage ? getLastMessageContent(lastMessage.content) : " ";
     return (
       <div className="contact">
         <MuiThemeProvider>
           <div>
             <ListItem
               onClick={this.fetchChatData} style={{ color: '#ffffff' }}
-              primaryText={name} secondaryText={content}
+              primaryText={name} secondaryText={lmContent}
               leftAvatar={
-                <Avatar size={45} src={require(`../images/${image}`)}
+                <Avatar size={45} src={require(`../avatars/${avatar}`)}
                   style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
               }
             />

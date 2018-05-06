@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import fire from '../firebase';
 import * as actions from '../actions/index';
 import _ from 'lodash';
+import AvatarPicker from './avatarPicker';
 import '../css/signIn.css';
 import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -20,7 +21,7 @@ class SignUp extends Component {
       SUemail: '',
       SUname: '',
       SUpassword: '',
-      SUimage: 'contact4.png',
+      SUavatar: 'default.png',
       loading: false
     }
   }
@@ -28,14 +29,13 @@ class SignUp extends Component {
   componentDidMount() {
     if(_.isEmpty(this.props.currentChatUser)) {
       this.setState({ loading: true }, () => {
-        this.props.actionFetchImages(() => {
+        this.props.actionFetchAvatars(() => {
           this.setState({ loading: false });
         });
       });
     }
   }
   
-
   updateProfile = (user) => {
     const { SUname } = this.state;
     console.log(user);
@@ -49,7 +49,7 @@ class SignUp extends Component {
   singUp = () => {
     this.setState({ loading: true }, () => {
       let signUpMessage = '';
-      const { SUemail, SUpassword, SUname, SUimage } = this.state;
+      const { SUemail, SUpassword, SUname, SUavatar } = this.state;
       if(validatePassword(SUpassword) === 'short') {
         signUpMessage = `Password should contain at least 6 chars`;
         this.setState({ loading: false, signUpMessage });
@@ -63,9 +63,7 @@ class SignUp extends Component {
       if(validateEmail(SUemail) && validatePassword(SUpassword)) {
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
-          signUpMessage = `Welcome ${user.displayName}`;
-          this.setState({ loading: false, signUpMessage });
-          this.props.actionSignUpUser(SUemail, SUname, SUimage, user.uid, this.updateProfile(user));
+          this.props.actionSignUpUser(SUemail, SUname, SUavatar, user.uid, this.updateProfile(user));
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });
@@ -87,29 +85,8 @@ class SignUp extends Component {
     this.setState(change);
   }
 
-  handleChangeImage = (e) => {
-    console.log(e.target.value);
-    this.setState({ SUimage: e.target.value });
-  }
-
-  renderImages() {
-    // const numOfImages = 8;
-    // const arrayOfImages = [];
-    // for (let i = 1; i <= numOfImages; i++) {
-    //   arrayOfImages[i] = `contact${i}.png`;
-    // }
-    if(_.isEmpty(this.props.images)) {
-      return <span />;
-    }
-    return (
-      this.props.images.map(image => {
-        return(
-          <MenuItem key ={image} onClick={this.handleChangeImage} leftIcon={
-            <Avatar className="center" size={45} src={image}/>
-          } />
-        );
-      })
-    )
+  changeAvatar = (SUavatar) => {
+    this.setState({ SUavatar });
   }
 
   render() {
@@ -137,6 +114,9 @@ class SignUp extends Component {
                     Sign Up
                 </button>
 
+                <AvatarPicker avatar={this.state.SUavatar}
+                  changeAvatar={this.changeAvatar} />
+
                 <FlatButton label="Already A Member? Sign In" primary={true}
                   onClick={this.signInClick} />
 
@@ -149,22 +129,4 @@ class SignUp extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  console.log(state);
-  return {
-    images: state.images
-  };
-}
-
-export default connect(mapStateToProps, actions)(SignUp);
-
-
-// style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}
-
-/* <div className="center">
-<Paper style={style.paper}>
-  <Menu>
-    {this.renderImages()}
-  </Menu>
-</Paper>
-</div> */
+export default connect(null, actions)(SignUp);

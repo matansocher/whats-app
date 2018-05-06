@@ -34,7 +34,7 @@ class ConversationHeader extends Component {
     if (!this.props.currentChatUser.name) {
       return <span />;
     }
-    const { name, image } = this.props.currentChatUser;
+    const { name, avatar } = this.props.currentChatUser;
     return (
       <MuiThemeProvider>
         <div>
@@ -48,7 +48,7 @@ class ConversationHeader extends Component {
             secondaryText="Online"
             onClick={this.infoClicked}
             leftAvatar={
-              <Avatar size={45} src={require(`../images/${image}`)}
+              <Avatar size={45} src={require(`../avatars/${avatar}`)}
                 style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}/>
             }
           />

@@ -13,35 +13,36 @@ import {
   PINUNPIN_CHAT,
   SEARCH_FRIENDS, // when trying to fetch new friends
   ADD_AS_FRIEND, // when adding a friend
-  FETCH_IMAGES
+  FETCH_AVATARS
 } from '../actions/types';
 
-export function actionFetchImages(callback) {
-  const numberOfImages = 32;
+export function actionFetchAvatars(callback) {
+  const numberOfAvatars = 32;
   return dispatch => {
-    const arrayOfImages = [];
-      for (let i = 1; i <= numberOfImages; i++) {
-        fire.storage().ref(`/images/contact${i}.png`).getDownloadURL().then(url => {
-          arrayOfImages.push(url);
-        }).catch(error => {
-          return arrayOfImages;
-          // console.log(error)
-        });
-      }
+    const arrayOfAvatars = [];
+    arrayOfAvatars.push('default.png');
+    for (let i = 1; i <= numberOfAvatars; i++) {
+      fire.storage().ref(`/avatars/contact${i}.png`).getDownloadURL().then(url => {
+        arrayOfAvatars.push(url);
+      }).catch(error => {
+        return arrayOfAvatars;
+        // console.log(error)
+      });
+    }
     dispatch({
-      type: FETCH_IMAGES,
-      payload: arrayOfImages
+      type: FETCH_AVATARS,
+      payload: arrayOfAvatars
     });
     callback();
   }
 }
 
 // export function actionSignUpUser(email, name) {
-//   const numOfImages = 8;
-//   const randImg = Math.floor((Math.random() * numOfImages) + 1);
+//   const numOfAvatars = 8;
+//   const randImg = Math.floor((Math.random() * numOfAvatars) + 1);
 //   return dispatch => {
 //     fire.database().ref(`${name}/info`).set({
-//       email, name, image: `contact${randImg}.png`
+//       email, name, avatar: `contact${randImg}.png`
 //     }).then(() => {
 //       fire.database().ref(`${name}/info`).once('value', snap => {
 //         const userFromDB = snap.val();
@@ -54,14 +55,14 @@ export function actionFetchImages(callback) {
 //   };
 // }
 
-export function actionSignUpUser(email, name, image, uid, callback) {
-  // const numOfImages = 8;
-  // const randImg = Math.floor((Math.random() * numOfImages) + 1);
-  // const image = `contact${randImg}.png`;
-  console.log(uid, email, name, image);
+export function actionSignUpUser(email, name, avatar, uid, callback) {
+  // const numOfAvatars = 8;
+  // const randImg = Math.floor((Math.random() * numOfAvatars) + 1);
+  // const avatar = `contact${randImg}.png`;
+  console.log(uid, email, name, avatar);
   return dispatch => {
     fire.database().ref(`users/${uid}`).set({
-      uid, email, name, image
+      uid, email, name, avatar
     }).then(() => {
       fire.database().ref(`users/${uid}`).once('value', snap => {
         console.log(snap, snap.val());
@@ -136,10 +137,10 @@ export function actionInitialDataForUser(uid, callback) {
 
 export function actionUpdateUserData(newUser, callback) {
   // ************ also need to update in auth ************
-  const { uid, name, email, image } = newUser;
+  const { uid, name, email, avatar } = newUser;
   return dispatch => {
     fire.database().ref(`users/${uid}`).set({
-      uid, name, email, image
+      uid, name, email, avatar
     })
     dispatch({
       type: UPDATE_USER_DATA,
@@ -213,7 +214,8 @@ export function actionFetchChatData(useruid, contactuid, callback) {
   }
 }
 
-export function actionDeleteContactChat(useruid, contactuid, callback) {
+export function actionDeleteContactChat(useruid, contact, callback) {
+  const { contactuid } = contact;
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).remove().then(() => {
       fire.database().ref(`friendships/${useruid}/${contactuid}`).remove().then(() => {
@@ -222,20 +224,22 @@ export function actionDeleteContactChat(useruid, contactuid, callback) {
     });
     dispatch({
       type: DELETE_CONTACT_CHAT,
-      payload: contactuid
+      payload: contact
     });
     callback();
   }
 }
 
 export function actionPinUnpinChat(useruid, contact, isPinned, callback) {
-  // const { email, image, name } = contact;
+  // const { email, avatar, name } = contact;
   contact.pinned = isPinned;
-  console.log(`friendships/${useruid}/${contact.info.uid}/pinned`)
   return dispatch => {
-    fire.database().ref(`friendships/${useruid}/${contact.info.uid}/pinned`).set({
-      true: "ew"
-    });//******************************************************************** */
+    const updates = {};
+    updates[`friendships/${useruid}/${contact.info.uid}/pinned`] = isPinned;
+    fire.database().ref().update(updates);
+    // fire.database().ref(`friendships/${useruid}/${contact.info.uid}/pinned`).set({
+    //   pinned: isPinned
+    // });
     dispatch({
       type: PINUNPIN_CHAT,
       payload: contact
@@ -265,31 +269,29 @@ export function actionSearchFriends(uid, friendsUids, callback) {
 
 export function actionAddAsFriend(useruid, contact, callback) {
   const contactuid = contact.uid;
-  console.log(useruid, contactuid);
   return dispatch => {
     fire.database().ref(`friendships/${useruid}/${contactuid}`).set({
-      somethingggggg: contactuid
-      // ********************************************** lo meduiak
+      key: contactuid, pinned: false
     }).then(() => {
       fire.database().ref(`friendships/${contactuid}/${useruid}`).set({
-        somethingggggg: useruid
+        key: useruid, pinned: false
       })
     })
     // .then(() => {
-    //   fire.database().ref(`messages/${senderuid}/${recieveruid}/lastMessage`).set({
+    //   fire.database().ref(`messages/${useruid}/${contactuid}/lastMessage`).set({
     //     id: "aaaaaa",
     //     content: " ",
     //     date: " ",
     //     hour: "0:0:0",
-    //     sender: senderuid
+    //     sender: useruid
     //   });
     // }).then(() => {
-    //   fire.database().ref(`messages/${recieveruid}/${senderuid}/lastMessage`).set({
+    //   fire.database().ref(`messages/${contactuid}/${useruid}/lastMessage`).set({
     //     id: "aaaaaa",
     //     content: " ",
     //     date: " ",
     //     hour: "0:0:0",
-    //     sender: recieveruid
+    //     sender: contactuid
     //   });
     // });
     dispatch({

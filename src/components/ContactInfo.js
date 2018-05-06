@@ -29,7 +29,7 @@ class ContactInfo extends Component {
     if(_.isEmpty(this.props.currentChatUser)) {
       return <span />;
     } else {
-      const { image, name } = this.props.currentChatUser;
+      const { avatar, name } = this.props.currentChatUser;
       return (
         <div>
           <MuiThemeProvider>
@@ -51,7 +51,7 @@ class ContactInfo extends Component {
               <br />
 
               <div className="center">
-                <Avatar size={90} src={require(`../images/${image}`)} />
+                <Avatar size={90} src={require(`../avatars/${avatar}`)} />
                 <br />
                 <h2>{name}</h2>
               </div>

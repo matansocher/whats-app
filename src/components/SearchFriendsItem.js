@@ -18,14 +18,14 @@ class SearchFriendsItem extends Component {
   }
 
   addAsFriend = () => {
-    const { email, image, name } = this.props.friend;
+    const { email, avatar, name } = this.props.friend;
     this.props.addAsFriend({
-      email, image, name, pinned: false
+      email, avatar, name, pinned: false
     });
   }
 
   render() {
-    const { name, image } = this.props.friend;
+    const { name, avatar } = this.props.friend;
     return (
       <div className="friend">
         <MuiThemeProvider>
@@ -34,7 +34,7 @@ class SearchFriendsItem extends Component {
               style={{ color: '#ffffff' }}
               primaryText={name}
               leftAvatar={
-                <Avatar size={45} src={require(`../images/${image}`)}
+                <Avatar size={45} src={require(`../avatars/${avatar}`)}
                   style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
               }
             />

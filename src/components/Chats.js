@@ -41,7 +41,7 @@ class Chats extends Component {
   deleteContactChat = (contact) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionDeleteContactChat(useruid, contact.uid, () => {
+      this.props.actionDeleteContactChat(useruid, contact, () => {
         this.setState({ loading: false });
       });
     });
@@ -75,7 +75,7 @@ class Chats extends Component {
   }
   
   renderList() {
-    if(_.isEmpty(this.props.contactList)) {
+    if(_.isEmpty(this.props.contactList) && !this.state.loading) {
       return(
         <div className="center">
           <h3>You have no conversations yet</h3>
@@ -84,6 +84,14 @@ class Chats extends Component {
         </div>
       );
     }
+    if(_.isEmpty(this.props.contactList) && this.state.loading) {
+      return (
+        <div className="center">
+          <h3>Loading List</h3>
+        </div>
+      );
+    }
+
     let contacts = _.values(this.props.contactList);
     if(this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
       contacts = filterBySearch(contacts, this.state.searchTerm);

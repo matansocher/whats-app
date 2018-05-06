@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { getCircularProgress } from '../actions/CommonFunctions';
 import _ from 'lodash';
+import AvatarPicker from './avatarPicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import MobileTearSheet from '../../../MobileTearSheet';
 import { List, ListItem } from 'material-ui/List';
@@ -18,7 +19,7 @@ class UserInfo extends Component {
     this.state = {
       name: this.props.user.name,
       email: this.props.user.email,
-      picture: this.props.user.image,
+      avatar: this.props.user.avatar,
       loading: false
     }
   }
@@ -35,9 +36,9 @@ class UserInfo extends Component {
 
   saveClick = () => {
     this.setState({ loading: true }, () => {
-      const { name, email, picture } = this.state;
+      const { name, email, avatar } = this.state;
       const { uid } = this.props.user;
-      const newUser = { uid, name, email, picture }
+      const newUser = { uid, name, email, avatar }
       this.props.actionUpdateUserData(newUser, () => {
         this.setState({ loading: false });
       });
@@ -51,31 +52,15 @@ class UserInfo extends Component {
     this.setState(change);
   }
 
-  handleChangeImage = (e) => {
-    this.setState({ SUimage: e.target.value });
-  }
-
-  renderImages() {
-    const numOfImages = 8;
-    const arrayOfImages = [];
-    for (let i = 1; i <= numOfImages; i++) {
-      arrayOfImages[i] = `contact${i}.png`;
-    }
-    arrayOfImages.map((image) => {
-      return(
-        <ListItem onClick={this.handleChangeImage} primaryText="Sent mail" leftIcon={
-          <Avatar size={45} src={require(`../images/${image}`)}
-            style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
-        } />
-      );
-    });
+  changeAvatar = (avatar) => {
+    this.setState({ avatar });
   }
 
   render() {
     if(_.isEmpty(this.props.user)) {
       return getCircularProgress();
     } else {
-      const { image } = this.props.user;
+      const { avatar } = this.props.user;
       return (
         <div>
           <MuiThemeProvider>
@@ -98,7 +83,7 @@ class UserInfo extends Component {
               <br />
 
               <div className="center">
-                <Avatar size={90} src={require(`../images/${image}`)} />
+                <Avatar size={90} src={require(`../avatars/${avatar}`)} />
 
                 <TextField
                   hintText="Name"
@@ -114,11 +99,8 @@ class UserInfo extends Component {
                   onChange={this.handleChange}
                   name="email" />
 
-                <div>
-                    <List>
-                      {this.renderImages()}
-                    </List>
-                </div>
+                <AvatarPicker avatar={this.state.avatar}
+                  changeAvatar={this.changeAvatar} />
 
               </div>
 

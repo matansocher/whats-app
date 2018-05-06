@@ -162,3 +162,8 @@ function getLastDayOfPrevMonth(month) {
   else if (month === 3 || month === 5 || month === 8 || month === 10) return 30;
   else return 31;
 }
+
+export function getLastMessageContent(content) {
+  const textWidth = (window.innerWidth - 100)/9;
+  content = content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
+}
