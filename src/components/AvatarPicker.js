@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
@@ -8,7 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
 
 class AvatarPicker extends Component {
-  constructor() {
+  constructor(props) {
     super(props);
     this.state = {
       // avatar: this.props.avatar

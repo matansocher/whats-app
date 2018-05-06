@@ -85,11 +85,7 @@ class Chats extends Component {
       );
     }
     if(_.isEmpty(this.props.contactList) && this.state.loading) {
-      return (
-        <div className="center">
-          <h3>Loading List</h3>
-        </div>
-      );
+      return (<span />);
     }
 
     let contacts = _.values(this.props.contactList);

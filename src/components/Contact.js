@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getLastMessageTime, getLastMessageContent } from '../actions/CommonFunctions';
+import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -38,7 +39,7 @@ class Contact extends Component {
     const { name, avatar } = this.props.contact.info;
     const { pinned } = this.props.contact;
     const { lastMessage } = this.props;
-    const lastMessageTime = lastMessage ? getLastMessageTime(lastMessage) : " ";
+    const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
     const lmContent = lastMessage ? getLastMessageContent(lastMessage.content) : " ";
     return (
       <div className="contact">

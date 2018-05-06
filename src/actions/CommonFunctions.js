@@ -165,5 +165,5 @@ function getLastDayOfPrevMonth(month) {
 
 export function getLastMessageContent(content) {
   const textWidth = (window.innerWidth - 100)/9;
-  content = content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
+  return content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
 }

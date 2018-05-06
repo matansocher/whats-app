@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { getCircularProgress } from '../actions/CommonFunctions';
 import _ from 'lodash';
-import AvatarPicker from './avatarPicker';
+import AvatarPicker from './AvatarPicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import MobileTearSheet from '../../../MobileTearSheet';
 import { List, ListItem } from 'material-ui/List';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import fire from '../firebase';
 import * as actions from '../actions/index';
 import _ from 'lodash';
-import AvatarPicker from './avatarPicker';
+import AvatarPicker from './AvatarPicker';
 import '../css/signIn.css';
 import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
