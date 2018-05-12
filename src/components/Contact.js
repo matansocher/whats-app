@@ -16,7 +16,7 @@ class Contact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     }
   }
 
@@ -24,11 +24,11 @@ class Contact extends Component {
     const contactUid = this.props.contact.info.uid;
     this.props.fetchChatData(contactUid);
   }
-  
+
   deleteContactChat = () => {
     this.props.deleteContactChat(this.props.contact);
   }
-  
+
   pinUnpinChat = () => {
     const contact = this.props.contact;
     const isPinned = contact.pinned ? true : false;
@@ -37,10 +37,13 @@ class Contact extends Component {
 
   render() {
     const { name, avatar } = this.props.contact.info;
+    console.log(this.props.contact);
+    console.log(this.props.contact.info);
+    console.log(this.props.contact.info.avatar);
     const { pinned } = this.props.contact;
     const { lastMessage } = this.props;
     const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
-    const lmContent = lastMessage ? getLastMessageContent(lastMessage.content) : " ";
+    const lmContent = lastMessage ? getLastMessageContent(lastMessage.content) : `Start a conversation with ${name}`;
     return (
       <div className="contact">
         <MuiThemeProvider>
@@ -49,7 +52,7 @@ class Contact extends Component {
               onClick={this.fetchChatData} style={{ color: '#ffffff' }}
               primaryText={name} secondaryText={lmContent}
               leftAvatar={
-                <Avatar size={45} src={require(`../avatars/${avatar}`)}
+                <Avatar size={45} src={avatar}
                   style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
               }
             />
@@ -63,13 +66,13 @@ class Contact extends Component {
             <IconMenu
               className="three-dots-contact"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
               <MenuItem primaryText="Archive Chat" />
               <MenuItem primaryText="Mute" />
               <MenuItem primaryText="Delete Chat" onClick={this.deleteContactChat} />
-              <MenuItem primaryText={ pinned ? "Unpin Chat" : "Pin Chat" }
+              <MenuItem primaryText={pinned ? "Unpin Chat" : "Pin Chat"}
                 onClick={this.pinUnpinChat} />
               <MenuItem primaryText="Mark As Unread" />
             </IconMenu>

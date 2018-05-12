@@ -1,3 +1,7 @@
+.friend {
+  height: 70px;
+}
+
 .search-chats {
   width: 100%;
   padding: 10px;
@@ -17,4 +21,5 @@
 .three-dots-add-friend {
   position: relative;
   top: -58px;
+  left: -15px;
 }

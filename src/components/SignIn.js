@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fire from '../firebase';
 import * as actions from '../actions/index';
-import '../css/signIn.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -45,7 +44,7 @@ class SignIn extends Component {
 
   render() {
     return (
-      <div className="container container-fluid center">
+      <div className="cetner-sign-in">
         <MuiThemeProvider>
           <div className="row">
             <div className="col-5">

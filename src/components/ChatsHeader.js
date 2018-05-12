@@ -45,13 +45,13 @@ class ChatsHeader extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div>
+        <div className="center">
 
           <IconMenu
             className="pull-right three-dots-chats-header"
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
           >
             <MenuItem primaryText="User Info" onClick={this.userInfoClicked} />
             <MenuItem primaryText="Search Friends" onClick={this.searchFriendsClicked} />

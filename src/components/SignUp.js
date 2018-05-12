@@ -4,12 +4,8 @@ import fire from '../firebase';
 import * as actions from '../actions/index';
 import _ from 'lodash';
 import AvatarPicker from './AvatarPicker';
-import '../css/signIn.css';
 import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import FlatButton from 'material-ui/FlatButton';
@@ -63,7 +59,9 @@ class SignUp extends Component {
       if(validateEmail(SUemail) && validatePassword(SUpassword)) {
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
-          this.props.actionSignUpUser(SUemail, SUname, SUavatar, user.uid, this.updateProfile(user));
+          this.props.actionSignUpUser(SUemail, SUname, SUavatar, user.uid, () => {
+            this.updateProfile(user)
+          });
         }).catch(e => {
           signUpMessage = e.message;
           this.setState({ loading: false, signUpMessage });
@@ -86,12 +84,13 @@ class SignUp extends Component {
   }
 
   changeAvatar = (SUavatar) => {
+    console.log(SUavatar);
     this.setState({ SUavatar });
   }
 
   render() {
     return (
-      <div className="container container-fluid center">
+      <div className="cetner-sign-in">
         <MuiThemeProvider>
           <div className="row">
             <div className="col-5">
@@ -109,16 +108,18 @@ class SignUp extends Component {
                 <br />
                 <p>{this.state.signUpMessage}</p>
 
+                <AvatarPicker avatar={this.state.SUavatar}
+                  changeAvatar={this.changeAvatar} />
+
                 <button className="btn btn-primary"
                   onClick={this.singUp}>
                     Sign Up
                 </button>
 
-                <AvatarPicker avatar={this.state.SUavatar}
-                  changeAvatar={this.changeAvatar} />
-
                 <FlatButton label="Already A Member? Sign In" primary={true}
                   onClick={this.signInClick} />
+
+                
 
               </div>
             </div>

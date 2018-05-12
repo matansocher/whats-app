@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <script>
+
+    function solution(A, K, L) {
+      var counter = 0;
+      if(K+L > A.length) { // not enough trees for both of them
+        return -1;
+      }
+      if(K+L === A.length) { // exactly enough trees they want to collect from
+        return countApplesFromIndexes(A, 0, A.length - 1);
+      }
+
+      // find indexes for the smaller of them
+      var arrayOfStartEndIndexFirst = findBestStartEndIndexes(A, L - 1);
+      var startFirst = arrayOfStartEndIndexFirst[0];
+      var endFirst = arrayOfStartEndIndexFirst[1];
+      console.log(startFirst, endFirst)
+      var applesFirst = countApplesFromIndexes(A, startFirst, endFirst);
+      console.log(applesFirst);
+      // make the already chosen one 0, so they wont be chosen again
+      var newA = makeZeroInRange(A, startFirst, endFirst);
+      console.log(newA)
+      // find the best indexes for the next one
+      var arrayOfStartEndIndexSecond = findBestStartEndIndexes(newA, K - 1);
+      var startSecond = arrayOfStartEndIndexSecond[0];
+      var endSecond = arrayOfStartEndIndexSecond[1];
+      console.log(startSecond, endSecond)
+      var applesSecond = countApplesFromIndexes(newA, startSecond, endSecond);
+      console.log(applesSecond);
+      return applesFirst + applesSecond;
+    }
+
+    function countApplesFromIndexes(A, start, end) {
+      var counter = 0;
+      for (let i = start; i <= end; i++) {
+        console.log(A[i])
+        counter += A[i];
+      }
+      return counter;
+    }
+    // return array [best start index, best end index]
+    function findBestStartEndIndexes(A, N) {
+      var max = 0;
+      var start = 0;
+      var end = 0
+      for (let i = 0; i < A.length; i++) {
+        var currentCount = 0;
+        for (let j = i; j < i+N; j++) {
+          currentCount += A[j];
+        }
+        if(currentCount > max) {
+          max = currentCount;
+          start = i;
+          end = i+N;
+        }
+      }
+      return [start, end];
+    }
+
+    function makeZeroInRange(A, start, end) {
+      for (let i = start; i <= end - 1; i++) {
+        A[i] = 0;
+      }
+      return A;
+    }
+
+    console.log(solution([1, 1, 4, 2, 3, 10, 7, 2, 5, 8], 1, 2))
+  </script>
+</body>
+</html>

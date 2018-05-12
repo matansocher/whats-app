@@ -5,8 +5,6 @@ import { getCircularProgress } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import AvatarPicker from './AvatarPicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import MobileTearSheet from '../../../MobileTearSheet';
-import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -27,6 +25,16 @@ class UserInfo extends Component {
   componentWillMount() {
     if(_.isEmpty(this.props.user)) {
       this.props.history.push('/');
+    }
+  }
+
+  componentDidMount() {
+    if(_.isEmpty(this.props.avatars)) {
+      this.setState({ lodaing: false }, () => {
+        this.props.actionFetchAvatars(() => {
+          this.setState({ lodaing: false });
+        })
+      })
     }
   }
 

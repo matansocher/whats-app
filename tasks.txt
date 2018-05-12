@@ -1,6 +1,7 @@
 message design - don't copy from whatsapp, make your own
 
-avatars
+pictures from db and not locally
+avatar picker
 last seen
 emoji
 tests

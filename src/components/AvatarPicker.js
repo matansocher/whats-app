@@ -17,7 +17,7 @@ class AvatarPicker extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.value);
+    console.log(e.target);
     // this.setState({ avatar: e.target.value });
     this.props.changeAvatar(e.target.value);
   }
@@ -30,8 +30,8 @@ class AvatarPicker extends Component {
       this.props.avatars.map(avatar => {
         return(
           <MenuItem key={avatar}
-            onClick={this.handleChange}
-            leftIcon={ <Avatar size={45} src={avatar} 
+            value={avatar}
+            leftIcon={ <Avatar size={75} src={avatar} 
               style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}/> } />
         );
       })
@@ -41,18 +41,20 @@ class AvatarPicker extends Component {
   render() {
     return(
       <div className="center">
-        <Paper>
-          <Menu value={this.props.avatar}>
-            {this.renderAvatars()}
-          </Menu>
-        </Paper>
+        <MuiThemeProvider>
+          <Paper>
+            <Menu value={this.props.avatar} desktop={true} width={100}
+              onItemClick={this.handleChange} >
+              {this.renderAvatars()}
+            </Menu>
+          </Paper>
+        </MuiThemeProvider>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     avatars: state.avatars
   };

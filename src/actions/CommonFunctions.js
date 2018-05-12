@@ -53,7 +53,6 @@ export function getCircularProgress() {
 }
 
 export function filterBySearch(array, subString) {
-  console.log(array, subString);
   return _.filter(array, (contact) => {
     return contact.name.toLowerCase()
       .startsWith(subString.toLowerCase());
@@ -63,11 +62,15 @@ export function filterBySearch(array, subString) {
 export function sortContactsByLastMessageTime(array) {
   return array.sort((a, b) => {
     array.map((contact) => {
-      const splitDays = contact.lastMessage.date.split('-');
+      if(!contact.lastMessage) {
+        contact.epoch = new Date(2020, 12, 12)
+      } else {
+        const splitDays = contact.lastMessage.date.split('-');
       const splitHours = contact.lastMessage.hour.split(':');
       const epoch = new Date(splitDays[0], splitDays[1], splitDays[2],
         splitHours[0], splitHours[1], splitHours[2]).getTime() / 1000;
       contact.epoch = epoch;
+      }
       return contact;
     });
     return (a.epoch > b.epoch) ? -1 : ((b.epoch > a.epoch) ? 1 : 0);

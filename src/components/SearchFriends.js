@@ -27,7 +27,7 @@ class SearchFriends extends Component {
     this.setState({ loading: true }, () => {
       if(_.isEmpty(this.props.searchFriends)) {
         const { uid } = this.props.user;
-        const friendsUids = _.map(this.props.contactList, e => e.uid);
+        const friendsUids = _.map(this.props.contactList, f => f.key);
         friendsUids.push(this.props.user.uid); // this user
         this.props.actionSearchFriends(uid, friendsUids, () => {
         this.setState({ loading: false });
@@ -40,7 +40,7 @@ class SearchFriends extends Component {
 
   addAsFriend = (friend) => {
     this.setState({ loading: true }, () => {
-      this.props.actionAddAsFriend(this.props.user.uid, friend.uid, () => {
+      this.props.actionAddAsFriend(this.props.user.uid, friend, () => {
         this.setState({ loading: false });
       });
     });
@@ -85,7 +85,7 @@ class SearchFriends extends Component {
 
   render() {
     return(
-      <div className="container container-fluid center">
+      <div className="center">
         <MuiThemeProvider>
           <div className="row">
             <div className="">

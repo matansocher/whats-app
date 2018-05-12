@@ -7,35 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
-    <script>
-    
-    var config = {
-        apiKey: "AIzaSyDPWq3lQLvl3FJ_9o_QfffYqovo3qtOaas",
-        authDomain: "whats-app-c5bba.firebaseapp.com",
-        databaseURL: "https://whats-app-c5bba.firebaseio.com",
-        projectId: "whats-app-c5bba",
-        storageBucket: "whats-app-c5bba.appspot.com",
-        messagingSenderId: "638752731394"
-    };
-    var fire = firebase.initializeApp(config);
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <script>
 
-    const fullData = { user: {}, friends: [] };
 
-    fire.database().ref(`friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2`).once('value', friendsSnap => {
-      const friends = friendsSnap.val();
-      Object.keys(friends).map((objectkey, index) => {
-        const { key, lastMessage, pinned } = friends[objectkey];
-        const friend = { key, lastMessage, pinned };
-        fire.database().ref(`users/6NXDlDWAikUjblf1TuoPPn9dQ6X2`).once('value', friendSnap => {
-          friend.info = friendSnap.val();
-          fullData.friends.push(friend);
-        });
-        return friend;
-      });
-    })
-
-    console.log(fullData.friends)
-    </script>
+  </script>
 </body>
 </html>

@@ -1,3 +1,12 @@
+.text-input {
+  /* margin-left: 0px;
+  margin-right: 0px; */
+}
+
+.contact {
+  height: 70px;
+}
+
 .contact:hover {
   background-color: #262B34;
   cursor: pointer;
@@ -56,5 +65,5 @@
 
 .three-dots-chats-header {
   position: relative;
-  top: -15px;
+  top: -10px;
 }

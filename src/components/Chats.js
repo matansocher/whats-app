@@ -32,8 +32,11 @@ class Chats extends Component {
 
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
-      this.props.actionInitialDataForUser(uid, () => {
-        this.setState({ loading: false });
+      this.props.actionFetchUserData(uid, () => {
+        console.log(this.props.user)
+        this.props.actionFetchFriendsList(uid, () => {
+          this.setState({ loading: false });
+        });
       });
     });
   }
@@ -76,18 +79,18 @@ class Chats extends Component {
   
   renderList() {
     if(_.isEmpty(this.props.contactList) && !this.state.loading) {
-      return(
-        <div className="center">
-          <h3>You have no conversations yet</h3>
-          <FlatButton label="Find Friends" primary={true}
-            onClick={() => this.navigateToRoute('SearchFriends')} />
-        </div>
-      );
+      if(!this.state.loading) {
+        return(
+          <div className="center">
+            <h3>You have no conversations yet</h3>
+            <FlatButton label="Find Friends" primary={true}
+              onClick={() => this.navigateToRoute('SearchFriends')} />
+          </div>
+        );
+      } else {
+        return (<span />);
+      }
     }
-    if(_.isEmpty(this.props.contactList) && this.state.loading) {
-      return (<span />);
-    }
-
     let contacts = _.values(this.props.contactList);
     if(this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
       contacts = filterBySearch(contacts, this.state.searchTerm);
