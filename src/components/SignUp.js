@@ -23,23 +23,13 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.currentChatUser)) {
+    if(_.isEmpty(this.props.avatars)) {
       this.setState({ loading: true }, () => {
         this.props.actionFetchAvatars(() => {
           this.setState({ loading: false });
         });
       });
     }
-  }
-  
-  updateProfile = (user) => {
-    const { SUname } = this.state;
-    console.log(user);
-    user.updateProfile({ displayName: SUname }).then(() => {
-      this.props.history.push('/');
-    }, error => {
-      console.log(error);
-    });
   }
 
   singUp = () => {
@@ -60,7 +50,7 @@ class SignUp extends Component {
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
         .then(user => {
           this.props.actionSignUpUser(SUemail, SUname, SUavatar, user.uid, () => {
-            this.updateProfile(user)
+            this.props.history.push('/');
           });
         }).catch(e => {
           signUpMessage = e.message;
@@ -119,8 +109,6 @@ class SignUp extends Component {
                 <FlatButton label="Already A Member? Sign In" primary={true}
                   onClick={this.signInClick} />
 
-                
-
               </div>
             </div>
           </div>
@@ -130,4 +118,10 @@ class SignUp extends Component {
   }
 }
 
-export default connect(null, actions)(SignUp);
+function mapStateToProps(state) {
+  return {
+    avatars: state.avatars
+  };
+}
+
+export default mapStateToProps(null, actions)(SignUp);

@@ -48,6 +48,7 @@ class Conversation extends Component {
     this.setState({ loading: true }, () => {
       const senderuid = this.props.user.uid;
       const recieveruid = this.props.currentChatUser.uid;
+      message.sender = senderuid;
       this.props.actionSendMessage(senderuid, recieveruid, message, () => {
         callback();
         this.setState({ loading: false });

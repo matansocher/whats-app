@@ -30,7 +30,7 @@ class UserInfo extends Component {
 
   componentDidMount() {
     if(_.isEmpty(this.props.avatars)) {
-      this.setState({ lodaing: false }, () => {
+      this.setState({ lodaing: true }, () => {
         this.props.actionFetchAvatars(() => {
           this.setState({ lodaing: false });
         })
@@ -123,7 +123,8 @@ class UserInfo extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    avatars: state.avatars
   };
 }
 
