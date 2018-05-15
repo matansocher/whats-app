@@ -55,6 +55,7 @@ class ChatsHeader extends Component {
           >
             <MenuItem primaryText="User Info" onClick={this.userInfoClicked} />
             <MenuItem primaryText="Search Friends" onClick={this.searchFriendsClicked} />
+            <MenuItem primaryText="Settings" />
             <MenuItem primaryText="Log Out" onClick={this.logout} />
           </IconMenu>
 

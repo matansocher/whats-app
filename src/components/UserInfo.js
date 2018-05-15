@@ -33,8 +33,8 @@ class UserInfo extends Component {
       this.setState({ lodaing: true }, () => {
         this.props.actionFetchAvatars(() => {
           this.setState({ lodaing: false });
-        })
-      })
+        });
+      });
     }
   }
 
@@ -46,7 +46,7 @@ class UserInfo extends Component {
     this.setState({ loading: true }, () => {
       const { name, email, avatar } = this.state;
       const { uid } = this.props.user;
-      const newUser = { uid, name, email, avatar }
+      const newUser = { uid, name, email, avatar };
       this.props.actionUpdateUserData(newUser, () => {
         this.setState({ loading: false });
       });

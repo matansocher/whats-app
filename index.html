@@ -10,6 +10,39 @@
   <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
   <script>
 
+    var config = {
+      apiKey: "AIzaSyDPWq3lQLvl3FJ_9o_QfffYqovo3qtOaas",
+      authDomain: "whats-app-c5bba.firebaseapp.com",
+      databaseURL: "https://whats-app-c5bba.firebaseio.com",
+      projectId: "whats-app-c5bba",
+      storageBucket: "whats-app-c5bba.appspot.com",
+      messagingSenderId: "638752731394"
+    };
+    firebase.initializeApp(config);
+
+    function getAvatarsNames() {
+      const numberOfAvatars = 8;
+      const arrayOfAvatarsNames = [];
+      arrayOfAvatarsNames.push('default.png');
+      for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
+        arrayOfAvatarsNames.push(`contact${i}.png`);
+      }
+      return arrayOfAvatarsNames;
+    }
+
+    const arrayOfAvatarsURLs = [];
+    getAvatarsNames().forEach(name => {
+      firebase.storage().ref(`/avatars/${name}`).getDownloadURL().then(url => {
+        console.log(url)
+        arrayOfAvatarsURLs.push(url);
+        console.log(arrayOfAvatarsURLs)
+      }).catch(error => {
+        console.log(error)
+        return arrayOfAvatarsURLs;
+      });
+    });
+
+    console.log(arrayOfAvatarsURLs)
 
   </script>
 </body>

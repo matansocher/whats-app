@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import fire from '../firebase';
 import {
+  FETCH_AVATARS,
   SIGNUP_USER,
   LOGIN_USER,
   LOGOUT_USER,
@@ -13,26 +14,26 @@ import {
   DELETE_CONTACT_CHAT,
   PINUNPIN_CHAT,
   SEARCH_FRIENDS, // when trying to fetch new friends
-  ADD_AS_FRIEND, // when adding a friend
-  FETCH_AVATARS
+  ADD_AS_FRIEND // when adding a friend
 } from '../actions/types';
 
+import { getAvatarsNames } from './CommonFunctions';
+
+
 export function actionFetchAvatars(callback) {
-  const numberOfAvatars = 8;
   return dispatch => {
-    const arrayOfAvatars = [];
-    arrayOfAvatars.push('default.png');
-    for (let i = 1; i <= numberOfAvatars; i++) {
-      fire.storage().ref(`/avatars/contact${i}.png`).getDownloadURL().then(url => {
-        arrayOfAvatars.push(url);
+    const arrayOfAvatarsURLs = [];
+    getAvatarsNames().forEach(name => {
+      fire.storage().ref(`/avatars/${name}`).getDownloadURL().then(url => {
+        arrayOfAvatarsURLs.push(url);
       }).catch(error => {
-        return arrayOfAvatars;
-        // console.log(error)
+        console.log(error)
+        return arrayOfAvatarsURLs;
       });
-    }
+    });
     dispatch({
       type: FETCH_AVATARS,
-      payload: arrayOfAvatars
+      payload: arrayOfAvatarsURLs
     });
     callback();
   }
@@ -40,16 +41,19 @@ export function actionFetchAvatars(callback) {
 
 export function actionSignUpUser(email, name, avatar, uid, callback) {
   return dispatch => {
-    fire.database().ref(`users/${uid}`).set({
-      uid, email, name, avatar
-    }).then(() => {
-      fire.database().ref(`users/${uid}`).once('value', snap => {
-        const userFromDB = snap.val();
+    fire.storage().ref(`/avatars/${avatar}`).getDownloadURL().then(url => {
+      fire.database().ref(`users/${uid}`).set({
+        uid, email, name, avatar: url
+      }).then(() => {
+        // fire.database().ref(`users/${uid}`).once('value', snap => {
+        // const userFromDB = snap.val();
+        const user = { uid, email, name, avatar: url };
         dispatch({
           type: SIGNUP_USER,
-          payload: userFromDB
+          payload: user
         });
         callback();
+        // });
       });
     });
   };
@@ -129,14 +133,14 @@ export function actionUpdateUserData(newUser, callback) {
     // email update
     // firebase.auth().currentUser.updateEmail("user@example.com").then(() => {
 
-      fire.database().ref(`users/${uid}`).set({
-        uid, name, email, avatar
-      })
-      dispatch({
-        type: UPDATE_USER_DATA,
-        payload: newUser
-      });
-      callback();
+    fire.database().ref(`users/${uid}`).set({
+      uid, name, email, avatar
+    });
+    dispatch({
+      type: UPDATE_USER_DATA,
+      payload: newUser
+    });
+    callback();
 
     // }).catch(error => {
     //   console.log(error);
@@ -195,12 +199,10 @@ export function actionSendMessage(senderuid, recieveruid, message, callback) {
 }
 
 export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
-
   return dispatch => {
-    fire.database().ref(`messages/${senderuid}/${recieveruid}/${message.id}`).remove()
-      .then(() => {
-        fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).remove()
-      })
+    fire.database().ref(`messages/${senderuid}/${recieveruid}/${message.id}`).remove().then(() => {
+      fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).remove()
+    })
     dispatch({
       type: DELETE_MESSAGE,
       payload: message
@@ -235,13 +237,19 @@ export function actionDeleteContactChat(useruid, contact, callback) {
   console.log(useruid, contact, contactuid)
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).remove().then(() => {
-      fire.database().ref(`friendships/${useruid}/${contactuid}`).remove();
+      fire.database().ref(`friendships/${useruid}/${contactuid}`).remove().then(() => {
+        dispatch({
+          type: DELETE_CONTACT_CHAT,
+          payload: contact
+        });
+        callback();
+      });
     });
-    dispatch({
-      type: DELETE_CONTACT_CHAT,
-      payload: contact
-    });
-    callback();
+    // dispatch({
+    //   type: DELETE_CONTACT_CHAT,
+    //   payload: contact
+    // });
+    // callback();
   }
 }
 

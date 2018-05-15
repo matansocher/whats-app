@@ -170,3 +170,13 @@ export function getLastMessageContent(content) {
   const textWidth = (window.innerWidth - 100)/9;
   return content.length > textWidth ? `${content.substr(0, textWidth)}...`: content;
 }
+
+export function getAvatarsNames() {
+  const numberOfAvatars = 8;
+  const arrayOfAvatarsNames = [];
+  arrayOfAvatarsNames.push('default.png');
+  for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
+    arrayOfAvatarsNames.push(`contact${i}.png`);
+  }
+  return arrayOfAvatarsNames;
+}
