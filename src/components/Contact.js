@@ -21,8 +21,7 @@ class Contact extends Component {
   }
 
   fetchChatData = () => {
-    const contactUid = this.props.contact.info.uid;
-    this.props.fetchChatData(contactUid);
+    this.props.fetchChatData(this.props.contact);
   }
 
   deleteContactChat = () => {

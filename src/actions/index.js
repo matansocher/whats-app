@@ -2,6 +2,7 @@ import _ from 'lodash';
 import fire from '../firebase';
 import {
   FETCH_AVATARS,
+  UPDATE_LAST_SEEN,
   SIGNUP_USER,
   LOGIN_USER,
   LOGOUT_USER,
@@ -39,15 +40,34 @@ export function actionFetchAvatars(callback) {
   }
 }
 
+export function actionUpdateLastSeen(useruid, lastSeen) {
+  return dispatch => {
+    const updates = {};
+    updates[`users/${useruid}/lastSeen`] = lastSeen;
+    fire.database().ref().update(updates);
+
+    // const { uid, email, name, avatar } = user;
+    // fire.database().ref(`users/${uid}`).set({
+    //   uid, email, name, avatar, lastSeen
+    // }).then(() => {
+
+    dispatch({
+      type: UPDATE_LAST_SEEN,
+      payload: useruid
+    });
+    callback();
+  }
+}
+
 export function actionSignUpUser(email, name, avatar, uid, callback) {
   return dispatch => {
     fire.storage().ref(`/avatars/${avatar}`).getDownloadURL().then(url => {
       fire.database().ref(`users/${uid}`).set({
-        uid, email, name, avatar: url
+        uid, email, name, avatar: url, lastSeen: "Online"
       }).then(() => {
         // fire.database().ref(`users/${uid}`).once('value', snap => {
         // const userFromDB = snap.val();
-        const user = { uid, email, name, avatar: url };
+        const user = { uid, email, name, avatar: url, lastSeen: "Online" };
         dispatch({
           type: SIGNUP_USER,
           payload: user
@@ -62,10 +82,10 @@ export function actionSignUpUser(email, name, avatar, uid, callback) {
 export function actionLoginUser(uid) {
   return dispatch => {
     fire.database().ref(`users/${uid}`).once('value', snap => {
-      const userFromDB = snap.val();
+      const user = snap.val();
       dispatch({
         type: LOGIN_USER,
-        payload: userFromDB
+        payload: user
       });
     });
   }
@@ -128,13 +148,13 @@ export function actionFetchUserData(uid, callback) {
 
 export function actionUpdateUserData(newUser, callback) {
   // ************ also need to update email in auth ************
-  const { uid, name, email, avatar } = newUser;
+  const { uid, name, email, avatar, lastSeen } = newUser;
   return dispatch => {
     // email update
     // firebase.auth().currentUser.updateEmail("user@example.com").then(() => {
 
     fire.database().ref(`users/${uid}`).set({
-      uid, name, email, avatar
+      uid, name, email, avatar, lastSeen
     });
     dispatch({
       type: UPDATE_USER_DATA,
@@ -211,23 +231,20 @@ export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
   }
 }
 
-export function actionFetchChatData(useruid, contactuid, callback) {
-  const chatData = { contact: {}, messages: [] };
+export function actionFetchChatData(useruid, contact, callback) {
+  const chatData = { contact, messages: [] };
+  const contactuid = contact.uid;
 
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).once('value', messagesSnap => {
       const messages = messagesSnap.val();
       chatData.messages = messages;
     }).then(() => {
-      fire.database().ref(`users/${contactuid}`).once('value', contactSnap => {
-        const contact = contactSnap.val();
-        chatData.contact = contact;
-        dispatch({
-          type: FETCH_CHAT_DATA,
-          payload: chatData
-        });
-        callback();
+      dispatch({
+        type: FETCH_CHAT_DATA,
+        payload: chatData
       });
+      callback();
     });
   }
 }

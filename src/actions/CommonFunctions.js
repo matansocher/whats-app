@@ -19,6 +19,31 @@ export function makeMessageID() {
   return `${dateString}${hourString}`;
 }
 
+export function getDateHourString() { // for last seen
+  const date = new Date();
+  const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const hourString = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  return `${dateString} ${hourString}`
+}
+
+export function getLastSeenString(lastSeen) { // for last seen
+  if(lastSeen === "Online"){
+    return lastSeen;
+  }
+  const splitted = lastSeen.split(" ");
+  let dateString = splitted[0];
+  let splittedDate = dateString.split("-");
+  let hourString = splitted[1];
+  let splittedHour = hourString.split(":");
+  
+  const dateObject = new Date(splittedDate[0], splittedDate[1]-1, splittedDate[2]);
+  if (checkIfToday(new Date(), dateObject)) {
+    return `Last seen today at ${splittedHour[0]}:${splittedHour[1]}`;
+  }
+
+  return `Last seen at ${dateString} ${dateString}`;
+}
+
 export function validateEmail(email) {
   // check in db if user already exists
   // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -62,14 +87,14 @@ export function filterBySearch(array, subString) {
 export function sortContactsByLastMessageTime(array) {
   return array.sort((a, b) => {
     array.map((contact) => {
-      if(!contact.lastMessage) {
+      if(!contact.lastMessage) { // no last message- return high epoch
         contact.epoch = new Date(2020, 12, 12)
       } else {
         const splitDays = contact.lastMessage.date.split('-');
-      const splitHours = contact.lastMessage.hour.split(':');
-      const epoch = new Date(splitDays[0], splitDays[1], splitDays[2],
-        splitHours[0], splitHours[1], splitHours[2]).getTime() / 1000;
-      contact.epoch = epoch;
+        const splitHours = contact.lastMessage.hour.split(':');
+        const epoch = new Date(splitDays[0], splitDays[1], splitDays[2],
+          splitHours[0], splitHours[1], splitHours[2]).getTime() / 1000;
+        contact.epoch = epoch;
       }
       return contact;
     });

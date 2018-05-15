@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
-import { getCircularProgress, sortContactsByLastMessageTime, filterBySearch, splitToPinned } from '../actions/CommonFunctions';
+import { getCircularProgress, sortContactsByLastMessageTime, filterBySearch, splitToPinned, getDateHourString } from '../actions/CommonFunctions';
 import fire from '../firebase';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
@@ -19,7 +19,9 @@ class Chats extends Component {
       loading: false
     }
   }
+
   componentDidMount() {
+    window.addEventListener("beforeunload", this.onUnload)
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
@@ -30,14 +32,28 @@ class Chats extends Component {
     });
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.onUnload)
+  }
+
+  onUnload = e => {
+    console.log("onUnload");
+    const { uid } = this.props.user;
+    const lastSeen = getDateHourString();
+    this.props.actionUpdateLastSeen(uid, lastSeen);
+    e.returnValue = "Hellooww";
+  }
+
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
-      this.props.actionFetchUserData(uid, () => {
-        console.log(this.props.user)
-        this.props.actionFetchFriendsList(uid, () => {
-          this.setState({ loading: false });
+      const lastSeen = "Online";
+      this.props.actionUpdateLastSeen(uid, lastSeen, () => {
+        this.props.actionFetchUserData(uid, () => {
+          this.props.actionFetchFriendsList(uid, () => {
+            this.setState({ loading: false });
+          });
         });
-      });
+      })
     });
   }
 
@@ -70,7 +86,7 @@ class Chats extends Component {
   fetchChatData = (contactUid) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionFetchChatData(useruid, contactUid, () => {
+      this.props.actionFetchChatData(useruid, contact, () => {
         this.setState({ loading: false })
         this.props.history.push('/conversation');
       });

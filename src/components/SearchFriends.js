@@ -28,7 +28,7 @@ class SearchFriends extends Component {
       if(_.isEmpty(this.props.searchFriends)) {
         const { uid } = this.props.user;
         const friendsUids = _.map(this.props.contactList, f => f.key);
-        friendsUids.push(this.props.user.uid); // this user
+        friendsUids.push(uid); // this user
         this.props.actionSearchFriends(uid, friendsUids, () => {
         this.setState({ loading: false });
         });

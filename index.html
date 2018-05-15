@@ -20,29 +20,10 @@
     };
     firebase.initializeApp(config);
 
-    function getAvatarsNames() {
-      const numberOfAvatars = 8;
-      const arrayOfAvatarsNames = [];
-      arrayOfAvatarsNames.push('default.png');
-      for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
-        arrayOfAvatarsNames.push(`contact${i}.png`);
-      }
-      return arrayOfAvatarsNames;
-    }
-
-    const arrayOfAvatarsURLs = [];
-    getAvatarsNames().forEach(name => {
-      firebase.storage().ref(`/avatars/${name}`).getDownloadURL().then(url => {
-        console.log(url)
-        arrayOfAvatarsURLs.push(url);
-        console.log(arrayOfAvatarsURLs)
-      }).catch(error => {
-        console.log(error)
-        return arrayOfAvatarsURLs;
-      });
-    });
-
-    console.log(arrayOfAvatarsURLs)
+    window.addEventListener("beforeunload", function (event) {
+      console.log("hellooww")
+      event.returnValue = "Hellooww"
+    })
 
   </script>
 </body>

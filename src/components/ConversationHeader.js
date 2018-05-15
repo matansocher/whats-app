@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import { getLastSeenString } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -34,7 +35,7 @@ class ConversationHeader extends Component {
     if (!this.props.currentChatUser.name) {
       return <span />;
     }
-    const { name, avatar } = this.props.currentChatUser;
+    const { name, avatar, lastSeen } = this.props.currentChatUser;
     return (
       <MuiThemeProvider>
         <div>
@@ -45,7 +46,7 @@ class ConversationHeader extends Component {
           <ListItem
             className="contact-info"
             primaryText={name}
-            secondaryText="Online"
+            secondaryText={getLastSeenString(lastSeen)}
             onClick={this.infoClicked}
             leftAvatar={
               <Avatar size={45} src={require(`../avatars/${avatar}`)}
