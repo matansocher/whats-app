@@ -5,6 +5,7 @@ import { getCircularProgress } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import AvatarPicker from './AvatarPicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Snackbar from 'material-ui/Snackbar';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -18,6 +19,9 @@ class UserInfo extends Component {
       name: this.props.user.name,
       email: this.props.user.email,
       avatar: this.props.user.avatar,
+      lastSeen: this.props.user.lastSeen,
+      gesture: false,
+      gestureText: "",
       loading: false
     }
   }
@@ -44,14 +48,18 @@ class UserInfo extends Component {
 
   saveClick = () => {
     this.setState({ loading: true }, () => {
-      const { name, email, avatar } = this.state;
+      const { name, email, avatar, lastSeen } = this.state;
       const { uid } = this.props.user;
-      const newUser = { uid, name, email, avatar };
+      const newUser = { uid, name, email, avatar, lastSeen };
       this.props.actionUpdateUserData(newUser, () => {
-        this.setState({ loading: false });
+        this.setState({ loading: false, gestureText: "Changes Saved Successfully", gesture: true });
       });
     })
   }
+
+  handleRequestClose = () => {
+    this.setState({ gesture: false });
+  };
 
   handleChange = (e) => {
     var change = {};
@@ -73,6 +81,9 @@ class UserInfo extends Component {
         <div>
           <MuiThemeProvider>
             <div>
+
+              <Snackbar open={this.state.gesture} message={this.state.gestureText}
+                autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
 
               <div className="user-info-header">
                 <div>

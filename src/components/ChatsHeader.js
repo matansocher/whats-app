@@ -34,6 +34,10 @@ class ChatsHeader extends Component {
     this.props.navigateToRoute('SearchFriends');
   }
 
+  settingsClicked = () => {
+    this.props.navigateToRoute('Settings');
+  }
+
   handleChange = (e) => {
     var change = {};
     const { value, name } = e.target;
@@ -55,7 +59,7 @@ class ChatsHeader extends Component {
           >
             <MenuItem primaryText="User Info" onClick={this.userInfoClicked} />
             <MenuItem primaryText="Search Friends" onClick={this.searchFriendsClicked} />
-            <MenuItem primaryText="Settings" />
+            <MenuItem primaryText="Settings" onClick={this.settingsClicked} />
             <MenuItem primaryText="Log Out" onClick={this.logout} />
           </IconMenu>
 

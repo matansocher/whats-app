@@ -26,11 +26,12 @@ class AvatarPicker extends Component {
     if(_.isEmpty(this.props.avatars)) {
       return <span />;
     }
+    console.log(this.props.avatars);
     return (
       this.props.avatars.map(avatar => {
         return(
           <MenuItem key={avatar} value={avatar}
-            leftIcon={ <Avatar size={75} src={avatar} 
+            leftIcon={ <Avatar size={75} src={require(`../avatars/${avatar}`)}
               style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}/> } />
         );
       })

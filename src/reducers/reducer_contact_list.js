@@ -7,8 +7,7 @@ export default function(state = [], action) {
   let newState = state;
   switch (action.type) {
     case FETCH_FRIENDS_LIST:
-      console.log(action.payload)
-      return _.values(action.payload);
+      return action.payload;
     case DELETE_CONTACT_CHAT:
       return _.without(state, action.payload);
     case PINUNPIN_CHAT:

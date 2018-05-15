@@ -7,17 +7,20 @@ import ConversationHeader from './ConversationHeader';
 import ConversationFooter from './ConversationFooter';
 import Message from './Message';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Snackbar from 'material-ui/Snackbar';
 
 class Conversation extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      gesture: false,
+      gestureText: "",
       loading: false
     }
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.user)) {
+    if (_.isEmpty(this.props.user)) {
       this.props.history.push('/');
     }
     this.scrollToBottom();
@@ -39,7 +42,7 @@ class Conversation extends Component {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
       this.props.actionDeleteContactChat(useruid, contact, () => {
-        this.setState({ loading: false });
+        this.setState({ loading: false, gestureText: "Chat Was Deleted Successfully", gesture: true });
       });
     });
   }
@@ -61,10 +64,14 @@ class Conversation extends Component {
       const senderuid = this.props.user.uid;
       const recieveruid = this.props.currentChatUser.uid;
       this.props.actionDeleteMessage(senderuid, recieveruid, message, () => {
-        this.setState({ loading: false });
+        this.setState({ loading: false, gestureText: "Message Was Deleted Successfully", gesture: true });
       });
     });
   }
+
+  handleRequestClose = () => {
+    this.setState({ gesture: false });
+  };
 
   renderMessages() {
     let messages = this.props.currentChatMessages;
@@ -75,11 +82,11 @@ class Conversation extends Component {
       messages.map((message, index, messages) => {
         if (message && message.content !== " ") {
           let arrayToReturn = [];
-          if(index !== messages.length - 1) { // not the last message
-            if(!compareDates(message.date, messages[index+1].date)) {
-              let lastTime = getLastMessageTime(messages[index+1]);
+          if (index !== messages.length - 1) { // not the last message
+            if (!compareDates(message.date, messages[index + 1].date)) {
+              let lastTime = getLastMessageTime(messages[index + 1]);
               lastTime = lastTime.includes(":") ? "Toady" : lastTime;
-              arrayToReturn.push(<div key={messages[index+1].date} className="day-indicator">
+              arrayToReturn.push(<div key={messages[index + 1].date} className="day-indicator">
                 {lastTime}
               </div>)
             }
@@ -97,8 +104,9 @@ class Conversation extends Component {
   render() {
     return (
       <MuiThemeProvider>
-
         <div>
+          <Snackbar open={this.state.gesture} message={this.state.gestureText}
+            autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
 
           <div className="conversation-header">
             <ConversationHeader currentChatUser={this.props.currentChatUser}
@@ -107,11 +115,12 @@ class Conversation extends Component {
               deleteContactChat={this.deleteContactChat}
               navigateToRoute={this.navigateToRoute} />
           </div>
+          
           <div id="scrollable-conversation" className="scrollable-conversation">
-            { this.state.loading ? getCircularProgress() : <span />}
-            { this.renderMessages() }
+            {this.state.loading ? getCircularProgress() : <span />}
+            {this.renderMessages()}
 
-            <div style={{ float:"left", clear: "both" }}
+            <div style={{ float: "left", clear: "both" }}
               ref={(el) => { this.messagesEnd = el; }}>
             </div>
           </div>

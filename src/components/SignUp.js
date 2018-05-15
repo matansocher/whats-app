@@ -124,4 +124,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default mapStateToProps(null, actions)(SignUp);
+export default connect(mapStateToProps, actions)(SignUp);

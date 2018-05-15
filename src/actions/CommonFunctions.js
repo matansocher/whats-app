@@ -197,7 +197,7 @@ export function getLastMessageContent(content) {
 }
 
 export function getAvatarsNames() {
-  const numberOfAvatars = 8;
+  const numberOfAvatars = 7;
   const arrayOfAvatarsNames = [];
   arrayOfAvatarsNames.push('default.png');
   for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array

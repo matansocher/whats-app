@@ -22,25 +22,26 @@ import { getAvatarsNames } from './CommonFunctions';
 
 
 export function actionFetchAvatars(callback) {
-  return dispatch => {
-    const arrayOfAvatarsURLs = [];
-    getAvatarsNames().forEach(name => {
-      fire.storage().ref(`/avatars/${name}`).getDownloadURL().then(url => {
-        arrayOfAvatarsURLs.push(url);
-      }).catch(error => {
-        console.log(error)
-        return arrayOfAvatarsURLs;
-      });
-    });
-    dispatch({
-      type: FETCH_AVATARS,
-      payload: arrayOfAvatarsURLs
-    });
+  // return dispatch => {
+  //   const arrayOfAvatarsURLs = [];
+  //   getAvatarsNames().forEach(name => {
+  //     fire.storage().ref(`/avatars/${name}`).getDownloadURL().then(url => {
+  //       arrayOfAvatarsURLs.push(url);
+  //     }).catch(error => {
+  //       console.log(error)
+  //       return arrayOfAvatarsURLs;
+  //     });
+  //   });
     callback();
-  }
+    return {
+      type: FETCH_AVATARS,
+      payload: getAvatarsNames()
+    };
+    
+  // }
 }
 
-export function actionUpdateLastSeen(useruid, lastSeen) {
+export function actionUpdateLastSeen(useruid, lastSeen, callback) {
   return dispatch => {
     const updates = {};
     updates[`users/${useruid}/lastSeen`] = lastSeen;
@@ -61,13 +62,13 @@ export function actionUpdateLastSeen(useruid, lastSeen) {
 
 export function actionSignUpUser(email, name, avatar, uid, callback) {
   return dispatch => {
-    fire.storage().ref(`/avatars/${avatar}`).getDownloadURL().then(url => {
+    // fire.storage().ref(`/avatars/${avatar}`).getDownloadURL().then(url => {
       fire.database().ref(`users/${uid}`).set({
-        uid, email, name, avatar: url, lastSeen: "Online"
+        uid, email, name, avatar, lastSeen: "Online"
       }).then(() => {
         // fire.database().ref(`users/${uid}`).once('value', snap => {
         // const userFromDB = snap.val();
-        const user = { uid, email, name, avatar: url, lastSeen: "Online" };
+        const user = { uid, email, name, avatar, lastSeen: "Online" };
         dispatch({
           type: SIGNUP_USER,
           payload: user
@@ -75,7 +76,7 @@ export function actionSignUpUser(email, name, avatar, uid, callback) {
         callback();
         // });
       });
-    });
+    // });
   };
 }
 
@@ -99,30 +100,31 @@ export function actionLogoutUser() {
 }
 
 export function actionFetchFriendsList(uid, callback) {
-  let friends = [];
+  let friendsArray = [];
   return dispatch => {
     fire.database().ref(`friendships/${uid}`).once('value', friendsSnap => {
-      friends = friendsSnap.val() || {};
+      const friends = friendsSnap.val() || {};
       Object.keys(friends).map((objectkey) => {
         const { key, lastMessage, pinned } = friends[objectkey];
         const friend = { key, lastMessage, pinned };
-        console.log(friend)
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
           friend.info = friendSnap.val();
           console.log(friend)
-        }).then(() => {
-          fire.storage().ref(`/avatars/${friend.info.avatar}`).getDownloadURL().then(url => {
-            friend.info.avatar = url;
-            console.log("************************", friend)
-            friends.push(friend);
-          }).catch(error => { console.log(error); });
-        });
+          friendsArray.push(friend);
+        })
+        // .then(() => {
+        //   fire.storage().ref(`/avatars/${friend.info.avatar}`).getDownloadURL().then(url => {
+        //     friend.info.avatar = url;
+        //     console.log("************************", friend)
+        //     friendsArray.push(friend);
+        //   }).catch(error => { console.log(error); });
+        // });
         return friend;
       });
     })
     dispatch({
       type: FETCH_FRIENDS_LIST,
-      payload: friends
+      payload: friendsArray
     });
     callback();
   }
@@ -134,14 +136,14 @@ export function actionFetchUserData(uid, callback) {
     fire.database().ref(`users/${uid}`).once('value', userSnap => {
       user = userSnap.val();
     }).then(() => {
-      fire.storage().ref(`/avatars/${user.avatar}`).getDownloadURL().then(url => {
-        user.avatar = url;
+      // fire.storage().ref(`/avatars/${user.avatar}`).getDownloadURL().then(url => {
+        // user.avatar = url;
         dispatch({
           type: FETCH_USER_DATA,
           payload: user
         });
         callback();
-      });
+      // });
     });
   }
 }
@@ -153,6 +155,7 @@ export function actionUpdateUserData(newUser, callback) {
     // email update
     // firebase.auth().currentUser.updateEmail("user@example.com").then(() => {
 
+    console.log(uid, name, email, avatar, lastSeen)
     fire.database().ref(`users/${uid}`).set({
       uid, name, email, avatar, lastSeen
     });

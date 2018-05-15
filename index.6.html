@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script>
+
+
+        function solution(A) {
+            
+            var firstIndexToSwap = 0;
+            var secondIndexToSwap = 0;
+            let i = 0;
+            for (i = 0; i < A.length; i++) {
+                if (A[i] > A[i+1]) {
+                    firstIndexToSwap = i;
+                    break;
+                }
+            }
+            for (let j = i; j < A.length; j++) {
+                if (A[j] < A[j+1]) {
+                    secondIndexToSwap = j;
+                    break;
+                }   
+            }
+            //make swap
+            var temp = A[firstIndexToSwap];
+            A[firstIndexToSwap] = A[secondIndexToSwap];
+            A[secondIndexToSwap] = temp;
+            console.log(firstIndexToSwap, secondIndexToSwap, A)
+            // return bool if sorted or not
+            return checkIfSorted(A);
+        }
+
+        function checkIfSorted(A) {
+            for (var i = 0; i < A.length - 1; i++) {
+                if (A[i] > A[i+1]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        // console.log(solution([1, 5, 3, 3, 7]));
+        console.log(solution([1, 3, 5, 3, 4]));
+        // console.log(solution([1, 3, 5]));
+    </script>
+</body>
+
+</html>
