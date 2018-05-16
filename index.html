@@ -18,12 +18,32 @@
       storageBucket: "whats-app-c5bba.appspot.com",
       messagingSenderId: "638752731394"
     };
-    firebase.initializeApp(config);
+    const fire = firebase.initializeApp(config);
 
-    window.addEventListener("beforeunload", function (event) {
-      console.log("hellooww")
-      event.returnValue = "Hellooww"
-    })
+    function getAvatarsNames() {
+      const numberOfAvatars = 7;
+      const arrayOfAvatarsNames = [];
+      arrayOfAvatarsNames.push('default.png');
+      for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
+        arrayOfAvatarsNames.push(`contact${i}.png`);
+      }
+      return arrayOfAvatarsNames;
+    }
+
+    getAvatarsFromNames = () => {
+      const arrayOfElements = [];
+      const avatarNames = getAvatarsNames();
+      avatarNames.map(avatarName => {
+        const element = {
+          text: avatarName,
+          value: avatarName
+        }
+        arrayOfElements.push(element);
+      });
+      return arrayOfElements;
+    }
+
+    console.log(getAvatarsFromNames())
 
   </script>
 </body>

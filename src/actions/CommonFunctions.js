@@ -77,6 +77,16 @@ export function getCircularProgress() {
   );
 }
 
+export function getChatBubbleDate(nextMessage) {
+  let lastTime = getLastMessageTime(nextMessage);
+  lastTime = lastTime.includes(":") ? "Toady" : lastTime;
+  return (
+    <div key={nextMessage.date} className="day-indicator">
+      {lastTime}
+    </div>
+  )
+}
+
 export function filterBySearch(array, subString) {
   return _.filter(array, (contact) => {
     return contact.name.toLowerCase()

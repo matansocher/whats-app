@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { getCircularProgress, compareDates, getLastMessageTime } from '../actions/CommonFunctions';
+import { getCircularProgress, compareDates, getChatBubbleDate } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import ConversationHeader from './ConversationHeader';
 import ConversationFooter from './ConversationFooter';
@@ -83,17 +83,24 @@ class Conversation extends Component {
         if (message && message.content !== " ") {
           let arrayToReturn = [];
           if (index !== messages.length - 1) { // not the last message
-            if (!compareDates(message.date, messages[index + 1].date)) {
-              let lastTime = getLastMessageTime(messages[index + 1]);
-              lastTime = lastTime.includes(":") ? "Toady" : lastTime;
-              arrayToReturn.push(<div key={messages[index + 1].date} className="day-indicator">
-                {lastTime}
-              </div>)
+            if (!compareDates(message.date, messages[index + 1].date)) { // need to show another bubble 
+
+              arrayToReturn.push(getChatBubbleDate(messages[index + 1]));
+
+              // let lastTime = getLastMessageTime(messages[index + 1]);
+              // lastTime = lastTime.includes(":") ? "Toady" : lastTime;
+              // arrayToReturn.push(
+              //   <div key={messages[index + 1].date} className="day-indicator">
+              //     {lastTime}
+              //   </div>
+              // )
             }
           }
-          arrayToReturn.push(<Message key={message.id} message={message}
-            user={this.props.user}
-            deleteMessage={this.deleteMessage} />);
+          arrayToReturn.push(
+            <Message key={message.id} message={message}
+              user={this.props.user} currentChatUser={this.props.currentChatUser}
+              deleteMessage={this.deleteMessage} />
+          );
           return arrayToReturn;
         }
         return <span key={1} />
@@ -115,7 +122,7 @@ class Conversation extends Component {
               deleteContactChat={this.deleteContactChat}
               navigateToRoute={this.navigateToRoute} />
           </div>
-          
+
           <div id="scrollable-conversation" className="scrollable-conversation">
             {this.state.loading ? getCircularProgress() : <span />}
             {this.renderMessages()}

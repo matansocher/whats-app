@@ -32,12 +32,12 @@ export function actionFetchAvatars(callback) {
   //       return arrayOfAvatarsURLs;
   //     });
   //   });
-    callback();
-    return {
-      type: FETCH_AVATARS,
-      payload: getAvatarsNames()
-    };
-    
+  callback();
+  return {
+    type: FETCH_AVATARS,
+    payload: getAvatarsNames()
+  };
+
   // }
 }
 
@@ -45,37 +45,32 @@ export function actionUpdateLastSeen(useruid, lastSeen, callback) {
   return dispatch => {
     const updates = {};
     updates[`users/${useruid}/lastSeen`] = lastSeen;
-    fire.database().ref().update(updates);
-
-    // const { uid, email, name, avatar } = user;
-    // fire.database().ref(`users/${uid}`).set({
-    //   uid, email, name, avatar, lastSeen
-    // }).then(() => {
-
-    dispatch({
-      type: UPDATE_LAST_SEEN,
-      payload: useruid
+    fire.database().ref().update(updates).then(() => {
+      dispatch({
+        type: UPDATE_LAST_SEEN,
+        payload: useruid
+      });
+      callback();
     });
-    callback();
   }
 }
 
 export function actionSignUpUser(email, name, avatar, uid, callback) {
   return dispatch => {
     // fire.storage().ref(`/avatars/${avatar}`).getDownloadURL().then(url => {
-      fire.database().ref(`users/${uid}`).set({
-        uid, email, name, avatar, lastSeen: "Online"
-      }).then(() => {
-        // fire.database().ref(`users/${uid}`).once('value', snap => {
-        // const userFromDB = snap.val();
-        const user = { uid, email, name, avatar, lastSeen: "Online" };
-        dispatch({
-          type: SIGNUP_USER,
-          payload: user
-        });
-        callback();
-        // });
+    fire.database().ref(`users/${uid}`).set({
+      uid, email, name, avatar, lastSeen: "Online"
+    }).then(() => {
+      // fire.database().ref(`users/${uid}`).once('value', snap => {
+      // const userFromDB = snap.val();
+      const user = { uid, email, name, avatar, lastSeen: "Online" };
+      dispatch({
+        type: SIGNUP_USER,
+        payload: user
       });
+      callback();
+      // });
+    });
     // });
   };
 }
@@ -121,12 +116,13 @@ export function actionFetchFriendsList(uid, callback) {
         // });
         return friend;
       });
-    })
-    dispatch({
-      type: FETCH_FRIENDS_LIST,
-      payload: friendsArray
+    }).then(() => {
+      dispatch({
+        type: FETCH_FRIENDS_LIST,
+        payload: friendsArray
+      });
+      callback();
     });
-    callback();
   }
 }
 
@@ -137,12 +133,12 @@ export function actionFetchUserData(uid, callback) {
       user = userSnap.val();
     }).then(() => {
       // fire.storage().ref(`/avatars/${user.avatar}`).getDownloadURL().then(url => {
-        // user.avatar = url;
-        dispatch({
-          type: FETCH_USER_DATA,
-          payload: user
-        });
-        callback();
+      // user.avatar = url;
+      dispatch({
+        type: FETCH_USER_DATA,
+        payload: user
+      });
+      callback();
       // });
     });
   }
@@ -158,13 +154,13 @@ export function actionUpdateUserData(newUser, callback) {
     console.log(uid, name, email, avatar, lastSeen)
     fire.database().ref(`users/${uid}`).set({
       uid, name, email, avatar, lastSeen
+    }).then(() => {
+      dispatch({
+        type: UPDATE_USER_DATA,
+        payload: newUser
+      });
+      callback();
     });
-    dispatch({
-      type: UPDATE_USER_DATA,
-      payload: newUser
-    });
-    callback();
-
     // }).catch(error => {
     //   console.log(error);
     // });
@@ -224,13 +220,14 @@ export function actionSendMessage(senderuid, recieveruid, message, callback) {
 export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
   return dispatch => {
     fire.database().ref(`messages/${senderuid}/${recieveruid}/${message.id}`).remove().then(() => {
-      fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).remove()
+      fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).remove().then(() => {
+        dispatch({
+          type: DELETE_MESSAGE,
+          payload: message
+        });
+        callback();
+      });
     })
-    dispatch({
-      type: DELETE_MESSAGE,
-      payload: message
-    });
-    callback();
   }
 }
 
@@ -278,12 +275,13 @@ export function actionPinUnpinChat(useruid, contact, isPinned, callback) {
   return dispatch => {
     const updates = {};
     updates[`friendships/${useruid}/${contact.info.uid}/pinned`] = isPinned;
-    fire.database().ref().update(updates);
-    dispatch({
-      type: PINUNPIN_CHAT,
-      payload: contact
+    fire.database().ref().update(updates).then(() => {
+      dispatch({
+        type: PINUNPIN_CHAT,
+        payload: contact
+      });
+      callback();
     });
-    callback();
   }
 }
 
@@ -315,12 +313,13 @@ export function actionAddAsFriend(useruid, contact, callback) {
     }).then(() => {
       fire.database().ref(`friendships/${contactuid}/${useruid}`).set({
         key: useruid, pinned: false
-      })
-    })
-    dispatch({
-      type: ADD_AS_FRIEND,
-      payload: contact
+      }).then(() => {
+        dispatch({
+          type: ADD_AS_FRIEND,
+          payload: contact
+        });
+        callback();
+      });
     });
-    callback();
   }
 }

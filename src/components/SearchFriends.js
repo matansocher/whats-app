@@ -27,18 +27,17 @@ class SearchFriends extends Component {
       this.props.history.push('/');
       return;
     }
-    this.setState({ loading: true }, () => {
-      if (_.isEmpty(this.props.searchFriends)) {
+
+    if (_.isEmpty(this.props.searchFriends)) {
+      this.setState({ loading: true }, () => {
         const { uid } = this.props.user;
         const friendsUids = _.map(this.props.contactList, f => f.key);
         friendsUids.push(uid); // this user
         this.props.actionSearchFriends(uid, friendsUids, () => {
           this.setState({ loading: false });
         });
-      } else {
-        this.setState({ loading: false });
-      }
-    })
+      });
+    }
   }
 
   addAsFriend = (friend) => {

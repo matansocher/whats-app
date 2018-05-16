@@ -42,8 +42,8 @@ class SearchFriendsItem extends Component {
             <IconMenu
               className="pull-right three-dots-add-friend"
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
               <MenuItem primaryText="Add As Friend" onClick={this.addAsFriend} />
             </IconMenu>
