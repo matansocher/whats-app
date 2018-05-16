@@ -16,7 +16,7 @@ class ContactInfo extends Component {
   }
 
   componentWillMount() {
-    if(_.isEmpty(this.props.currentChatUser)) {
+    if (_.isEmpty(this.props.currentChatUser)) {
       this.props.history.push('/');
     }
   }
@@ -26,7 +26,7 @@ class ContactInfo extends Component {
   }
 
   render() {
-    if(_.isEmpty(this.props.currentChatUser)) {
+    if (_.isEmpty(this.props.currentChatUser)) {
       return <span />;
     } else {
       const { avatar, name } = this.props.currentChatUser;
@@ -37,7 +37,7 @@ class ContactInfo extends Component {
 
               <div className="user-info-header">
                 <div>
-                  <FlatButton className="pull-left back-button-user-info" label="Back" primary={true}  onClick={this.backClick}>
+                  <FlatButton className="pull-left back-button-user-info" label="Back" primary={true} onClick={this.backClick}>
                     <BackIcon className="pull-left back-user-info" />
                   </FlatButton>
                 </div>

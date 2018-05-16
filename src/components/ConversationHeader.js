@@ -41,7 +41,7 @@ class ConversationHeader extends Component {
         <div>
 
           <BackIcon className="pull-left icon back-icon"
-             onClick={this.backClick} />
+            onClick={this.backClick} />
 
           <ListItem
             className="contact-info"
@@ -50,14 +50,14 @@ class ConversationHeader extends Component {
             onClick={this.infoClicked}
             leftAvatar={
               <Avatar size={45} src={require(`../avatars/${avatar}`)}
-                style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }}/>
+                style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
             }
           />
           <IconMenu
             className="three-dots-conversation-header"
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
           >
             <MenuItem onClick={this.deleteContactChat} primaryText="Delete Chat" />
           </IconMenu>

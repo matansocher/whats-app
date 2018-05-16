@@ -27,19 +27,19 @@ class UserInfo extends Component {
   }
 
   componentWillMount() {
-    if(_.isEmpty(this.props.user)) {
+    if (_.isEmpty(this.props.user)) {
       this.props.history.push('/');
     }
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.avatars)) {
-      this.setState({ lodaing: true }, () => {
-        this.props.actionFetchAvatars(() => {
-          this.setState({ lodaing: false });
-        });
-      });
-    }
+    // if(_.isEmpty(this.props.avatars)) {
+    //   this.setState({ lodaing: true }, () => {
+    //     this.props.actionFetchAvatars(() => {
+    //       this.setState({ lodaing: false });
+    //     });
+    //   });
+    // }
   }
 
   backClick = () => {
@@ -73,7 +73,7 @@ class UserInfo extends Component {
   }
 
   render() {
-    if(_.isEmpty(this.props.user)) {
+    if (_.isEmpty(this.props.user)) {
       return getCircularProgress();
     } else {
       const { avatar } = this.props.user;
@@ -87,7 +87,7 @@ class UserInfo extends Component {
 
               <div className="user-info-header">
                 <div>
-                  <FlatButton className="pull-left back-button-user-info" label="Back" primary={true}  onClick={this.backClick}>
+                  <FlatButton className="pull-left back-button-user-info" label="Back" primary={true} onClick={this.backClick}>
                     <BackIcon className="pull-left back-user-info" />
                   </FlatButton>
                 </div>
@@ -97,7 +97,7 @@ class UserInfo extends Component {
                 </div>
               </div>
 
-              { this.state.loading ? getCircularProgress() : <span /> }
+              {this.state.loading ? getCircularProgress() : <span />}
 
               <br />
 

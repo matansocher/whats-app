@@ -24,7 +24,7 @@ class ConversationFooter extends Component {
       id: makeMessageID(),
       content: this.state.message,
       hour: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
-      date: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+      date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }
     this.props.sendMessage(message, () => {
       this.setState({ message: '' });
@@ -41,15 +41,14 @@ class ConversationFooter extends Component {
   toggleSmiley = () => {
     document.getElementById("scrollable-conversation").classList.toggle('scrollable-conversation-short');
     document.getElementById("conversation-footer").classList.toggle('conversation-footer-long');
-    const show = this.state.smileyShow;
-    this.setState({ smileyShow: !show });
+    this.setState({ smileyShow: !this.state.smileyShow });
   }
 
   returnEmoji = (id) => {
-    return(
+    return (
       <span dangerouslySetInnerHTML={{
         __html: Emoji({
-          html: true, set: 'apple', emoji: {id}, size: 20
+          html: true, set: 'apple', emoji: { id }, size: 20
         })
       }}></span>
     );
@@ -68,10 +67,10 @@ class ConversationFooter extends Component {
       <div>
         <MuiThemeProvider>
           <div className="">
-            { this.state.smileyShow ?
+            {this.state.smileyShow ?
               <Picker onSelect={this.addEmojiToMessage}
                 style={{ position: 'relative', width: '100%' }} />
-                : <span />}
+              : <span />}
             <div className="smiley">
               <SmileyIcon onClick={this.toggleSmiley} className="pull-left" />
             </div>

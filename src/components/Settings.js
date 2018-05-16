@@ -17,7 +17,7 @@ class Settings extends Component {
   }
 
   componentWillMount() {
-    if(_.isEmpty(this.props.settings)) {
+    if (_.isEmpty(this.props.settings)) {
       this.props.history.push('/');
     }
   }
@@ -30,10 +30,10 @@ class Settings extends Component {
 
   render() {
     return (
-        <MuiThemeProvider>
-          <div className="row">
-          </div>
-        </MuiThemeProvider>
+      <MuiThemeProvider>
+        <div className="row">
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

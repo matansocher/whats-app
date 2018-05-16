@@ -147,7 +147,7 @@ class Chats extends Component {
             <ChatsHeader searchContact={this.searchContact}
               navigateToRoute={this.navigateToRoute} />
           </div>
-          
+
           <div className="scrollable-chats">
             {this.state.loading ? getCircularProgress() : <span />}
             <List>

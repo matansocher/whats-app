@@ -23,39 +23,39 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.avatars)) {
-      this.setState({ loading: true }, () => {
-        this.props.actionFetchAvatars(() => {
-          this.setState({ loading: false });
-        });
-      });
-    }
+    // if(_.isEmpty(this.props.avatars)) {
+    //   this.setState({ loading: true }, () => {
+    //     this.props.actionFetchAvatars(() => {
+    //       this.setState({ loading: false });
+    //     });
+    //   });
+    // }
   }
 
   singUp = () => {
     this.setState({ loading: true }, () => {
       let signUpMessage = '';
       const { SUemail, SUpassword, SUname, SUavatar } = this.state;
-      if(validatePassword(SUpassword) === 'short') {
+      if (validatePassword(SUpassword) === 'short') {
         signUpMessage = `Password should contain at least 6 chars`;
         this.setState({ loading: false, signUpMessage });
         return;
       }
-      if(!SUname || SUname.length === 0) {
+      if (!SUname || SUname.length === 0) {
         signUpMessage = `Name is empty`;
         this.setState({ loading: false, signUpMessage });
         return;
       }
-      if(validateEmail(SUemail) && validatePassword(SUpassword)) {
+      if (validateEmail(SUemail) && validatePassword(SUpassword)) {
         fire.auth().createUserWithEmailAndPassword(SUemail, SUpassword)
-        .then(user => {
-          this.props.actionSignUpUser(SUemail, SUname, SUavatar, user.uid, () => {
-            this.props.history.push('/');
+          .then(user => {
+            this.props.actionSignUpUser(SUemail, SUname, SUavatar, user.uid, () => {
+              this.props.history.push('/');
+            });
+          }).catch(e => {
+            signUpMessage = e.message;
+            this.setState({ loading: false, signUpMessage });
           });
-        }).catch(e => {
-          signUpMessage = e.message;
-          this.setState({ loading: false, signUpMessage });
-        });
       } else {
         signUpMessage = `Oops, something went wrong, please try again`;
         this.setState({ loading: false, signUpMessage });
@@ -85,7 +85,7 @@ class SignUp extends Component {
           <div className="row">
             <div className="col-5">
               <div>
-                { this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
+                {this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
                 <h3>Create An Acount</h3>
                 <TextField hintText="Email" name="SUemail"
                   value={this.state.SUemail} onChange={this.handleChange} />
@@ -103,7 +103,7 @@ class SignUp extends Component {
 
                 <button className="btn btn-primary"
                   onClick={this.singUp}>
-                    Sign Up
+                  Sign Up
                 </button>
 
                 <FlatButton label="Already A Member? Sign In" primary={true}
