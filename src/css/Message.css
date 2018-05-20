@@ -1,63 +1,37 @@
 .message {
-  clear: both;
-  line-height: 18px;
-  font-size: 15px;
-  padding: 8px;
-  position: relative;
-  margin: 8px 0;
-  max-width: 85%;
-  word-wrap: break-word;
-  z-index: -1;
-}
-.metadata {
-  display: inline-block;
-  float: right;
-  padding: 0 0 0 7px;
-  position: relative;
-  bottom: -4px;
-}
-.metadata .time {
-  color: white;
-  font-size: 11px;
-  display: inline-block;
-}
-.message:first-child {
-  margin: 16px 0 8px;
-}
-.message.received {
-  background: #1F232A;
-  color: white;
-  border-radius: 0px 5px 5px 5px;
-  float: left;
-}
-.message.received .metadata {
-  padding: 0 0 0 16px;
-}
-.message.sent {
-  background: #394151;
-  color: white;
-  border-radius: 5px 0px 5px 5px;
-  float: right;
+  height: 60px;;
 }
 
 .message-name {
   font-weight: bold;
+  position: relative;
+  top: 10px;
+  left: 20px;
 }
 
 .message-content {
-
+  position: relative;
+  top: -5px;
+  left: 55px;
 }
 
 .time-of-message {
-  float: left;
+  float: right;
   position: relative;
-  /* top: -6px;
-  left: 5px; */
+  top: -40px;
+  left: -20px;
 }
 
 .message-avatar {
   float: left;
   position: relative;
-  /* top: -6px;
-  left: 5px; */
+  top: 10px;
+  left: 10px;
+}
+
+.message-V {
+  float: right;
+  position: relative;
+  top: -40px;
+  left: -30px;
 }

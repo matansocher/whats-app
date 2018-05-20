@@ -1,32 +1,19 @@
 import React from 'react';
+import fire from '../firebase';
 import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 
-export function sortByUid(array) {
-  return array.sort();
+
+export function updateLastSeen(useruid, lastSeen, callback) {
+  const updates = {};
+  updates[`users/${useruid}/lastSeen`] = lastSeen;
+  fire.database().ref().update(updates).then(() => {
+    callback();
+  });
 }
 
-export function getCharFromNumber(number) {
-  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  return possible.charAt(number);
-}
-
-export function makeMessageID() {
-  const date = new Date();
-  const dateString = `${getCharFromNumber(date.getFullYear() - 2000)}${getCharFromNumber(date.getMonth())}${getCharFromNumber(date.getDate())}`;
-  const hourString = `${getCharFromNumber(date.getHours())}${getCharFromNumber(date.getMinutes())}${getCharFromNumber(date.getSeconds())}`;
-  return `${dateString}${hourString}`;
-}
-
-export function getDateHourString() { // for last seen
-  const date = new Date();
-  const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  const hourString = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  return `${dateString} ${hourString}`
-}
-
-export function getLastSeenString(lastSeen) { // for last seen
+export function getLastSeenString(lastSeen) {
   if (lastSeen === "Online") {
     return lastSeen;
   }
@@ -40,8 +27,31 @@ export function getLastSeenString(lastSeen) { // for last seen
   if (checkIfToday(new Date(), dateObject)) {
     return `Last seen today at ${splittedHour[0]}:${splittedHour[1]}`;
   }
+  return `Last seen at ${getCorrectDate(dateString)} ${getCorrectHour(hourString)}`;
+}
 
-  return `Last seen at ${dateString} ${dateString}`;
+
+export function getDateHourString() { // for last seen
+  const date = new Date();
+  const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const hourString = `${date.getHours()}:${date.getMinutes()}`;
+  return `${dateString} ${hourString}`
+}
+
+export function sortByUid(array) {
+  return array.sort();
+}
+
+export function getCharFromNumber(number) {
+  const possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  return possible.charAt(number);
+}
+
+export function makeMessageID() {
+  const date = new Date();
+  const dateString = `${getCharFromNumber(date.getFullYear() - 2000)}${getCharFromNumber(date.getMonth())}${getCharFromNumber(date.getDate())}`;
+  const hourString = `${getCharFromNumber(date.getHours())}${getCharFromNumber(date.getMinutes())}${getCharFromNumber(date.getSeconds())}`;
+  return `${dateString}${hourString}`;
 }
 
 export function validateEmail(email) {
@@ -56,6 +66,16 @@ export function validatePassword(password) {
     return 'short';
   }
   return true;
+}
+
+export function getCorrectDate(time) {
+  const dateArray = time.split('-');
+  let year = dateArray[0];
+  let month = dateArray[1];
+  let day = dateArray[2];
+  month = month < 10 ? `0${month}` : month;
+  day = day < 10 ? `0${day}` : day;
+  return `${year}-${month}-${day}`
 }
 
 export function getCorrectHour(time) {
@@ -89,7 +109,7 @@ export function getChatBubbleDate(nextMessage) {
 
 export function filterBySearch(array, subString) {
   return _.filter(array, (contact) => {
-    return contact.name.toLowerCase()
+    return contact.info.name.toLowerCase()
       .startsWith(subString.toLowerCase());
   });
 }

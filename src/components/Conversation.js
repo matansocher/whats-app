@@ -48,14 +48,11 @@ class Conversation extends Component {
   }
 
   sendMessage = (message, callback) => {
-    this.setState({ loading: true }, () => {
-      const senderuid = this.props.user.uid;
-      const recieveruid = this.props.currentChatUser.uid;
-      message.sender = senderuid;
-      this.props.actionSendMessage(senderuid, recieveruid, message, () => {
-        callback();
-        this.setState({ loading: false });
-      });
+    const senderuid = this.props.user.uid;
+    const recieveruid = this.props.currentChatUser.info.uid;
+    message.sender = senderuid;
+    this.props.actionSendMessage(senderuid, recieveruid, message, () => {
+      callback();
     });
   }
 
@@ -116,7 +113,8 @@ class Conversation extends Component {
             autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
 
           <div className="conversation-header">
-            <ConversationHeader currentChatUser={this.props.currentChatUser}
+            <ConversationHeader user={this.props.user}
+              currentChatUser={this.props.currentChatUser}
               backToChats={this.navigateToRoute}
               contactInfoShow={this.navigateToRoute}
               deleteContactChat={this.deleteContactChat}

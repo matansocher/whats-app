@@ -2,7 +2,6 @@ import _ from 'lodash';
 import fire from '../firebase';
 import {
   FETCH_AVATARS,
-  UPDATE_LAST_SEEN,
   SIGNUP_USER,
   LOGIN_USER,
   LOGOUT_USER,
@@ -39,20 +38,6 @@ export function actionFetchAvatars(callback) {
   };
 
   // }
-}
-
-export function actionUpdateLastSeen(useruid, lastSeen, callback) {
-  return dispatch => {
-    const updates = {};
-    updates[`users/${useruid}/lastSeen`] = lastSeen;
-    fire.database().ref().update(updates).then(() => {
-      dispatch({
-        type: UPDATE_LAST_SEEN,
-        payload: useruid
-      });
-      callback();
-    });
-  }
 }
 
 export function actionSignUpUser(email, name, avatar, uid, callback) {
@@ -104,7 +89,6 @@ export function actionFetchFriendsList(uid, callback) {
         const friend = { key, lastMessage, pinned };
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
           friend.info = friendSnap.val();
-          console.log(friend)
           friendsArray.push(friend);
         })
         // .then(() => {
@@ -148,8 +132,8 @@ export function actionUpdateUserData(newUser, callback) {
   // ************ also need to update email in auth ************
   const { uid, name, email, avatar, lastSeen } = newUser;
   return dispatch => {
-    // email update
-    // firebase.auth().currentUser.updateEmail("user@example.com").then(() => {
+    // ************ also need to update email in auth ************
+    // fire.auth().currentUser.updateEmail("user@example.com").then(() => {
 
     console.log(uid, name, email, avatar, lastSeen)
     fire.database().ref(`users/${uid}`).set({
@@ -169,45 +153,17 @@ export function actionUpdateUserData(newUser, callback) {
 
 export function actionSendMessage(senderuid, recieveruid, message, callback) {
   const { id, content, date, hour, sender } = message;
-  // const sender = senderuid;
   return dispatch => {
-
-
-    // ********************************
-    // const updates = {};
-    // updates[`messages/${senderuid}/${recieveruid}/${message.id}`] =
-    //   { id, content, date, hour, sender };
-    // updates[`messages/${recieveruid}/${senderuid}/${message.id}`] =
-    //   { id, content, date, hour, sender };
-    // updates[`friendships/${senderuid}/${recieveruid}/lastMessage`] =
-    //   { id, content, date, hour, sender };
-    // updates[`friendships/${recieveruid}/${senderuid}/lastMessage`] =
-    //   { id, content, date, hour, sender };
-    // fire.database().ref().update(updates).then(() => {
-    //   dispatch({
-    //     type: SEND_MESSAGE,
-    //     payload: message
-    //   });
-    //   callback();
-    // });
-    // ********************************
-
-
-    fire.database().ref(`messages/${senderuid}/${recieveruid}/${message.id}`).set({
-      id, content, date, hour, sender
-    }).then(() => {
-      fire.database().ref(`messages/${recieveruid}/${senderuid}/${message.id}`).set({
-        id, content, date, hour, sender
-      })
-    }).then(() => {
-      fire.database().ref(`friendships/${senderuid}/${recieveruid}/lastMessage`).set({
-        id, content, date, hour, sender
-      })
-    }).then(() => {
-      fire.database().ref(`friendships/${recieveruid}/${senderuid}/lastMessage`).set({
-        id, content, date, hour, sender
-      })
-    }).then(() => {
+    const updates = {};
+    updates[`messages/${senderuid}/${recieveruid}/${message.id}`] =
+      { id, content, date, hour, sender };
+    updates[`messages/${recieveruid}/${senderuid}/${message.id}`] =
+      { id, content, date, hour, sender };
+    updates[`friendships/${senderuid}/${recieveruid}/lastMessage`] =
+      { id, content, date, hour, sender };
+    updates[`friendships/${recieveruid}/${senderuid}/lastMessage`] =
+      { id, content, date, hour, sender };
+    fire.database().ref().update(updates).then(() => {
       dispatch({
         type: SEND_MESSAGE,
         payload: message
@@ -233,7 +189,7 @@ export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
 
 export function actionFetchChatData(useruid, contact, callback) {
   const chatData = { contact, messages: [] };
-  const contactuid = contact.uid;
+  const contactuid = contact.info.uid;
 
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).once('value', messagesSnap => {

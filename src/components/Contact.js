@@ -36,9 +36,6 @@ class Contact extends Component {
 
   render() {
     const { name, avatar } = this.props.contact.info;
-    console.log(this.props.contact);
-    console.log(this.props.contact.info);
-    console.log(this.props.contact.info.avatar);
     const { pinned } = this.props.contact;
     const { lastMessage } = this.props;
     const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
@@ -51,7 +48,7 @@ class Contact extends Component {
               onClick={this.fetchChatData} style={{ color: '#ffffff' }}
               primaryText={name} secondaryText={lmContent}
               leftAvatar={
-                <Avatar size={45} src={avatar}
+                <Avatar size={45} src={require(`../avatars/${avatar}`)}
                   style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
               }
             />

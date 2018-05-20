@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
-import { getCircularProgress, sortContactsByLastMessageTime, filterBySearch, splitToPinned, getDateHourString } from '../actions/CommonFunctions';
+import { getCircularProgress, sortContactsByLastMessageTime, filterBySearch, splitToPinned, getDateHourString, updateLastSeen } from '../actions/CommonFunctions';
 import fire from '../firebase';
 import ChatsHeader from './ChatsHeader';
 import Contact from './Contact';
@@ -24,6 +24,7 @@ class Chats extends Component {
   }
 
   componentDidMount() {
+    
     window.addEventListener("beforeunload", this.onUnload)
     fire.auth().onAuthStateChanged(user => {
       if (user) {
@@ -40,24 +41,36 @@ class Chats extends Component {
   }
 
   onUnload = e => {
-    console.log("onUnload");
+    // console.log("onUnload");
     const { uid } = this.props.user;
     const lastSeen = getDateHourString();
-    this.props.actionUpdateLastSeen(uid, lastSeen);
+    updateLastSeen(uid, lastSeen, () => {});
     // e.returnValue = "Hellooww";
   }
 
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
       const lastSeen = "Online";
-      this.props.actionUpdateLastSeen(uid, lastSeen, () => {
+      // this.props.updateLastSeen(uid, lastSeen, () => {
         this.props.actionFetchUserData(uid, () => {
           this.props.actionFetchFriendsList(uid, () => {
-            this.setState({ loading: false });
+            updateLastSeen(uid, lastSeen, () => {
+              this.setState({ loading: false });
+            })
           });
         });
-      });
+      // });
     });
+  }
+
+  fetchChatData = (contactUid) => {
+    this.setState({ loading: true }, () => {
+      const useruid = this.props.user.uid;
+      this.props.actionFetchChatData(useruid, contactUid, () => {
+        this.setState({ loading: false })
+        this.props.history.push('/conversation');
+      });
+    })
   }
 
   deleteContactChat = (contact) => {
@@ -87,25 +100,11 @@ class Chats extends Component {
     this.setState({ searchTerm });
   }
 
-  fetchChatData = (contactUid) => {
-    this.setState({ loading: true }, () => {
-      const useruid = this.props.user.uid;
-      this.props.actionFetchChatData(useruid, contactUid, () => {
-        this.setState({ loading: false })
-        this.props.history.push('/conversation');
-      });
-    })
-  }
-
   handleRequestClose = () => {
     this.setState({ gesture: false });
   };
 
   renderList() {
-    console.log(this.props.contactList)
-    if (_.isEmpty(this.props.contactList)) {
-      console.log('asdcasdcasdcads')
-    }
     if (_.isEmpty(this.props.contactList) && !this.state.loading) {
       if (!this.state.loading) {
         return (

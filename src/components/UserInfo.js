@@ -19,7 +19,6 @@ class UserInfo extends Component {
       name: this.props.user.name,
       email: this.props.user.email,
       avatar: this.props.user.avatar,
-      lastSeen: this.props.user.lastSeen,
       gesture: false,
       gestureText: "",
       loading: false
@@ -33,13 +32,13 @@ class UserInfo extends Component {
   }
 
   componentDidMount() {
-    // if(_.isEmpty(this.props.avatars)) {
-    //   this.setState({ lodaing: true }, () => {
-    //     this.props.actionFetchAvatars(() => {
-    //       this.setState({ lodaing: false });
-    //     });
-    //   });
-    // }
+    if(_.isEmpty(this.props.avatars)) {
+      this.setState({ lodaing: true }, () => {
+        this.props.actionFetchAvatars(() => {
+          this.setState({ lodaing: false });
+        });
+      });
+    }
   }
 
   backClick = () => {
@@ -48,9 +47,10 @@ class UserInfo extends Component {
 
   saveClick = () => {
     this.setState({ loading: true }, () => {
-      const { name, email, avatar, lastSeen } = this.state;
+      const { name, email, avatar } = this.state;
       const { uid } = this.props.user;
-      const newUser = { uid, name, email, avatar, lastSeen };
+      const newUser = { uid, name, email, avatar, lastSeen: "Online" };
+      console.log(newUser)
       this.props.actionUpdateUserData(newUser, () => {
         this.setState({ loading: false, gestureText: "Changes Saved Successfully", gesture: true });
       });
@@ -76,7 +76,6 @@ class UserInfo extends Component {
     if (_.isEmpty(this.props.user)) {
       return getCircularProgress();
     } else {
-      const { avatar } = this.props.user;
       return (
         <div>
           <MuiThemeProvider>
@@ -102,7 +101,9 @@ class UserInfo extends Component {
               <br />
 
               <div className="center">
-                <Avatar size={90} src={require(`../avatars/${avatar}`)} />
+                <Avatar size={90} src={require(`../avatars/${this.state.avatar}`)} />
+
+                <br />
 
                 <TextField
                   hintText="Name"
@@ -121,9 +122,8 @@ class UserInfo extends Component {
                 <AvatarPicker avatar={this.state.avatar}
                   changeAvatar={this.changeAvatar} />
 
+                <RaisedButton primary={true} label="Update Info" onClick={this.saveClick} />
               </div>
-
-              <RaisedButton primary={true} label="Update Info" onClick={this.saveClick} />
             </div>
           </MuiThemeProvider>
         </div>

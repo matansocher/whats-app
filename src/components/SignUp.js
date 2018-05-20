@@ -4,10 +4,9 @@ import fire from '../firebase';
 import * as actions from '../actions/index';
 import _ from 'lodash';
 import AvatarPicker from './AvatarPicker';
-import { validateEmail, validatePassword } from '../actions/CommonFunctions';
+import { validateEmail, validatePassword, getCircularProgress } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
-import CircularProgress from 'material-ui/CircularProgress';
 import FlatButton from 'material-ui/FlatButton';
 
 class SignUp extends Component {
@@ -23,13 +22,13 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    // if(_.isEmpty(this.props.avatars)) {
-    //   this.setState({ loading: true }, () => {
-    //     this.props.actionFetchAvatars(() => {
-    //       this.setState({ loading: false });
-    //     });
-    //   });
-    // }
+    if(_.isEmpty(this.props.avatars)) {
+      this.setState({ loading: true }, () => {
+        this.props.actionFetchAvatars(() => {
+          this.setState({ loading: false });
+        });
+      });
+    }
   }
 
   singUp = () => {
@@ -82,35 +81,39 @@ class SignUp extends Component {
     return (
       <div className="cetner-sign-in">
         <MuiThemeProvider>
-          <div className="row">
-            <div className="col-5">
-              <div>
-                {this.state.loading ? <CircularProgress size={80} thickness={5} /> : <span />}
-                <h3>Create An Acount</h3>
-                <TextField hintText="Email" name="SUemail"
-                  value={this.state.SUemail} onChange={this.handleChange} />
-                <br />
-                <TextField hintText="Name" name="SUname"
-                  value={this.state.SUname} onChange={this.handleChange} />
-                <br />
-                <TextField hintText="Password" name="SUpassword" type="password"
-                  value={this.state.SUpassword} onChange={this.handleChange} />
-                <br />
-                <p>{this.state.signUpMessage}</p>
+          <div className="center">
+            {this.state.loading ? getCircularProgress() : <span />}
+            <h1>Create An Acount</h1>
+            <TextField hintText="Email" name="SUemail"
+              value={this.state.SUemail} onChange={this.handleChange} />
 
-                <AvatarPicker avatar={this.state.SUavatar}
-                  changeAvatar={this.changeAvatar} />
+            <br />
 
-                <button className="btn btn-primary"
-                  onClick={this.singUp}>
-                  Sign Up
-                </button>
+            <TextField hintText="Name" name="SUname"
+              value={this.state.SUname} onChange={this.handleChange} />
 
-                <FlatButton label="Already A Member? Sign In" primary={true}
-                  onClick={this.signInClick} />
+            <br />
 
-              </div>
-            </div>
+            <TextField hintText="Password" name="SUpassword" type="password"
+              value={this.state.SUpassword} onChange={this.handleChange} />
+
+            <br />
+
+            <p>{this.state.signUpMessage}</p>
+
+            <AvatarPicker avatar={this.state.SUavatar}
+              changeAvatar={this.changeAvatar} />
+
+            <button className="btn btn-primary"
+              onClick={this.singUp}>
+              Sign Up
+            </button>
+
+            <br />
+
+            <FlatButton label="Already A Member? Sign In" primary={true}
+              onClick={this.signInClick} />
+
           </div>
         </MuiThemeProvider>
       </div>

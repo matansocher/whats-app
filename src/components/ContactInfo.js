@@ -29,7 +29,7 @@ class ContactInfo extends Component {
     if (_.isEmpty(this.props.currentChatUser)) {
       return <span />;
     } else {
-      const { avatar, name } = this.props.currentChatUser;
+      const { avatar, name } = this.props.currentChatUser.info;
       return (
         <div>
           <MuiThemeProvider>

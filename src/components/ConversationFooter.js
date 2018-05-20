@@ -27,6 +27,7 @@ class ConversationFooter extends Component {
       date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }
     this.props.sendMessage(message, () => {
+      this.refs.message.value = '';
       this.setState({ message: '' });
     });
   }
@@ -75,7 +76,7 @@ class ConversationFooter extends Component {
               <SmileyIcon onClick={this.toggleSmiley} className="pull-left" />
             </div>
             <div className="center">
-              <textarea value={this.props.message} name="message"
+              <textarea value={this.state.message} name="message" ref="message"
                 className="form-control input-message" rows="1"
                 placeholder="Type a message" onChange={this.handleChange}>
               </textarea>

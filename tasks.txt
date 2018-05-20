@@ -1,6 +1,3 @@
-message design - don't copy from whatsapp, make your own
-
-avatar picker
-last seen
+when updating details - update email too
 emoji
 tests

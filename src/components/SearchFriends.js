@@ -93,31 +93,27 @@ class SearchFriends extends Component {
     return (
       <div className="center">
         <MuiThemeProvider>
-          <div className="row">
-            <div className="">
-              <div className="center">
+          <div className="center">
 
-                <Snackbar open={this.state.gesture} message={this.state.gestureText}
-                  autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
+            <Snackbar open={this.state.gesture} message={this.state.gestureText}
+              autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
 
 
-                <FlatButton className="pull-left back-button-user-info" label="Back" primary={true} onClick={this.backClick}>
-                  <BackIcon className="pull-left back-user-info" />
-                </FlatButton>
+            <FlatButton className="pull-left back-button-user-info" label="Back" primary={true} onClick={this.backClick}>
+              <BackIcon className="pull-left back-user-info" />
+            </FlatButton>
 
-                <h1>Search Friends</h1>
-                <div className="search-chats">
-                  <input className="form-control text-input" placeholder="Search" name="searchTerm"
-                    value={this.state.searchTerm} onChange={this.handleChange} />
-                </div>
-                {this.state.loading ? getCircularProgress() : <span />}
-
-                <List>
-                  {this.renderList()}
-                </List>
-
+              <h1>Search Friends</h1>
+              <div className="search-chats">
+                <input className="form-control text-input" placeholder="Search" name="searchTerm"
+                  value={this.state.searchTerm} onChange={this.handleChange} />
               </div>
-            </div>
+            {this.state.loading ? getCircularProgress() : <span />}
+
+            <List>
+              {this.renderList()}
+            </List>
+
           </div>
         </MuiThemeProvider>
       </div>

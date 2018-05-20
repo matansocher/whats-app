@@ -20,30 +20,16 @@
     };
     const fire = firebase.initializeApp(config);
 
-    function getAvatarsNames() {
-      const numberOfAvatars = 7;
-      const arrayOfAvatarsNames = [];
-      arrayOfAvatarsNames.push('default.png');
-      for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
-        arrayOfAvatarsNames.push(`contact${i}.png`);
-      }
-      return arrayOfAvatarsNames;
-    }
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const array = possible.split("");
+    array.sort();
+    console.log(array)
 
-    getAvatarsFromNames = () => {
-      const arrayOfElements = [];
-      const avatarNames = getAvatarsNames();
-      avatarNames.map(avatarName => {
-        const element = {
-          text: avatarName,
-          value: avatarName
-        }
-        arrayOfElements.push(element);
-      });
-      return arrayOfElements;
+    if('0' > 'A') {
+      console.log("0 is greater")
+    } else {
+      console.log("A is greater")
     }
-
-    console.log(getAvatarsFromNames())
 
   </script>
 </body>
