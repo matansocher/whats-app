@@ -35,3 +35,10 @@
   top: -40px;
   left: -30px;
 }
+
+.unraed-badge {
+  float: right;
+  position: relative;
+  top: -30px;
+  left: -20px;
+}

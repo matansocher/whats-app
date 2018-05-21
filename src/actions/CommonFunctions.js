@@ -3,14 +3,26 @@ import fire from '../firebase';
 import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
+import Badge from 'material-ui/Badge';
 
 
-export function updateLastSeen(useruid, lastSeen, callback) {
+export function updateLastSeen(useruid, lastSeen) {
   const updates = {};
   updates[`users/${useruid}/lastSeen`] = lastSeen;
-  fire.database().ref().update(updates).then(() => {
-    callback();
-  });
+  fire.database().ref().update(updates);
+}
+
+export function getUnraedBadge(isUnread) {
+  // possible - 0(marked as unraed), some number, "None" - all raed
+  if (isUnread === "None") {
+    return <span />;
+  }
+  return (
+    <MuiThemeProvider>
+      <Badge badgeContent={isUnread === 0 ? "" : isUnread}
+        className="unraed-badge" primary={true} />
+    </MuiThemeProvider>
+  );
 }
 
 export function getLastSeenString(lastSeen) {

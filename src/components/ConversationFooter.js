@@ -65,28 +65,26 @@ class ConversationFooter extends Component {
 
   render() {
     return (
-      <div>
-        <MuiThemeProvider>
-          <div className="">
-            {this.state.smileyShow ?
-              <Picker onSelect={this.addEmojiToMessage}
-                style={{ position: 'relative', width: '100%' }} />
-              : <span />}
-            <div className="smiley">
-              <SmileyIcon onClick={this.toggleSmiley} className="pull-left" />
-            </div>
-            <div className="center">
-              <textarea value={this.state.message} name="message" ref="message"
-                className="form-control input-message" rows="1"
-                placeholder="Type a message" onChange={this.handleChange}>
-              </textarea>
-            </div>
-            <div className="send-icon">
-              <SendIcon className="pull-right" onClick={this.sendMessage} />
-            </div>
+      <MuiThemeProvider>
+        <div>
+          {this.state.smileyShow ?
+            <Picker onSelect={this.addEmojiToMessage}
+              style={{ position: 'relative', width: '100%' }} />
+            : <span />}
+          <div className="smiley">
+            <SmileyIcon onClick={this.toggleSmiley} className="pull-left" />
           </div>
-        </MuiThemeProvider>
-      </div>
+          <div className="center">
+            <textarea value={this.state.message} name="message" ref="message"
+              className="form-control input-message" rows="1"
+              placeholder="Type a message" onChange={this.handleChange}>
+            </textarea>
+          </div>
+          <div className="send-icon">
+            <SendIcon className="pull-right" onClick={this.sendMessage} />
+          </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

@@ -39,7 +39,6 @@ class AvatarPicker extends Component {
   }
 
   render() {
-    // const styles = { customWidth: { width: 300 } };
     return (
       <div className="center">
         <MuiThemeProvider>
@@ -53,10 +52,12 @@ class AvatarPicker extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    avatars: state.avatars
-  };
-}
+export default AvatarPicker;
 
-export default connect(mapStateToProps, actions)(AvatarPicker);
+// function mapStateToProps(state) {
+//   return {
+//     avatars: state.avatars
+//   };
+// }
+
+// export default connect(mapStateToProps, actions)(AvatarPicker);

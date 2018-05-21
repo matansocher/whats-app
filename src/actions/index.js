@@ -13,6 +13,7 @@ import {
   DELETE_MESSAGE, // delete individual message
   DELETE_CONTACT_CHAT,
   PINUNPIN_CHAT,
+  RAEDUNRAED_CHAT,
   SEARCH_FRIENDS, // when trying to fetch new friends
   ADD_AS_FRIEND // when adding a friend
 } from '../actions/types';
@@ -85,8 +86,8 @@ export function actionFetchFriendsList(uid, callback) {
     fire.database().ref(`friendships/${uid}`).once('value', friendsSnap => {
       const friends = friendsSnap.val() || {};
       Object.keys(friends).map((objectkey) => {
-        const { key, lastMessage, pinned } = friends[objectkey];
-        const friend = { key, lastMessage, pinned };
+        const { key, lastMessage, pinned, isUnraed } = friends[objectkey];
+        const friend = { key, lastMessage, pinned, isUnraed };
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
           friend.info = friendSnap.val();
           friendsArray.push(friend);
@@ -132,8 +133,10 @@ export function actionUpdateUserData(newUser, callback) {
   // ************ also need to update email in auth ************
   const { uid, name, email, avatar, lastSeen } = newUser;
   return dispatch => {
-    // ************ also need to update email in auth ************
     // fire.auth().currentUser.updateEmail("user@example.com").then(() => {
+
+    // https://firebase.google.com/docs/auth/web/manage-users#re-authenticate_a_user
+
 
     console.log(uid, name, email, avatar, lastSeen)
     fire.database().ref(`users/${uid}`).set({
@@ -154,21 +157,25 @@ export function actionUpdateUserData(newUser, callback) {
 export function actionSendMessage(senderuid, recieveruid, message, callback) {
   const { id, content, date, hour, sender } = message;
   return dispatch => {
-    const updates = {};
-    updates[`messages/${senderuid}/${recieveruid}/${message.id}`] =
-      { id, content, date, hour, sender };
-    updates[`messages/${recieveruid}/${senderuid}/${message.id}`] =
-      { id, content, date, hour, sender };
-    updates[`friendships/${senderuid}/${recieveruid}/lastMessage`] =
-      { id, content, date, hour, sender };
-    updates[`friendships/${recieveruid}/${senderuid}/lastMessage`] =
-      { id, content, date, hour, sender };
-    fire.database().ref().update(updates).then(() => {
-      dispatch({
-        type: SEND_MESSAGE,
-        payload: message
+    fire.database().ref(`friendships/${recieveruid}/${senderuid}/isUnraed`).once('value', isUnraed => {
+      const NumOfUnraed = isUnraed === "None" ? 1 : isUnraed + 1;
+      const updates = {};
+      updates[`friendships/${recieveruid}/${senderuid}/isUnraed`] = NumOfUnraed;
+      updates[`messages/${senderuid}/${recieveruid}/${id}`] =
+        { id, content, date, hour, sender };
+      updates[`messages/${recieveruid}/${senderuid}/${id}`] =
+        { id, content, date, hour, sender };
+      updates[`friendships/${senderuid}/${recieveruid}/lastMessage`] =
+        { id, content, date, hour, sender };
+      updates[`friendships/${recieveruid}/${senderuid}/lastMessage`] =
+        { id, content, date, hour, sender };
+      fire.database().ref().update(updates).then(() => {
+        dispatch({
+          type: SEND_MESSAGE,
+          payload: message
+        });
+        callback();
       });
-      callback();
     });
   }
 }
@@ -261,14 +268,13 @@ export function actionSearchFriends(uid, friendsUids, callback) {
 }
 
 export function actionAddAsFriend(useruid, contact, callback) {
-
   const contactuid = contact.uid;
   return dispatch => {
     fire.database().ref(`friendships/${useruid}/${contactuid}`).set({
-      key: contactuid, pinned: false
+      key: contactuid, pinned: false, isUnraed: "None"
     }).then(() => {
       fire.database().ref(`friendships/${contactuid}/${useruid}`).set({
-        key: useruid, pinned: false
+        key: useruid, pinned: false, isUnraed: "None"
       }).then(() => {
         dispatch({
           type: ADD_AS_FRIEND,
@@ -277,5 +283,20 @@ export function actionAddAsFriend(useruid, contact, callback) {
         callback();
       });
     });
+  }
+}
+
+export function actionMarkRaedUnraed(useruid, contact, raedUnraed, callback) {
+  const contactuid = contact.uid;
+  return dispatch => {
+    const updates = {};
+    updates[`friendships/${useruid}/${contactid}/raedUnraed`] = raedUnraed;
+    fire.database().ref().update(updates).then(() => {
+      dispatch({
+        type: RAEDUNRAED_CHAT,
+        payload: contact
+      });
+      callback();
+    });;
   }
 }

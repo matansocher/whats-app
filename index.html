@@ -20,16 +20,39 @@
     };
     const fire = firebase.initializeApp(config);
 
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const array = possible.split("");
-    array.sort();
-    console.log(array)
+    // fire.auth().currentUser.updateEmail("user@example.com").then(() => {
+      
+    // }).catch(error => {
+    //   console.log(error);
+    // });
 
-    if('0' > 'A') {
-      console.log("0 is greater")
-    } else {
-      console.log("A is greater")
-    }
+
+  let friendsArray = [];
+  fire.database().ref(`friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2`).once('value', friendsSnap => {
+    const friends = friendsSnap.val() || {};
+    Object.keys(friends).map((objectkey) => {
+      const { key, lastMessage, pinned, isUnraed } = friends[objectkey];
+      const friend = { key, lastMessage, pinned, isUnraed };
+      fire.database().ref(`users/${key}`).once('value', friendSnap => {
+        friend.info = friendSnap.val();
+        friendsArray.push(friend);
+      })
+      // .then(() => {
+      //   fire.storage().ref(`/avatars/${friend.info.avatar}`).getDownloadURL().then(url => {
+      //     friend.info.avatar = url;
+      //     console.log("************************", friend)
+      //     friendsArray.push(friend);
+      //   }).catch(error => { console.log(error); });
+      // });
+      return friend;
+    });
+  }).then(() => {
+    console.log(friendsArray)
+  }) 
+
+
+  
+
 
   </script>
 </body>

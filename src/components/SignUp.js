@@ -101,7 +101,7 @@ class SignUp extends Component {
 
             <p>{this.state.signUpMessage}</p>
 
-            <AvatarPicker avatar={this.state.SUavatar}
+            <AvatarPicker avatars={this.props.avatars} avatar={this.state.SUavatar}
               changeAvatar={this.changeAvatar} />
 
             <button className="btn btn-primary"

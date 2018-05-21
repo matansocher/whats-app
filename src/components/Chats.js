@@ -24,8 +24,8 @@ class Chats extends Component {
   }
 
   componentDidMount() {
-    
-    window.addEventListener("beforeunload", this.onUnload)
+
+    window.addEventListener("beforeunload", this.onUnload);
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
@@ -37,29 +37,25 @@ class Chats extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onUnload)
+    window.removeEventListener("beforeunload", this.onUnload);
   }
 
   onUnload = e => {
-    // console.log("onUnload");
     const { uid } = this.props.user;
     const lastSeen = getDateHourString();
-    updateLastSeen(uid, lastSeen, () => {});
-    // e.returnValue = "Hellooww";
+    updateLastSeen(uid, lastSeen);
   }
 
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
       const lastSeen = "Online";
-      // this.props.updateLastSeen(uid, lastSeen, () => {
-        this.props.actionFetchUserData(uid, () => {
-          this.props.actionFetchFriendsList(uid, () => {
-            updateLastSeen(uid, lastSeen, () => {
-              this.setState({ loading: false });
-            })
-          });
+      this.props.actionFetchUserData(uid, () => {
+        this.props.actionFetchFriendsList(uid, () => {
+          updateLastSeen(uid, lastSeen, () => {
+            this.setState({ loading: false });
+          })
         });
-      // });
+      });
     });
   }
 
@@ -88,6 +84,15 @@ class Chats extends Component {
       this.props.actionPinUnpinChat(useruid, contact, isPinned, () => {
         const pinnedText = isPinned ? "Pinned" : "Unpinned";
         this.setState({ loading: false, gestureText: `Friend Was ${pinnedText} Successfully`, gesture: true });
+      });
+    });
+  }
+
+  markAsUnraed = (contact, raedUnraed) => {
+    this.setState({ loading: true }, () => {
+      const useruid = this.props.user.uid;
+      this.props.actionMarkRaedUnraed(useruid, contact, raedUnraed, () => {
+        this.setState({ loading: false, gestureText: `Message Was Marked As Unraed`, gesture: true });
       });
     });
   }
@@ -125,11 +130,13 @@ class Chats extends Component {
     contacts = splitToPinned(contacts);
     return (
       contacts.map(contact => {
-        return <Contact key={contact.info.email} contact={contact}
+        return <Contact key={contact.info.email} 
+          contact={contact}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}
           deleteContactChat={this.deleteContactChat}
-          pinUnpinChat={this.pinUnpinChat} />
+          pinUnpinChat={this.pinUnpinChat}
+          markAsUnraed={this.markAsUnraed} />
       })
     );
   }

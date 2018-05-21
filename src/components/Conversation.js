@@ -24,6 +24,9 @@ class Conversation extends Component {
       this.props.history.push('/');
     }
     this.scrollToBottom();
+    const useruid = this.props.user.uid;
+    const contactid = this.props.currentChatUser.info.uid;
+    this.props.actionMarkRaedUnraed(useruid, contactid, "None");
   }
 
   componentDidUpdate() {

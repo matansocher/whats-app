@@ -19,8 +19,9 @@ class Message extends Component {
 
   render() {
     let { content, hour, sender } = this.props.message;
-    const name = sender === this.props.user.uid ? this.props.user.name : this.props.currentChatUser.info.name;
-    const avatar = sender === this.props.user.uid ? this.props.user.avatar : this.props.currentChatUser.info.avatar;
+    const { user, currentChatUser } = this.props;
+    const name = sender === user.uid ? user.name : currentChatUser.info.name;
+    const avatar = sender === user.uid ? user.avatar : currentChatUser.info.avatar;
     hour = getCorrectHour(hour);
     return (
       <MuiThemeProvider>

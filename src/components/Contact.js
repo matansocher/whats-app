@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getLastMessageTime, getLastMessageContent } from '../actions/CommonFunctions';
+import { getLastMessageTime, getLastMessageContent, getUnraedBadge } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ListItem } from 'material-ui/List';
@@ -29,14 +29,19 @@ class Contact extends Component {
   }
 
   pinUnpinChat = () => {
-    const contact = this.props.contact;
+    const { contact } = this.props;
     const isPinned = contact.pinned ? true : false;
     this.props.pinUnpinChat(contact, !isPinned); // reverse the pin bool
   }
 
+  markAsUnraed = () => {
+    this.props.markAsUnraed(contact, 0);
+  }
+
   render() {
+    // this.props.contact === {info}, {lastMessage}, pinned, key, [[[[numOfUnread]]]]
     const { name, avatar } = this.props.contact.info;
-    const { pinned } = this.props.contact;
+    const { pinned, isUnraed } = this.props.contact;
     const { lastMessage } = this.props;
     const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
     const lmContent = lastMessage ? getLastMessageContent(lastMessage.content) : `Start a conversation with ${name}`;
@@ -57,6 +62,9 @@ class Contact extends Component {
               <span className="pull-right last-message-hour">{lastMessageTime}</span>
               <MoreButton className="pull-right contact-more-icon" />
               {pinned ? <PinIcon className="pull-right pin-icon" /> : <span />}
+
+              {getUnraedBadge(isUnraed)}
+
             </div>
 
             <IconMenu
@@ -70,7 +78,7 @@ class Contact extends Component {
               <MenuItem primaryText="Delete Chat" onClick={this.deleteContactChat} />
               <MenuItem primaryText={pinned ? "Unpin Chat" : "Pin Chat"}
                 onClick={this.pinUnpinChat} />
-              <MenuItem primaryText="Mark As Unread" />
+              <MenuItem primaryText="Mark As Unread" onClick={this.markAsUnraed} />
             </IconMenu>
             <Divider />
           </div>

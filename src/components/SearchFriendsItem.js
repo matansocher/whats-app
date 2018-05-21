@@ -18,10 +18,7 @@ class SearchFriendsItem extends Component {
   }
 
   addAsFriend = () => {
-    const { uid, email, avatar, name } = this.props.friend;
-    this.props.addAsFriend({
-      uid, email, avatar, name, pinned: false
-    });
+    this.props.addAsFriend(this.props.friend);
   }
 
   render() {

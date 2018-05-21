@@ -119,7 +119,7 @@ class UserInfo extends Component {
                   onChange={this.handleChange}
                   name="email" />
 
-                <AvatarPicker avatar={this.state.avatar}
+                <AvatarPicker avatars={this.props.avatars} avatar={this.state.avatar}
                   changeAvatar={this.changeAvatar} />
 
                 <RaisedButton primary={true} label="Update Info" onClick={this.saveClick} />
