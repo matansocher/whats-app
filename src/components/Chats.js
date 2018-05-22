@@ -24,7 +24,9 @@ class Chats extends Component {
   }
 
   componentDidMount() {
-
+    if (!navigator.onLine) {
+      this.props.history.push('NoConnection');
+    }
     window.addEventListener("beforeunload", this.onUnload);
     fire.auth().onAuthStateChanged(user => {
       if (user) {
@@ -59,10 +61,10 @@ class Chats extends Component {
     });
   }
 
-  fetchChatData = (contactUid) => {
+  fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionFetchChatData(useruid, contactUid, () => {
+      this.props.actionFetchChatData(useruid, contact, () => {
         this.setState({ loading: false })
         this.props.history.push('/conversation');
       });
@@ -83,6 +85,7 @@ class Chats extends Component {
       const useruid = this.props.user.uid;
       this.props.actionPinUnpinChat(useruid, contact, isPinned, () => {
         const pinnedText = isPinned ? "Pinned" : "Unpinned";
+        contact.pinned = isPinned;
         this.setState({ loading: false, gestureText: `Friend Was ${pinnedText} Successfully`, gesture: true });
       });
     });
@@ -91,7 +94,9 @@ class Chats extends Component {
   markAsUnraed = (contact, raedUnraed) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
-      this.props.actionMarkRaedUnraed(useruid, contact, raedUnraed, () => {
+      contact.isUnraed = 0;
+      console.log(contact)
+      this.props.actionMarkUnraed(useruid, contact, () => {
         this.setState({ loading: false, gestureText: `Message Was Marked As Unraed`, gesture: true });
       });
     });
@@ -167,6 +172,7 @@ class Chats extends Component {
 }
 
 function mapStateToProps(state) {
+  // console.log(state.contactList);
   return {
     contactList: state.contactList,
     user: state.user

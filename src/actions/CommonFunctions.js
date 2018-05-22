@@ -4,11 +4,11 @@ import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 import Badge from 'material-ui/Badge';
+import Divider from 'material-ui/Divider';
 
-
-export function updateLastSeen(useruid, lastSeen) {
+export function raedMessage(useruid, contactid) {
   const updates = {};
-  updates[`users/${useruid}/lastSeen`] = lastSeen;
+  updates[`friendships/${useruid}/${contactid}/isUnraed`] = "None";
   fire.database().ref().update(updates);
 }
 
@@ -18,11 +18,20 @@ export function getUnraedBadge(isUnread) {
     return <span />;
   }
   return (
-    <MuiThemeProvider>
-      <Badge badgeContent={isUnread === 0 ? "" : isUnread}
-        className="unraed-badge" primary={true} />
-    </MuiThemeProvider>
+    <span className="pull-right unraed-badge">
+      <Badge badgeContent={isUnread === 0 ? "" : isUnread} primary={true} />
+    </span>
   );
+}
+    //     <MuiThemeProvider>
+    // </MuiThemeProvider>
+
+export function updateLastSeen(useruid, lastSeen, callback) {
+  const updates = {};
+  updates[`users/${useruid}/lastSeen`] = lastSeen;
+  fire.database().ref().update(updates).then(() => {
+    callback();
+  });
 }
 
 export function getLastSeenString(lastSeen) {
@@ -113,8 +122,11 @@ export function getChatBubbleDate(nextMessage) {
   let lastTime = getLastMessageTime(nextMessage);
   lastTime = lastTime.includes(":") ? "Toady" : lastTime;
   return (
-    <div key={nextMessage.date} className="day-indicator">
-      {lastTime}
+    <div key={nextMessage.date}>
+      <div className="day-indicator">
+        {lastTime}
+      </div>
+      <Divider />
     </div>
   )
 }

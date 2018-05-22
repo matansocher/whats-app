@@ -13,7 +13,7 @@ import {
   DELETE_MESSAGE, // delete individual message
   DELETE_CONTACT_CHAT,
   PINUNPIN_CHAT,
-  RAEDUNRAED_CHAT,
+  UNRAED_CHAT,
   SEARCH_FRIENDS, // when trying to fetch new friends
   ADD_AS_FRIEND // when adding a friend
 } from '../actions/types';
@@ -90,6 +90,7 @@ export function actionFetchFriendsList(uid, callback) {
         const friend = { key, lastMessage, pinned, isUnraed };
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
           friend.info = friendSnap.val();
+          // console.log(friend)
           friendsArray.push(friend);
         })
         // .then(() => {
@@ -138,7 +139,7 @@ export function actionUpdateUserData(newUser, callback) {
     // https://firebase.google.com/docs/auth/web/manage-users#re-authenticate_a_user
 
 
-    console.log(uid, name, email, avatar, lastSeen)
+    // console.log(uid, name, email, avatar, lastSeen)
     fire.database().ref(`users/${uid}`).set({
       uid, name, email, avatar, lastSeen
     }).then(() => {
@@ -197,7 +198,6 @@ export function actionDeleteMessage(senderuid, recieveruid, message, callback) {
 export function actionFetchChatData(useruid, contact, callback) {
   const chatData = { contact, messages: [] };
   const contactuid = contact.info.uid;
-
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).once('value', messagesSnap => {
       const messages = messagesSnap.val();
@@ -214,7 +214,7 @@ export function actionFetchChatData(useruid, contact, callback) {
 
 export function actionDeleteContactChat(useruid, contact, callback) {
   const contactuid = contact.key;
-  console.log(useruid, contact, contactuid)
+  // console.log(useruid, contact, contactuid)
   return dispatch => {
     fire.database().ref(`messages/${useruid}/${contactuid}`).remove().then(() => {
       fire.database().ref(`friendships/${useruid}/${contactuid}`).remove().then(() => {
@@ -234,11 +234,13 @@ export function actionDeleteContactChat(useruid, contact, callback) {
 }
 
 export function actionPinUnpinChat(useruid, contact, isPinned, callback) {
-  contact.pinned = isPinned;
+  // console.log(contact)
   return dispatch => {
     const updates = {};
     updates[`friendships/${useruid}/${contact.info.uid}/pinned`] = isPinned;
     fire.database().ref().update(updates).then(() => {
+      
+      // console.log(JSON.stringify(contact))
       dispatch({
         type: PINUNPIN_CHAT,
         payload: contact
@@ -286,14 +288,14 @@ export function actionAddAsFriend(useruid, contact, callback) {
   }
 }
 
-export function actionMarkRaedUnraed(useruid, contact, raedUnraed, callback) {
-  const contactuid = contact.uid;
+export function actionMarkUnraed(useruid, contact, callback) {
+  const contactuid = contact.info.uid;
   return dispatch => {
     const updates = {};
-    updates[`friendships/${useruid}/${contactid}/raedUnraed`] = raedUnraed;
+    updates[`friendships/${useruid}/${contactuid}/isUnraed`] = 0;
     fire.database().ref().update(updates).then(() => {
       dispatch({
-        type: RAEDUNRAED_CHAT,
+        type: UNRAED_CHAT,
         payload: contact
       });
       callback();

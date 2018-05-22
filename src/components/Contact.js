@@ -11,7 +11,6 @@ import IconButton from 'material-ui/IconButton';
 import MoreButton from 'material-ui/svg-icons/navigation/chevron-right';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import PinIcon from 'material-ui/svg-icons/toggle/star-border';
-
 class Contact extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,7 @@ class Contact extends Component {
   }
 
   markAsUnraed = () => {
-    this.props.markAsUnraed(contact, 0);
+    this.props.markAsUnraed(this.props.contact, 0);
   }
 
   render() {
@@ -59,12 +58,12 @@ class Contact extends Component {
             />
 
             <div className="last-message-hour-div">
-              <span className="pull-right last-message-hour">{lastMessageTime}</span>
-              <MoreButton className="pull-right contact-more-icon" />
-              {pinned ? <PinIcon className="pull-right pin-icon" /> : <span />}
-
+              <span className="last-message-hour">
+                {lastMessageTime}
+              </span>
+              <MoreButton className="contact-more-icon" />
+              {pinned ? <PinIcon className="pin-icon" /> : <span />}
               {getUnraedBadge(isUnraed)}
-
             </div>
 
             <IconMenu

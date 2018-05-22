@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { getCircularProgress, compareDates, getChatBubbleDate } from '../actions/CommonFunctions';
+import { getCircularProgress, compareDates, getChatBubbleDate, raedMessage } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import ConversationHeader from './ConversationHeader';
 import ConversationFooter from './ConversationFooter';
@@ -26,7 +26,8 @@ class Conversation extends Component {
     this.scrollToBottom();
     const useruid = this.props.user.uid;
     const contactid = this.props.currentChatUser.info.uid;
-    this.props.actionMarkRaedUnraed(useruid, contactid, "None");
+    raedMessage(useruid, contactid);
+    // this.props.actionMarkRaedUnraed(useruid, contact, "None", () => {});
   }
 
   componentDidUpdate() {

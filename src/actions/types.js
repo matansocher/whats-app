@@ -10,6 +10,6 @@ export const SEND_MESSAGE = 'send_message';
 export const DELETE_MESSAGE = 'delete_message';
 export const DELETE_CONTACT_CHAT = 'delete_contact_chat';
 export const PINUNPIN_CHAT = 'pin_unpin_chat';
-export const RAEDUNRAED_CHAT = 'raed_unraed_chat';
+export const UNRAED_CHAT = 'raed_unraed_chat';
 export const SEARCH_FRIENDS = 'search_friends';
 export const ADD_AS_FRIEND = 'add_as_friend';

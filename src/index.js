@@ -13,6 +13,7 @@ import UserInfo from './components/UserInfo';
 import ContactInfo from './components/ContactInfo';
 import SearchFriends from './components/SearchFriends';
 import Settings from './components/Settings';
+import NoConnection from './components/NoConnection';
 import NoMatch from './components/NoMatch';
 import './css/index.css';
 
@@ -23,6 +24,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
+        <Route path="/NoConnection" component={NoConnection}/>
         <Route path="/Settings" component={Settings}/>
         <Route path="/SearchFriends" component={SearchFriends}/>
         <Route path="/SignIn" component={SignIn}/>
