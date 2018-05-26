@@ -4,22 +4,17 @@ import {
 } from '../actions/types';
 
 export default function(state = [], action) {
-  let newState = state;
   switch (action.type) {
     case FETCH_FRIENDS_LIST:
       return action.payload;
     case DELETE_CONTACT_CHAT:
       return _.without(state, action.payload);
     case PINUNPIN_CHAT:
-    // console.log(JSON.stringify(action.payload))
-      const i = _.findIndex(state, { key: action.payload.key }); // return ron\tuta
-      // return [...state, [i]: action.payload];
-      state[i] = action.payload;
+      state[_.findIndex(state, { key: action.payload.key })] = action.payload;
       return state.slice();
     case UNRAED_CHAT:
-      const index = _.findIndex(newState, { key: action.payload.key }); // return ron\tuta
-      newState[index] = action.payload;
-      return newState;
+      state[_.findIndex(state, { key: action.payload.key })] = action.payload;
+      return state;
     case LOGOUT_USER:
       return [];
     default:

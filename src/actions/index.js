@@ -159,7 +159,7 @@ export function actionSendMessage(senderuid, recieveruid, message, callback) {
   const { id, content, date, hour, sender } = message;
   return dispatch => {
     fire.database().ref(`friendships/${recieveruid}/${senderuid}/isUnraed`).once('value', isUnraed => {
-      const NumOfUnraed = isUnraed === "None" ? 1 : isUnraed + 1;
+      const NumOfUnraed = isUnraed.val() === "None" ? 1 : isUnraed.val() + 1;
       const updates = {};
       updates[`friendships/${recieveruid}/${senderuid}/isUnraed`] = NumOfUnraed;
       updates[`messages/${senderuid}/${recieveruid}/${id}`] =

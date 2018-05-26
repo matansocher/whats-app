@@ -40,9 +40,9 @@ class ConversationFooter extends Component {
   }
 
   toggleSmiley = () => {
-    document.getElementById("scrollable-conversation").classList.toggle('scrollable-conversation-short');
-    document.getElementById("conversation-footer").classList.toggle('conversation-footer-long');
-    this.setState({ smileyShow: !this.state.smileyShow });
+    // document.getElementById("scrollable-conversation").classList.toggle('scrollable-conversation-short');
+    // document.getElementById("conversation-footer").classList.toggle('conversation-footer-long');
+    // this.setState({ smileyShow: !this.state.smileyShow });
   }
 
   returnEmoji = (id) => {

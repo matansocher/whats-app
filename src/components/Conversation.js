@@ -19,10 +19,15 @@ class Conversation extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    console.log(this.props.user)
     if (_.isEmpty(this.props.user)) {
-      this.props.history.push('/');
+      console.log('inside if')
+      this.props.history.push('/Settings');
     }
+  }
+
+  componentDidMount() {
     this.scrollToBottom();
     const useruid = this.props.user.uid;
     const contactid = this.props.currentChatUser.info.uid;
@@ -147,7 +152,6 @@ function mapStateToProps(state) {
   return {
     currentChatUser: state.currentChatUser,
     currentChatMessages: state.currentChatMessages,
-    // currentChat: state.currentChat,
     user: state.user,
     message: state.message
   };

@@ -1,4 +1,11 @@
-when updating details - update email too
+when updating details - update email too - sign in with email annd password and then use the onAuthStateChanged to get the user and use:
+user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+  // User re-authenticated.
+}).catch(function(error) {
+  // An error happened.
+});
+
+
 emoji
 tests
 
