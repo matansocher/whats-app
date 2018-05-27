@@ -24,9 +24,6 @@ class Chats extends Component {
   }
 
   componentDidMount() {
-    if (!navigator.onLine) {
-      this.props.history.push('NoConnection');
-    }
     window.addEventListener("beforeunload", this.onUnload);
     fire.auth().onAuthStateChanged(user => {
       if (user) {
