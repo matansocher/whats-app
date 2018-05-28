@@ -113,11 +113,7 @@ class UserInfo extends Component {
 
                 <br />
 
-                <TextField
-                  hintText="Email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  name="email" />
+                {this.state.email}
 
                 <AvatarPicker avatars={this.props.avatars} avatar={this.state.avatar}
                   changeAvatar={this.changeAvatar} />
