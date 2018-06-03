@@ -23,10 +23,14 @@ export function getUnraedBadge(isUnread) {
     </span>
   );
 }
-    //     <MuiThemeProvider>
-    // </MuiThemeProvider>
 
-export function updateLastSeen(useruid, lastSeen, callback) {
+export function updateStatusInConversation(useruid, contactid, isTyping) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
+const updates = {};
+updates[`friendships/${useruid}/${contactid}/isTyping`] = isTyping;
+fire.database().ref().update(updates);
+}
+
+export function updateLastSeen(useruid, lastSeen, callback) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
   const updates = {};
   updates[`users/${useruid}/lastSeen`] = lastSeen;
   fire.database().ref().update(updates).then(() => {
@@ -34,7 +38,10 @@ export function updateLastSeen(useruid, lastSeen, callback) {
   });
 }
 
-export function getLastSeenString(lastSeen) {
+export function getLastSeenString(isTyping, lastSeen) {
+  if (isTyping) {
+    return "Typing...";
+  }
   if (lastSeen === "Online") {
     return lastSeen;
   }
@@ -243,6 +250,18 @@ function getLastDayOfPrevMonth(month) {
   if (month === 1) return 28;
   else if (month === 3 || month === 5 || month === 8 || month === 10) return 30;
   else return 31;
+}
+
+export function getLastMessage(isTyping, content, name) {
+  if(isTyping) {
+    return "Typing ..."; // "Typing"
+  }
+  if(content){
+    const textWidth = (window.innerWidth - 100) / 9;
+     // "last message cut or full"
+    return content.length > textWidth ? `${content.substr(0, textWidth)}...` : content;
+  }
+  return `Start a conversation with ${name}`; // no last message
 }
 
 export function getLastMessageContent(content) {

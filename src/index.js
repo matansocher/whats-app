@@ -13,8 +13,8 @@ import UserInfo from './components/UserInfo';
 import ContactInfo from './components/ContactInfo';
 import SearchFriends from './components/SearchFriends';
 import Settings from './components/Settings';
-import NoConnection from './components/NoConnection';
 import NoMatch from './components/NoMatch';
+import AuthNStatusHOC from './components/AuthNStatusHOC';
 import './css/index.css';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -24,15 +24,14 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/NoConnection" component={NoConnection}/>
-        <Route path="/Settings" component={Settings}/>
-        <Route path="/SearchFriends" component={SearchFriends}/>
+        <Route path="/Settings" component={AuthNStatusHOC(Settings)}/>
+        <Route path="/SearchFriends" component={AuthNStatusHOC(SearchFriends)}/>
         <Route path="/SignIn" component={SignIn}/>
         <Route path="/SignUp" component={SignUp}/>
-        <Route path="/UserInfo" component={UserInfo}/>
-        <Route path="/ContactInfo" component={ContactInfo}/>
-        <Route path="/conversation" component={Conversation}/>
-        <Route path="/" component={Chats}/>
+        <Route path="/UserInfo" component={AuthNStatusHOC(UserInfo)}/>
+        <Route path="/ContactInfo" component={AuthNStatusHOC(ContactInfo)}/>
+        <Route path="/conversation" component={AuthNStatusHOC(Conversation)}/>
+        <Route path="/" component={AuthNStatusHOC(Chats)}/>
         <Route path="*" component={NoMatch}/>
       </Switch>
     </Router>

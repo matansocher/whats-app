@@ -36,7 +36,7 @@ class ConversationHeader extends Component {
     if (_.isEmpty(this.props.currentChatUser)) {
       return <span />;
     }
-    const { name, avatar, lastSeen } = this.props.currentChatUser.info;
+    const { name, avatar, lastSeen, isTyping } = this.props.currentChatUser.info;
     return (
       <MuiThemeProvider>
         <div>
@@ -47,6 +47,7 @@ class ConversationHeader extends Component {
           <ListItem
             className="contact-info"
             primaryText={name}
+            secondaryText={getLastSeenString(isTyping, lastSeen)}
             secondaryText={getLastSeenString(lastSeen)}
             onClick={this.infoClicked}
             leftAvatar={

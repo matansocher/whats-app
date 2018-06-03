@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getLastMessageTime, getLastMessageContent, getUnraedBadge } from '../actions/CommonFunctions';
+import { getLastMessageTime, getLastMessage, getUnraedBadge } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ListItem } from 'material-ui/List';
@@ -40,10 +40,10 @@ class Contact extends Component {
   render() {
     // this.props.contact === {info}, {lastMessage}, pinned, key, [[[[numOfUnread]]]]
     const { name, avatar } = this.props.contact.info;
-    const { pinned, isUnraed } = this.props.contact;
+    const { pinned, isUnraed, isTyping } = this.props.contact;
     const { lastMessage } = this.props;
     const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
-    const lmContent = lastMessage ? getLastMessageContent(lastMessage.content) : `Start a conversation with ${name}`;
+    const lmContent = getLastMessage(isTyping, lastMessage.content || false, name);
     return (
       <div className="contact">
         <MuiThemeProvider>

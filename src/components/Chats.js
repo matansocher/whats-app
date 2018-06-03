@@ -24,7 +24,7 @@ class Chats extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("beforeunload", this.onUnload);
+    // window.addEventListener("beforeunload", this.onUnload);
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
@@ -36,23 +36,23 @@ class Chats extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onUnload);
+    // window.removeEventListener("beforeunload", this.onUnload);
   }
 
-  onUnload = e => {
-    const { uid } = this.props.user;
-    const lastSeen = getDateHourString();
-    updateLastSeen(uid, lastSeen);
-  }
+  // onUnload = e => {
+  //   const { uid } = this.props.user;
+  //   const lastSeen = getDateHourString();
+  //   updateLastSeen(uid, lastSeen, () => {});
+  // }
 
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
       const lastSeen = "Online";
       this.props.actionFetchUserData(uid, () => {
         this.props.actionFetchFriendsList(uid, () => {
-          updateLastSeen(uid, lastSeen, () => {
+          // updateLastSeen(uid, lastSeen, () => {
             this.setState({ loading: false });
-          })
+          // })
         });
       });
     });

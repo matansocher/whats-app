@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { makeMessageID } from '../actions/CommonFunctions';
+import { makeMessageID, updateStatusInConversation } from '../actions/CommonFunctions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SmileyIcon from 'material-ui/svg-icons/social/mood';
 import SendIcon from 'material-ui/svg-icons/content/send';
@@ -14,7 +14,8 @@ class ConversationFooter extends Component {
     super(props);
     this.state = {
       message: '',
-      smileyShow: false
+      smileyShow: false,
+      timeout: null
     }
   }
 
@@ -32,11 +33,31 @@ class ConversationFooter extends Component {
     });
   }
 
+  createSetTimeout = () => {
+    this.setState({ timeout: setTimeout(() => {
+      updateStatusInConversation(uid, contactid, false); // stopped typing
+    } , 2000) });
+  }
+
+  updateStatus = () => {
+    const { timeout } = this.state;
+    const userid = this.props.user.uid;
+    const contactid = this.props.currentChatUser.info.uid;
+    if(timeout) {
+      window.clearTimeout(timeout); 
+      this.setState({ timeout: null });
+    } else {
+      updateStatusInConversation(userid, contactid, true); // typing
+    }
+    this.createSetTimeout();
+  }
+
   handleChange = (e) => {
     var change = {};
     const { value, name } = e.target;
     change[name] = value;
     this.setState(change);
+    this.updateStatus(); // in order the update the status to "Typing"
   }
 
   toggleSmiley = () => {

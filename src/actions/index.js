@@ -273,10 +273,10 @@ export function actionAddAsFriend(useruid, contact, callback) {
   const contactuid = contact.uid;
   return dispatch => {
     fire.database().ref(`friendships/${useruid}/${contactuid}`).set({
-      key: contactuid, pinned: false, isUnraed: "None"
+      key: contactuid, pinned: false, isUnraed: "None", isTyping: false
     }).then(() => {
       fire.database().ref(`friendships/${contactuid}/${useruid}`).set({
-        key: useruid, pinned: false, isUnraed: "None"
+        key: useruid, pinned: false, isUnraed: "None", isTyping: false
       }).then(() => {
         dispatch({
           type: ADD_AS_FRIEND,

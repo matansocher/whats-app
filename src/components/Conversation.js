@@ -23,7 +23,7 @@ class Conversation extends Component {
     console.log(this.props.user)
     if (_.isEmpty(this.props.user)) {
       console.log('inside if')
-      this.props.history.push('/Settings');
+      this.props.history.push('/SignIn');
     }
   }
 
@@ -90,16 +90,7 @@ class Conversation extends Component {
           let arrayToReturn = [];
           if (index !== messages.length - 1) { // not the last message
             if (!compareDates(message.date, messages[index + 1].date)) { // need to show another bubble 
-
               arrayToReturn.push(getChatBubbleDate(messages[index + 1]));
-
-              // let lastTime = getLastMessageTime(messages[index + 1]);
-              // lastTime = lastTime.includes(":") ? "Toady" : lastTime;
-              // arrayToReturn.push(
-              //   <div key={messages[index + 1].date} className="day-indicator">
-              //     {lastTime}
-              //   </div>
-              // )
             }
           }
           arrayToReturn.push(
@@ -140,7 +131,10 @@ class Conversation extends Component {
           </div>
 
           <div id="conversation-footer" className="conversation-footer">
-            <ConversationFooter sendMessage={this.sendMessage} />
+            <ConversationFooter 
+              user={this.props.user}
+              currentChatUser={this.props.currentChatUser}
+              sendMessage={this.sendMessage} />
           </div>
         </div>
       </MuiThemeProvider>
