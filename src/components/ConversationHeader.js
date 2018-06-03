@@ -48,7 +48,6 @@ class ConversationHeader extends Component {
             className="contact-info"
             primaryText={name}
             secondaryText={getLastSeenString(isTyping, lastSeen)}
-            secondaryText={getLastSeenString(lastSeen)}
             onClick={this.infoClicked}
             leftAvatar={
               <Avatar size={45} src={require(`../avatars/${avatar}`)}

@@ -20,35 +20,9 @@
     };
     const fire = firebase.initializeApp(config);
 
-    // fire.auth().currentUser.updateEmail("user@example.com").then(() => {
-      
-    // }).catch(error => {
-    //   console.log(error);
-    // });
-
-
-  // let friendsArray = [];
-  // fire.database().ref(`friendships/6NXDlDWAikUjblf1TuoPPn9dQ6X2`).once('value', friendsSnap => {
-  //   const friends = friendsSnap.val() || {};
-  //   Object.keys(friends).map((objectkey) => {
-  //     const { key, lastMessage, pinned, isUnraed } = friends[objectkey];
-  //     const friend = { key, lastMessage, pinned, isUnraed };
-  //     fire.database().ref(`users/${key}`).once('value', friendSnap => {
-  //       friend.info = friendSnap.val();
-  //       friendsArray.push(friend);
-  //     })
-      // .then(() => {
-      //   fire.storage().ref(`/avatars/${friend.info.avatar}`).getDownloadURL().then(url => {
-      //     friend.info.avatar = url;
-      //     console.log("************************", friend)
-      //     friendsArray.push(friend);
-      //   }).catch(error => { console.log(error); });
-      // });
-  //     return friend;
-  //   });
-  // }).then(() => {
-  //   console.log(friendsArray)
-  // }) 
+    fire.database().ref(`friendships`).on('value', friendships => {
+      console.log(friendships.val());
+    });
 
 
   </script>

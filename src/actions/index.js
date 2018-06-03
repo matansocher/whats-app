@@ -86,8 +86,8 @@ export function actionFetchFriendsList(uid, callback) {
     fire.database().ref(`friendships/${uid}`).once('value', friendsSnap => {
       const friends = friendsSnap.val() || {};
       Object.keys(friends).map((objectkey) => {
-        const { key, lastMessage, pinned, isUnraed } = friends[objectkey];
-        const friend = { key, lastMessage, pinned, isUnraed };
+        const { key, lastMessage, pinned, isUnraed, isTyping } = friends[objectkey];
+        const friend = { key, lastMessage, pinned, isUnraed, isTyping };
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
           friend.info = friendSnap.val();
           // console.log(friend)

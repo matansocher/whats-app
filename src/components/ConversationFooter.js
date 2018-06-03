@@ -19,6 +19,20 @@ class ConversationFooter extends Component {
     }
   }
 
+  componentDidMount() {
+    this.enterKeyListener();
+  }
+
+  enterKeyListener = () => {
+    const input = document.getElementById("message");
+    input.addEventListener("keydown", event => {
+      event.preventDefault();
+      if (event.keyCode === 13) { // 13 is the "Enter" key
+        document.getElementById("sendBtn").click();
+      }
+    });
+  }
+
   sendMessage = () => {
     var date = new Date();
     const message = {
@@ -96,13 +110,15 @@ class ConversationFooter extends Component {
             <SmileyIcon onClick={this.toggleSmiley} className="pull-left" />
           </div>
           <div className="center">
-            <textarea value={this.state.message} name="message" ref="message"
-              className="form-control input-message" rows="1"
+            <textarea value={this.state.message} id="message" 
+              name="message" ref="message" rows="1"
+              className="form-control input-message"
               placeholder="Type a message" onChange={this.handleChange}>
             </textarea>
           </div>
           <div className="send-icon">
-            <SendIcon className="pull-right" onClick={this.sendMessage} />
+            <SendIcon id ="sendBtn" className="pull-right" 
+              onClick={this.sendMessage} />
           </div>
         </div>
       </MuiThemeProvider>

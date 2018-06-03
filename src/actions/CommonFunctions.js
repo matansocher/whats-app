@@ -6,6 +6,41 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Badge from 'material-ui/Badge';
 import Divider from 'material-ui/Divider';
 
+export function preActionFetchFriendsList(uid, callback) {
+  let friendsArray = [];
+  fire.database().ref(`friendships/${uid}`).on('value', friendsSnap => {
+    const friends = friendsSnap.val() || {};
+    Object.keys(friends).map((objectkey) => {
+      const { key, lastMessage, pinned, isUnraed, isTyping } = friends[objectkey];
+      const friend = { key, lastMessage, pinned, isUnraed, isTyping };
+      fire.database().ref(`users/${key}`).once('value', friendSnap => {
+        friend.info = friendSnap.val();
+        friendsArray.push(friend);
+      })
+      // .then(() => {
+      //   fire.storage().ref(`/avatars/${friend.info.avatar}`).getDownloadURL().then(url => {
+      //     friend.info.avatar = url;
+      //     console.log("************************", friend)
+      //     friendsArray.push(friend);
+      //   }).catch(error => { console.log(error); });
+      // });
+      return friend;
+    });
+  }).then(() => {
+    this.props.actionFetchFriendsList(friendsArray, callback)
+  });
+}
+
+export function preActionFetchChatData(useruid, contact, callback) {
+  const chatData = { contact, messages: [] };
+  const contactuid = contact.info.uid;
+  fire.database().ref(`messages/${useruid}/${contactuid}`).once('value', messagesSnap => {
+    chatData.messages = messagesSnap.val();
+  }).then(() => {
+    this.props.actionFetchChatData(chatData, callback)
+  });
+}
+
 export function raedMessage(useruid, contactid) {
   const updates = {};
   updates[`friendships/${useruid}/${contactid}/isUnraed`] = "None";
@@ -25,9 +60,9 @@ export function getUnraedBadge(isUnread) {
 }
 
 export function updateStatusInConversation(useruid, contactid, isTyping) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
-const updates = {};
-updates[`friendships/${useruid}/${contactid}/isTyping`] = isTyping;
-fire.database().ref().update(updates);
+  const updates = {};
+  updates[`friendships/${useruid}/${contactid}/isTyping`] = isTyping;
+  fire.database().ref().update(updates);
 }
 
 export function updateLastSeen(useruid, lastSeen, callback) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
@@ -45,6 +80,7 @@ export function getLastSeenString(isTyping, lastSeen) {
   if (lastSeen === "Online") {
     return lastSeen;
   }
+  // lastSeen === yyyy-mm-dd hh:mm:ss
   const splitted = lastSeen.split(" ");
   let dateString = splitted[0];
   let splittedDate = dateString.split("-");
@@ -55,6 +91,14 @@ export function getLastSeenString(isTyping, lastSeen) {
   if (checkIfToday(new Date(), dateObject)) {
     return `Last seen today at ${splittedHour[0]}:${splittedHour[1]}`;
   }
+  if (checkIfYesterday(new Date(), dateObject)) {
+    return `Last seen yesterday at ${splittedHour[0]}:${splittedHour[1]}`;
+  }
+  if (checkIfLastWeek(new Date(), dateObject)) {
+    const day = getDayFromDayNumber(dateObject.getDay());
+    return `Last seen ${day} at ${splittedHour[0]}:${splittedHour[1]}`;
+  }
+
   return `Last seen at ${getCorrectDate(dateString)} ${getCorrectHour(hourString)}`;
 }
 
@@ -233,7 +277,8 @@ function checkIfLastWeek(today, dateObject) {
 export function compareDates(date1, date2) {
   const split1 = date1.split('-');
   const split2 = date2.split('-');
-  if (split1[0] === split2[0] && split1[1] === split2[1] &&
+  if (split1[0] === split2[0] &&
+    split1[1] === split2[1] &&
     split1[2] === split2[2]) { // not on the same day
     return true;
   }
@@ -253,12 +298,12 @@ function getLastDayOfPrevMonth(month) {
 }
 
 export function getLastMessage(isTyping, content, name) {
-  if(isTyping) {
-    return "Typing ..."; // "Typing"
+  if (isTyping) {
+    return "Typing..."; // "Typing"
   }
-  if(content){
+  if (content) {
     const textWidth = (window.innerWidth - 100) / 9;
-     // "last message cut or full"
+    // "last message cut or full"
     return content.length > textWidth ? `${content.substr(0, textWidth)}...` : content;
   }
   return `Start a conversation with ${name}`; // no last message
