@@ -24,10 +24,12 @@ class Chats extends Component {
   }
 
   componentDidMount() {
-    // window.addEventListener("beforeunload", this.onUnload);
+    window.addEventListener("beforeunload", this.onUnload);
+    // preActionFetchFriendsList();
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
+        this.preActionFetchFriendsList(user.uid, () => {});
       } else {
         this.props.actionLogoutUser();
         this.props.history.push('/SignIn');
@@ -35,24 +37,44 @@ class Chats extends Component {
     });
   }
 
-  componentWillUnmount() {
-    // window.removeEventListener("beforeunload", this.onUnload);
+  preActionFetchFriendsList = (uid, callback) => {
+    let friendsArray = [];
+    fire.database().ref(`friendships/${uid}`).on('value', friendsSnap => {
+      console.log("**********************")
+      const friends = friendsSnap.val() || {};
+      Object.keys(friends).map((objectkey) => {
+        const { key, lastMessage, pinned, isUnraed, isTyping } = friends[objectkey];
+        const friend = { key, lastMessage, pinned, isUnraed, isTyping };
+        fire.database().ref(`users/${key}`).once('value', friendSnap => {
+          console.log("####################")
+          friend.info = friendSnap.val();
+          friendsArray.push(friend);
+        })
+        return friend;
+      });
+      console.log(friendsArray)
+      this.props.actionFetchFriendsListReady(friendsArray, callback)
+    });
   }
 
-  // onUnload = e => {
-  //   const { uid } = this.props.user;
-  //   const lastSeen = getDateHourString();
-  //   updateLastSeen(uid, lastSeen, () => {});
-  // }
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.onUnload);
+  }
+
+  onUnload = e => {
+    const { uid } = this.props.user;
+    const lastSeen = getDateHourString();
+    updateLastSeen(uid, lastSeen, () => {});
+  }
 
   fetchData = (uid) => {
     this.setState({ loading: true }, () => {
       const lastSeen = "Online";
-      this.props.actionFetchUserData(uid, () => {
-        this.props.actionFetchFriendsList(uid, () => {
-          // updateLastSeen(uid, lastSeen, () => {
+      this.props.actionFetchFriendsList(uid, () => {
+        this.props.actionFetchUserData(uid, () => {
+          updateLastSeen(uid, lastSeen, () => {
             this.setState({ loading: false });
-          // })
+          })
         });
       });
     });
@@ -169,7 +191,6 @@ class Chats extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state.contactList);
   return {
     contactList: state.contactList,
     user: state.user

@@ -1,2 +1,5 @@
+live shit
+message id is not sorted
+send message - enter skips line, and then sends
 emoji
 tests

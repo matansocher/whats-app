@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { updateLastSeen } from '../actions/CommonFunctions';
+import propTypes from 'proptypes';
+import { updateLastSeen, getDateHourString } from '../actions/CommonFunctions';
 
-function asdcasdc(ComposedComponent) {
+export default function (ComposedComponent) {
   class AuthNStatus extends Component {
 
     static contextTypes = {
-      router: React.propTypes.object
+      router: propTypes.object
     }
 
     componentWillMount() {
       if (_.isEmpty(this.props.user)) {
-        this.context.router.push('SignIn')
+        this.context.router.history.push('SignIn')
       }
       window.addEventListener("beforeunload", this.onUnload);
       const { uid } = this.props.user;
-      updateLastSeen(uid, "Online", () => {});
+      updateLastSeen(uid, "Online", () => { });
     }
 
     componentWillUpdate(nextProps) {
       if (_.isEmpty(nextProps.user)) {
-        this.context.router.push('SignIn')
+        this.context.router.history.push('SignIn')
       }
     }
 
@@ -32,7 +33,7 @@ function asdcasdc(ComposedComponent) {
     onUnload = e => {
       const { uid } = this.props.user;
       const lastSeen = getDateHourString();
-      updateLastSeen(uid, lastSeen, () => {});
+      updateLastSeen(uid, lastSeen, () => { });
     }
 
     render() {
@@ -44,5 +45,5 @@ function asdcasdc(ComposedComponent) {
     return { user: state.user }
   }
 
-  return connect()()
+  return connect(mapStateToProps)(AuthNStatus);
 }

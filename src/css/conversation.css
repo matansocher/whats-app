@@ -107,3 +107,14 @@ input, textarea {
   color: #000000;
   background-color : #000000;
 }
+
+#sendBtn {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden; 
+  position: relative;
+  top: 7px;
+  left: 5px;
+}

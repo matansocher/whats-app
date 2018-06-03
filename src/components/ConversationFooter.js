@@ -25,8 +25,8 @@ class ConversationFooter extends Component {
 
   enterKeyListener = () => {
     const input = document.getElementById("message");
+    // console.log(document.getElementById("sendBtn"))
     input.addEventListener("keydown", event => {
-      event.preventDefault();
       if (event.keyCode === 13) { // 13 is the "Enter" key
         document.getElementById("sendBtn").click();
       }
@@ -42,15 +42,17 @@ class ConversationFooter extends Component {
       date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }
     this.props.sendMessage(message, () => {
-      this.refs.message.value = '';
       this.setState({ message: '' });
     });
   }
 
-  createSetTimeout = () => {
+  createSetTimeout = (userid, contactid) => {
     this.setState({ timeout: setTimeout(() => {
-      updateStatusInConversation(uid, contactid, false); // stopped typing
-    } , 2000) });
+      // console.log("send false")
+      updateStatusInConversation(userid, contactid, false); // stopped typing
+      window.clearTimeout(this.state.timeout); 
+      this.setState({ timeout: null });
+    } , 3000) });
   }
 
   updateStatus = () => {
@@ -61,9 +63,10 @@ class ConversationFooter extends Component {
       window.clearTimeout(timeout); 
       this.setState({ timeout: null });
     } else {
+      // console.log("send true")
       updateStatusInConversation(userid, contactid, true); // typing
     }
-    this.createSetTimeout();
+    this.createSetTimeout(userid, contactid);
   }
 
   handleChange = (e) => {
@@ -111,14 +114,16 @@ class ConversationFooter extends Component {
           </div>
           <div className="center">
             <textarea value={this.state.message} id="message" 
-              name="message" ref="message" rows="1"
+              name="message" rows="1"
               className="form-control input-message"
               placeholder="Type a message" onChange={this.handleChange}>
             </textarea>
           </div>
           <div className="send-icon">
-            <SendIcon id ="sendBtn" className="pull-right" 
-              onClick={this.sendMessage} />
+            <button id="sendBtn" className="pull-right" 
+              onClick={this.sendMessage}>
+              <SendIcon />
+            </button>
           </div>
         </div>
       </MuiThemeProvider>

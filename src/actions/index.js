@@ -112,6 +112,13 @@ export function actionFetchFriendsList(uid, callback) {
   }
 }
 
+export function actionFetchFriendsListReady(friendsArray, callback) {
+  return {
+    type: FETCH_FRIENDS_LIST,
+    payload: friendsArray
+  }
+}
+
 export function actionFetchUserData(uid, callback) {
   let user = {};
   return dispatch => {
@@ -209,6 +216,13 @@ export function actionFetchChatData(useruid, contact, callback) {
       });
       callback();
     });
+  }
+}
+
+export function actionFetchChatDataReady(chatData, callback) {
+  return {
+    type: FETCH_CHAT_DATA,
+    payload: chatData
   }
 }
 

@@ -6,41 +6,6 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Badge from 'material-ui/Badge';
 import Divider from 'material-ui/Divider';
 
-export function preActionFetchFriendsList(uid, callback) {
-  let friendsArray = [];
-  fire.database().ref(`friendships/${uid}`).on('value', friendsSnap => {
-    const friends = friendsSnap.val() || {};
-    Object.keys(friends).map((objectkey) => {
-      const { key, lastMessage, pinned, isUnraed, isTyping } = friends[objectkey];
-      const friend = { key, lastMessage, pinned, isUnraed, isTyping };
-      fire.database().ref(`users/${key}`).once('value', friendSnap => {
-        friend.info = friendSnap.val();
-        friendsArray.push(friend);
-      })
-      // .then(() => {
-      //   fire.storage().ref(`/avatars/${friend.info.avatar}`).getDownloadURL().then(url => {
-      //     friend.info.avatar = url;
-      //     console.log("************************", friend)
-      //     friendsArray.push(friend);
-      //   }).catch(error => { console.log(error); });
-      // });
-      return friend;
-    });
-  }).then(() => {
-    this.props.actionFetchFriendsList(friendsArray, callback)
-  });
-}
-
-export function preActionFetchChatData(useruid, contact, callback) {
-  const chatData = { contact, messages: [] };
-  const contactuid = contact.info.uid;
-  fire.database().ref(`messages/${useruid}/${contactuid}`).once('value', messagesSnap => {
-    chatData.messages = messagesSnap.val();
-  }).then(() => {
-    this.props.actionFetchChatData(chatData, callback)
-  });
-}
-
 export function raedMessage(useruid, contactid) {
   const updates = {};
   updates[`friendships/${useruid}/${contactid}/isUnraed`] = "None";

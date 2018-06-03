@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import fire from '../firebase';
 import { getCircularProgress, compareDates, getChatBubbleDate, raedMessage } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import ConversationHeader from './ConversationHeader';
@@ -21,18 +22,29 @@ class Conversation extends Component {
 
   componentWillMount() {
     console.log(this.props.user)
-    if (_.isEmpty(this.props.user)) {
-      console.log('inside if')
-      this.props.history.push('/SignIn');
-    }
+    // if (_.isEmpty(this.props.user)) {
+    //   this.props.history.push('/');
+    // }
   }
 
   componentDidMount() {
     this.scrollToBottom();
-    const useruid = this.props.user.uid;
-    const contactid = this.props.currentChatUser.info.uid;
-    raedMessage(useruid, contactid);
-    // this.props.actionMarkRaedUnraed(useruid, contact, "None", () => {});
+    if (!_.isEmpty(this.props.user)) {
+      const useruid = this.props.user.uid;
+      const contactid = this.props.currentChatUser.info.uid;
+      raedMessage(useruid, contactid);
+      this.preActionFetchChatData(useruid, this.props.currentChatUser, () => {})
+      // this.props.actionMarkRaedUnraed(useruid, contact, "None", () => {});
+    }
+  }
+
+  preActionFetchChatData = (useruid, contact, callback) => {
+    const chatData = { contact, messages: [] };
+    const contactuid = contact.info.uid;
+    fire.database().ref(`messages/${useruid}/${contactuid}`).on('value', messagesSnap => {
+      chatData.messages = messagesSnap.val();
+      this.props.actionFetchChatDataReady(chatData, callback)
+    });
   }
 
   componentDidUpdate() {
