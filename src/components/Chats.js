@@ -40,20 +40,21 @@ class Chats extends Component {
   preActionFetchFriendsList = (uid, callback) => {
     let friendsArray = [];
     fire.database().ref(`friendships/${uid}`).on('value', friendsSnap => {
-      console.log("**********************")
+      const numOfFriends = Object.keys(friendsSnap.val()).length;
       const friends = friendsSnap.val() || {};
       Object.keys(friends).map((objectkey) => {
         const { key, lastMessage, pinned, isUnraed, isTyping } = friends[objectkey];
         const friend = { key, lastMessage, pinned, isUnraed, isTyping };
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
-          console.log("####################")
           friend.info = friendSnap.val();
           friendsArray.push(friend);
+          if(friendsArray.length === numOfFriends) {
+            console.log(JSON.stringify(friendsArray))
+            this.props.actionFetchFriendsListReady(friendsArray, callback)
+          }
         })
         return friend;
       });
-      console.log(friendsArray)
-      this.props.actionFetchFriendsListReady(friendsArray, callback)
     });
   }
 

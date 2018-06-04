@@ -25,7 +25,6 @@ class ConversationFooter extends Component {
 
   enterKeyListener = () => {
     const input = document.getElementById("message");
-    // console.log(document.getElementById("sendBtn"))
     input.addEventListener("keydown", event => {
       if (event.keyCode === 13) { // 13 is the "Enter" key
         document.getElementById("sendBtn").click();
@@ -48,7 +47,6 @@ class ConversationFooter extends Component {
 
   createSetTimeout = (userid, contactid) => {
     this.setState({ timeout: setTimeout(() => {
-      // console.log("send false")
       updateStatusInConversation(userid, contactid, false); // stopped typing
       window.clearTimeout(this.state.timeout); 
       this.setState({ timeout: null });
@@ -63,7 +61,6 @@ class ConversationFooter extends Component {
       window.clearTimeout(timeout); 
       this.setState({ timeout: null });
     } else {
-      // console.log("send true")
       updateStatusInConversation(userid, contactid, true); // typing
     }
     this.createSetTimeout(userid, contactid);

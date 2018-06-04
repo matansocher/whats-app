@@ -8,7 +8,17 @@
 </head>
 <body>
   <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  Enter your name: <input type="text" id="fname">
   <script>
+
+    document.getElementById("fname").addEventListener("change", myFunction);
+
+    function myFunction() {
+      console.log("**********************")
+      var x = document.getElementById("fname");
+      x.value = x.value.toUpperCase();
+    }
 
     var config = {
       apiKey: "AIzaSyDPWq3lQLvl3FJ_9o_QfffYqovo3qtOaas",
@@ -20,10 +30,32 @@
     };
     const fire = firebase.initializeApp(config);
 
-    fire.database().ref(`friendships`).on('value', friendships => {
-      console.log(friendships.val());
-    });
+    preActionFetchFriendsList = (uid) => {
+      let friendsArray = [];
+      fire.database().ref(`friendships/${uid}`).on('value', friendsSnap => {
+        console.log("**********************")
+        console.log(Object.keys(friendsSnap.val()).length)
+        const numOfFriends = Object.keys(friendsSnap.val()).length;
+        const friends = friendsSnap.val() || {};
+        Object.keys(friends).map((objectkey) => {
+          const { key, lastMessage, pinned, isUnraed, isTyping } = friends[objectkey];
+          const friend = { key, lastMessage, pinned, isUnraed, isTyping };
+          fire.database().ref(`users/${key}`).once('value', friendSnap => {
+            console.log("####################")
+            friend.info = friendSnap.val();
+            friendsArray.push(friend);
+            if(friendsArray.length === numOfFriends) {
+              console.log(JSON.stringify(friendsArray))
+              
+            }
+          })
+          return friend;
+        });
+        // this.props.actionFetchFriendsListReady(friendsArray, callback)
+      });
+    }
 
+    preActionFetchFriendsList('6NXDlDWAikUjblf1TuoPPn9dQ6X2')
 
   </script>
 </body>

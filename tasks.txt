@@ -1,5 +1,7 @@
 live shit
-message id is not sorted
+message id is not sorted - check
 send message - enter skips line, and then sends
+get only 7 messages - then another 7
+hash the messages
 emoji
 tests
