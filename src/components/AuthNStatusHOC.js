@@ -13,7 +13,7 @@ export default function (ComposedComponent) {
 
     componentWillMount() {
       if (_.isEmpty(this.props.user)) {
-        this.context.router.history.push('SignIn')
+        this.context.router.history.push('/')
       }
       window.addEventListener("beforeunload", this.onUnload);
       const { uid } = this.props.user;
@@ -22,7 +22,7 @@ export default function (ComposedComponent) {
 
     componentWillUpdate(nextProps) {
       if (_.isEmpty(nextProps.user)) {
-        this.context.router.history.push('SignIn')
+        this.context.router.history.push('/')
       }
     }
 

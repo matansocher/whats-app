@@ -29,7 +29,7 @@ class Chats extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
-        this.preActionFetchFriendsList(user.uid, () => {});
+        this.preActionFetchFriendsList(user.uid, () => { });
       } else {
         this.props.actionLogoutUser();
         this.props.history.push('/SignIn');
@@ -38,8 +38,8 @@ class Chats extends Component {
   }
 
   preActionFetchFriendsList = (uid, callback) => {
-    let friendsArray = [];
     fire.database().ref(`friendships/${uid}`).on('value', friendsSnap => {
+      let friendsArray = [];
       const numOfFriends = Object.keys(friendsSnap.val()).length;
       const friends = friendsSnap.val() || {};
       Object.keys(friends).map((objectkey) => {
@@ -48,10 +48,8 @@ class Chats extends Component {
         fire.database().ref(`users/${key}`).once('value', friendSnap => {
           friend.info = friendSnap.val();
           friendsArray.push(friend);
-          if(friendsArray.length === numOfFriends) {
-            console.log(JSON.stringify(friendsArray))
+          if (friendsArray.length === numOfFriends)
             this.props.actionFetchFriendsListReady(friendsArray, callback)
-          }
         })
         return friend;
       });
@@ -65,7 +63,7 @@ class Chats extends Component {
   onUnload = e => {
     const { uid } = this.props.user;
     const lastSeen = getDateHourString();
-    updateLastSeen(uid, lastSeen, () => {});
+    updateLastSeen(uid, lastSeen, () => { });
   }
 
   fetchData = (uid) => {
@@ -155,7 +153,7 @@ class Chats extends Component {
     contacts = splitToPinned(contacts);
     return (
       contacts.map(contact => {
-        return <Contact key={contact.info.email} 
+        return <Contact key={contact.info.email}
           contact={contact}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}

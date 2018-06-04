@@ -20,13 +20,6 @@ class Conversation extends Component {
     }
   }
 
-  componentWillMount() {
-    console.log(this.props.user)
-    // if (_.isEmpty(this.props.user)) {
-    //   this.props.history.push('/');
-    // }
-  }
-
   componentDidMount() {
     this.scrollToBottom();
     if (!_.isEmpty(this.props.user)) {
