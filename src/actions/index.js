@@ -274,6 +274,7 @@ export function actionSearchFriends(uid, friendsUids, callback) {
           notFriends.push(u);
         }
       })
+      console.log(notFriends)
       dispatch({
         type: SEARCH_FRIENDS,
         payload: notFriends

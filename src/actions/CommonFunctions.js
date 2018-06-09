@@ -31,6 +31,7 @@ export function updateStatusInConversation(useruid, contactid, isTyping) { // up
 }
 
 export function updateLastSeen(useruid, lastSeen, callback) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
+  console.log(useruid)
   const updates = {};
   updates[`users/${useruid}/lastSeen`] = lastSeen;
   fire.database().ref().update(updates).then(() => {
@@ -148,9 +149,9 @@ export function getChatBubbleDate(nextMessage) {
 }
 
 export function filterBySearch(array, subString) {
-  return _.filter(array, (contact) => {
-    return contact.info.name.toLowerCase()
-      .startsWith(subString.toLowerCase());
+  return _.filter(array, contact => {
+    const name = contact.info ? contact.info.name : contact.name;
+    return name.toLowerCase().startsWith(subString.toLowerCase());
   });
 }
 
@@ -262,7 +263,7 @@ function getLastDayOfPrevMonth(month) {
   else return 31;
 }
 
-export function getLastMessage(isTyping, content, name) {
+export function getLastMessage(isTyping, { content }, name) {
   if (isTyping) {
     return "Typing..."; // "Typing"
   }
@@ -272,11 +273,6 @@ export function getLastMessage(isTyping, content, name) {
     return content.length > textWidth ? `${content.substr(0, textWidth)}...` : content;
   }
   return `Start a conversation with ${name}`; // no last message
-}
-
-export function getLastMessageContent(content) {
-  const textWidth = (window.innerWidth - 100) / 9;
-  return content.length > textWidth ? `${content.substr(0, textWidth)}...` : content;
 }
 
 export function getAvatarsNames() {

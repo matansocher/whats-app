@@ -16,8 +16,7 @@ export default function (ComposedComponent) {
         this.context.router.history.push('/')
       }
       window.addEventListener("beforeunload", this.onUnload);
-      const { uid } = this.props.user;
-      updateLastSeen(uid, "Online", () => { });
+
     }
 
     componentWillUpdate(nextProps) {

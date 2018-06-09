@@ -43,14 +43,15 @@ class Contact extends Component {
     const { pinned, isUnraed, isTyping } = this.props.contact;
     const { lastMessage } = this.props;
     const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
-    const lmContent = getLastMessage(isTyping, lastMessage.content || false, name);
+    const lmContent = getLastMessage(isTyping, lastMessage || false, name);
     return (
       <div className="contact">
         <MuiThemeProvider>
           <div>
             <ListItem
               onClick={this.fetchChatData} style={{ color: '#ffffff' }}
-              primaryText={name} secondaryText={lmContent}
+              primaryText={name} 
+              secondaryText={<span style={{ color: '#ffffff' }}>{lmContent}</span>}
               leftAvatar={
                 <Avatar size={45} src={require(`../avatars/${avatar}`)}
                   style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />

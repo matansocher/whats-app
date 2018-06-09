@@ -65,9 +65,10 @@ class Conversation extends Component {
     const senderuid = this.props.user.uid;
     const recieveruid = this.props.currentChatUser.info.uid;
     message.sender = senderuid;
-    this.props.actionSendMessage(senderuid, recieveruid, message, () => {
-      callback();
-    });
+    console.log("message sent:", message.content)
+    // this.props.actionSendMessage(senderuid, recieveruid, message, () => {
+    //   callback();
+    // });
   }
 
   deleteMessage = (message) => {

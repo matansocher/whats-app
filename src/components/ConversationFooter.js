@@ -20,19 +20,41 @@ class ConversationFooter extends Component {
   }
 
   componentDidMount() {
-    this.enterKeyListener();
+    // this.enterKeyListener();
   }
 
   enterKeyListener = () => {
     const input = document.getElementById("message");
     input.addEventListener("keydown", event => {
+      // console.log(event.keyCode)
       if (event.keyCode === 13) { // 13 is the "Enter" key
+        var message = this.state.message.substring(0, this.state.message.length - 1);
+        console.log(message)
+        this.setState({ message })
         document.getElementById("sendBtn").click();
       }
     });
   }
 
-  sendMessage = () => {
+  onEnterPress = (e) => {
+    if(e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      this.messageForm.submit();
+    }
+  }
+
+  submitMessage = (e) => {
+    e.preventDefault();
+    this.sendMessage();
+  }
+
+  sendMessage = (e) => {
+    const content = this.state.message.trim();
+
+    if(content === '') {
+      console.log('empty')
+      return;
+    }
     var date = new Date();
     const message = {
       id: makeMessageID(),
@@ -109,19 +131,22 @@ class ConversationFooter extends Component {
           <div className="smiley">
             <SmileyIcon onClick={this.toggleSmiley} className="pull-left" />
           </div>
-          <div className="center">
-            <textarea value={this.state.message} id="message" 
-              name="message" rows="1"
-              className="form-control input-message"
-              placeholder="Type a message" onChange={this.handleChange}>
-            </textarea>
-          </div>
-          <div className="send-icon">
-            <button id="sendBtn" className="pull-right" 
-              onClick={this.sendMessage}>
+          
+          <form ref={el => this.messageForm = el} onSubmit={this.submitMessage}>
+            <div className="center">
+              <textarea value={this.state.message} id="message" 
+                onKeyDown={this.onEnterPress}
+                name="message" rows="1"
+                className="form-control input-message"
+                placeholder="Type a message" onChange={this.handleChange}>
+              </textarea>
+            </div>
+            <div className="send-icon">
+              <input id="sendBtn" className="pull-right" type="submit">
               <SendIcon />
-            </button>
-          </div>
+              </input>
+            </div>
+          </form>
         </div>
       </MuiThemeProvider>
     );
@@ -129,3 +154,18 @@ class ConversationFooter extends Component {
 }
 
 export default ConversationFooter;
+
+
+{/* <div className="center">
+  <textarea value={this.state.message} id="message" 
+    name="message" rows="1"
+    className="form-control input-message"
+    placeholder="Type a message" onChange={this.handleChange}>
+  </textarea>
+</div>
+<div className="send-icon">
+  <button id="sendBtn" className="pull-right" 
+    onClick={this.sendMessage}>
+    <SendIcon />
+  </button>
+</div> */}

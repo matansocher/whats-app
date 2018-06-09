@@ -47,8 +47,9 @@ class ConversationHeader extends Component {
           <ListItem
             className="contact-info"
             primaryText={name}
-            secondaryText={getLastSeenString(isTyping, lastSeen)}
+            secondaryText={<span style={{ color: '#ffffff' }}>{getLastSeenString(isTyping, lastSeen)}</span>}
             onClick={this.infoClicked}
+            style={{ color: '#ffffff' }}
             leftAvatar={
               <Avatar size={45} src={require(`../avatars/${avatar}`)}
                 style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />

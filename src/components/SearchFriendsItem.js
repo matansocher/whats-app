@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import '../css/searchFriends.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ListItem } from 'material-ui/List';
@@ -22,7 +23,12 @@ class SearchFriendsItem extends Component {
   }
 
   render() {
-    const { name, avatar } = this.props.friend;
+    console.log(this.props.friend)
+    const { friend } = this.props;
+    if(_.isEmpty(friend) || !friend.name || ! friend.avatar) {
+      return <span />
+    }
+    const { name, avatar } = friend;
     return (
       <div className="friend">
         <MuiThemeProvider>

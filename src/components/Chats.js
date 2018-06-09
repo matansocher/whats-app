@@ -25,11 +25,10 @@ class Chats extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onUnload);
-    // preActionFetchFriendsList();
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
-        this.preActionFetchFriendsList(user.uid, () => { });
+        // this.preActionFetchFriendsList(user.uid, () => { });
       } else {
         this.props.actionLogoutUser();
         this.props.history.push('/SignIn');
@@ -63,6 +62,7 @@ class Chats extends Component {
   onUnload = e => {
     const { uid } = this.props.user;
     const lastSeen = getDateHourString();
+    console.log("1")
     updateLastSeen(uid, lastSeen, () => { });
   }
 
@@ -71,6 +71,7 @@ class Chats extends Component {
       const lastSeen = "Online";
       this.props.actionFetchFriendsList(uid, () => {
         this.props.actionFetchUserData(uid, () => {
+          // console.log("2")
           updateLastSeen(uid, lastSeen, () => {
             this.setState({ loading: false });
           })
@@ -142,9 +143,8 @@ class Chats extends Component {
               onClick={() => this.navigateToRoute('SearchFriends')} />
           </div>
         );
-      } else {
+      } else
         return (<span />);
-      }
     }
     let contacts = _.values(this.props.contactList);
     if (this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
